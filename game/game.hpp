@@ -22,6 +22,7 @@ public:
     
 private:
     void createAssets();
+    void createMoreAssets();
     void handleEventInput();
     void handleGameEvents();
     void checkEvent();
@@ -37,14 +38,13 @@ private:
     
     Sprite* background; 
     Player* playerSprite;
-    std::vector<Enemy*> enemySprite;
-    std::vector<Bullet*> bullets;
+    std::vector<Rain*> rainDrops;
+    float rainRespawnTime; 
+
     std::vector<TextClass*> endMessage;
     std::string endingText;
     
     MusicClass* backgroundMusic;
-    SoundClass* bulletSound;
-    SoundClass* enemyDeadSound;
     SoundClass* playerDeadSound;
     SoundClass* victorySound;
 };

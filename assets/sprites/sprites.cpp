@@ -25,29 +25,21 @@ Sprite::~Sprite(){
 }
 
 void Sprite::updatePos(){
-    if (position.x > GameComponents.screenWidth - 930) {
-        position.x = GameComponents.screenWidth - 930;
+    if (position.x > GameComponents.screenWidth + 80) {
+        position.x = GameComponents.screenWidth + 80;
     } else if (position.x < - 10) {
         position.x = - 10;
     }
-    if (position.y > GameComponents.screenHeight - 430) {
-        position.y = GameComponents.screenHeight - 430;
-    } else if (position.y < 0) {
-        position.y = 0;
-    }
+    if (position.y > GameComponents.screenHeight + 80) 
+        setVisibleState(false); 
+
     spriteCreated->setPosition(position);
 }
 
 //Player class
 void Player::updatePlayer(){
-    if(FlagEvents.wPressed){
-        position.y -= speed * GameComponents.deltaTime;
-    }
     if(FlagEvents.aPressed){
         position.x -= speed * GameComponents.deltaTime;
-    }
-    if(FlagEvents.sPressed){
-        position.y += speed * GameComponents.deltaTime;
     }
     if(FlagEvents.dPressed){
         position.x += speed * GameComponents.deltaTime;
@@ -70,28 +62,7 @@ void Player::updatePlayer(){
 }
 
 //Enemy class
-void Enemy::updateEnemy(sf::Vector2f playerPos){
-    sf::Vector2f enemyToPlayer = playerPos - position;
-    float length = sqrt(enemyToPlayer.x * enemyToPlayer.x + enemyToPlayer.y * enemyToPlayer.y);
-    enemyToPlayer /= length;
-    position += enemyToPlayer * speed * GameComponents.deltaTime;
+void Rain::updateRain(sf::Vector2f playerPos){
+    position.y += speed * GameComponents.deltaTime;
     updatePos();
 }
-
-//Bullet class
-void Bullet::calculateDirVec(){
-    sf::Vector2f direction = static_cast<sf::Vector2f>(GameComponents.mouseClickedPos) - position;
-    directionUnit = direction / std::sqrt(direction.x * direction.x + direction.y * direction.y);
-}
-
-void Bullet::updateBullet(){
-    position += directionUnit * speed * GameComponents.deltaTime;
-
-    if (position.x > GameComponents.screenWidth || position.x < 0 || position.y > GameComponents.screenHeight || position.y < 0) {
-        setVisibleState(false); 
-    }
-    spriteCreated->setPosition(position);
-}
-
-
-

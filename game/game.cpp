@@ -6,8 +6,9 @@
 //
 
 #include "game.hpp"
-GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game tut") {
+GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0) {
     window.setFramerateLimit(30);
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 GameManager::~GameManager() {
@@ -15,16 +16,12 @@ GameManager::~GameManager() {
 }
 
 void GameManager::destroyAll(){
-    for (Enemy* enemy : enemySprite) {
-        delete enemy;
-        enemy = nullptr;
+    for (Rain* rain : rainDrops) {
+        delete rain;
+        rain = nullptr;
     }
-    enemySprite.clear();
-    for (Bullet* bullet : bullets) {
-        delete bullet;
-        bullet = nullptr;
-    }
-    bullets.clear();
+    rainDrops.clear();
+  
     for (TextClass* text : endMessage){
         delete text;
         text = nullptr;
@@ -37,10 +34,6 @@ void GameManager::destroyAll(){
     
     delete backgroundMusic;
     backgroundMusic = nullptr;
-    delete bulletSound;
-    bulletSound = nullptr;
-    delete enemyDeadSound;
-    enemyDeadSound = nullptr;
     delete playerDeadSound;
     playerDeadSound = nullptr;
     delete victorySound;
@@ -52,6 +45,7 @@ void GameManager::runGame() {
     while (window.isOpen()) {
         if(!GameEvents.gameEnd){
             countTime();
+            createMoreAssets(); 
             checkEvent();
             handleGameEvents();
             deleteAssets();
@@ -63,23 +57,30 @@ void GameManager::runGame() {
 }
 
 void GameManager::createAssets( ){
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
-   for (int i = 0; i< GameComponents.enemyNum; i++){
-        Enemy* enemy = new Enemy( sf::Vector2f{
-            static_cast<float>(GameComponents.screenWidth - 900),
-            static_cast<float>(rand() % GameComponents.screenHeight)
-        }, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfmlgame1/sfmlgame1/assets/sprites/3.png");
-        enemySprite.push_back(enemy);
-   }
-    playerSprite = new Player(sf::Vector2f{0.0f, 50.0f}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfmlgame1/sfmlgame1/assets/sprites/1.png");
-    background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "/Users/student/projects/sfmlgame1/sfmlgame1/assets/sprites/4.png");
+    Rain* rain = new Rain({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/raindrop.png");
+    rainDrops.push_back(rain);
+    playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "/Users/student/projects/sfml_game2/assets/sprites/player.png");
+    background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "/Users/student/projects/sfml_game2/assets/sprites/background.png");
     backgroundMusic = new MusicClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/backgroundMusic.ogg");
     backgroundMusic->returnMusic()->play();
-    bulletSound = new SoundClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/bulletSound.wav");
-    enemyDeadSound = new SoundClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/enemyDead.wav");
     playerDeadSound = new SoundClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/playerDead.wav");
     victorySound = new SoundClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/victorySound.wav");
+}
+
+void GameManager::createMoreAssets(){
+    if(rainRespawnTime <= 0){
+        Rain* rain = new Rain({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/raindrop.png");
+        rainDrops.push_back(rain);
+
+        rainRespawnTime = 1.0f; 
+    }
+}
+
+void GameManager::countTime(){
+    sf::Time frameTime = clock.restart();
+    GameComponents.deltaTime = frameTime.asSeconds();
+    GameComponents.globalTime += frameTime.asSeconds();
+    rainRespawnTime -= GameComponents.deltaTime; 
 }
 
 void GameManager::handleEventInput(){
@@ -96,12 +97,6 @@ void GameManager::handleEventInput(){
                 case sf::Keyboard::A:
                     FlagEvents.aPressed = true;
                     break;
-                case sf::Keyboard::W:
-                    FlagEvents.wPressed = true;
-                    break;
-                case sf::Keyboard::S:
-                    FlagEvents.sPressed = true;
-                    break;
                 case sf::Keyboard::B:
                     destroyAll();
                     restartGame();
@@ -113,51 +108,22 @@ void GameManager::handleEventInput(){
         else if (event.type == sf::Event::KeyReleased){
             FlagEvents.dPressed = false;
             FlagEvents.aPressed = false;
-            FlagEvents.wPressed = false;
-            FlagEvents.sPressed = false;
-        }
-        if (event.type == sf::Event::MouseButtonPressed){
-            GameComponents.mouseClickedPos = sf::Mouse::getPosition(window);
-            FlagEvents.mouseClicked = true;
-        }
-        if (event.type == sf::Event::MouseButtonReleased){
-            FlagEvents.mouseClicked = false;
         }
     }
 }
 
 void GameManager::checkEvent(){
-    for (const auto& enemy : enemySprite) {
-           sf::FloatRect enemyBounds = enemy->returnSpritesShape().getGlobalBounds();
-           if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(enemyBounds)) {
+    for (const auto& rain : rainDrops) {
+           sf::FloatRect rainBounds = rain->returnSpritesShape().getGlobalBounds();
+           if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(rainBounds)) {
                GameEvents.playerDead = true;
            }
        }
-    for (auto bulletIter = bullets.begin(); bulletIter != bullets.end(); ++bulletIter) {
-            for (auto enemy : enemySprite) {
-                sf::FloatRect bulletBounds = (*bulletIter)->returnSpritesShape().getGlobalBounds();
-                sf::FloatRect enemyBounds = enemy->returnSpritesShape().getGlobalBounds();
-
-                if (bulletBounds.intersects(enemyBounds)) {
-                    (*bulletIter)->setVisibleState(false);
-                    enemy->setVisibleState(false);
-                    enemyDeadSound->returnSound()->play();
-                    break;
-                }
-            }
-    }
-    
-    if(!enemySprite.size())
+    if(!rainDrops.size())
         GameEvents.playerWin = true;
 }
 
 void GameManager::handleGameEvents(){
-   if(FlagEvents.mouseClicked){
-        Bullet* bullet = new Bullet(playerSprite->getSpritePos(),sf::Vector2f{0.03,0.03}, "/Users/student/projects/sfmlgame1/sfmlgame1/assets/sprites/2.png");
-            bullets.push_back(bullet);
-        bulletSound->returnSound()->play();
-    }
-    
     if(GameEvents.playerWin){
         endingText = "player wins! time elapsed:\n";
         victorySound->returnSound()->play();
@@ -173,30 +139,22 @@ void GameManager::handleGameEvents(){
         endingText.append(std::to_string(GameComponents.globalTime));
         endingText.append(" seconds");
         TextClass* endMessage1 = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "/Users/student/projects/sfmlgame1/sfmlgame1/assets/fonts/arial.ttf", endingText);
-            endMessage.push_back(endMessage1);
+        endMessage.push_back(endMessage1);
         
         backgroundMusic->returnMusic()->stop();
         
-        for(const auto& enemy : enemySprite){
-            enemy->setMoveState(false);
+        for(const auto& rain : rainDrops){
+            rain->setMoveState(false);
         }
-    }
-}
 
-void GameManager::countTime(){
-    sf::Time frameTime = clock.restart();
-    GameComponents.deltaTime = frameTime.asSeconds();
-    GameComponents.globalTime += frameTime.asSeconds();
+        playerSprite->setMoveState(false); 
+    }
 }
 
 void GameManager::updateSprites() {
-    for (Enemy* enemy : enemySprite){
-        if(enemy->getMoveState())
-            enemy->updateEnemy(playerSprite->getSpritePos());
-    }
-    for (Bullet* bullet : bullets){
-        if(bullet->getMoveState())
-            bullet->updateBullet();
+    for (Rain* rain : rainDrops){
+        if(rain->getMoveState())
+            rain->updateRain(playerSprite->getSpritePos());
     }
     if(playerSprite->getMoveState())
         playerSprite->updatePlayer();
@@ -210,13 +168,9 @@ void GameManager::draw() {
         if(text->getVisibleState())
             window.draw(*text->getText());
     }
-    for (Enemy* enemy : enemySprite){
-        if(enemy->getVisibleState())
-            window.draw(enemy->returnSpritesShape());
-    }
-    for (Bullet* bullet : bullets){
-        if(bullet->getVisibleState())
-            window.draw(bullet->returnSpritesShape());
+    for (Rain* rain : rainDrops){
+        if(rain->getVisibleState())
+            window.draw(rain->returnSpritesShape());
     }
     window.draw(playerSprite->returnSpritesShape());
     
@@ -224,24 +178,14 @@ void GameManager::draw() {
 }
 
 void GameManager::deleteAssets() {
-    for (auto it = enemySprite.begin(); it != enemySprite.end();) {
-        Enemy* enemy = *it;
-        if(enemy->getVisibleState()) {
+    for (auto it = rainDrops.begin(); it != rainDrops.end();) {
+        Rain* rain = *it;
+        if(rain->getVisibleState()) {
             ++it;
         } else {
-            delete enemy;
-            enemy = nullptr;
-            it = enemySprite.erase(it);
-        }
-    }
-    for (auto it = bullets.begin(); it != bullets.end();) {
-        Bullet* bullet = *it;
-        if(bullet->getVisibleState()) {
-            ++it;
-        } else {
-            delete bullet;
-            bullet = nullptr;
-            it = bullets.erase(it);
+            delete rain;
+            rain = nullptr;
+            it = rainDrops.erase(it);
         }
     }
 }

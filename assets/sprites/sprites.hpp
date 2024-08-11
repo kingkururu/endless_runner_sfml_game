@@ -46,28 +46,16 @@ public:
 };
 
 //enemy class
-class Enemy : public Sprite{
+class Rain : public Sprite{
 public:
-    Enemy(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
-    ~Enemy( ) override{ };
-    void updateEnemy(sf::Vector2f playerPos);
+    Rain(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
+    ~Rain( ) override{ };
+    void updateRain(sf::Vector2f playerPos);
     
 private:
     float speed = 100;
 };
 
-//bullet class
-class Bullet : public Sprite{
-public:
-    Bullet(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) { calculateDirVec(); }
-    ~Bullet( ) override{ };
-    void updateBullet();
-    
-private:
-    void calculateDirVec();
-    sf::Vector2f directionUnit;
-    float speed = 500;
-};
 
 
 

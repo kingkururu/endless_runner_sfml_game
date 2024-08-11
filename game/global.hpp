@@ -12,13 +12,11 @@
 #include <SFML/Graphics.hpp>
 
 extern struct flagEvents{
-    bool wPressed;
     bool aPressed;
-    bool sPressed;
     bool dPressed;
     bool mouseClicked;
     
-    flagEvents() : wPressed(false), aPressed(false), sPressed(false), dPressed(false), mouseClicked(false){}
+    flagEvents() : aPressed(false), dPressed(false){}
 } FlagEvents;
 
 extern struct gameEvents{
@@ -33,10 +31,8 @@ extern struct gameComponents{
     int screenWidth, screenHeight;
     float deltaTime;
     float globalTime;
-    sf::Vector2i mouseClickedPos;
-    const int enemyNum = 7;
     
-    gameComponents() : screenWidth(1920), screenHeight(1080), deltaTime(0), globalTime(0), mouseClickedPos(0,0){}
+    gameComponents() : screenWidth(1000), screenHeight(1000), deltaTime(0), globalTime(0){}
 } GameComponents;
 
 
