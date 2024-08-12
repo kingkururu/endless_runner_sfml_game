@@ -56,7 +56,11 @@ private:
     float speed = 100;
 };
 
-
+class Lightning : public Sprite{
+    public:
+    Lightning(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
+    ~Lightning() override{};
+};
 
 
 #endif /* sprites_hpp */

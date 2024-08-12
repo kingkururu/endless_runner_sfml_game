@@ -32,11 +32,16 @@ extern struct gameComponents{
     float deltaTime;
     float globalTime;
     
-    gameComponents() : screenWidth(1000), screenHeight(1000), deltaTime(0), globalTime(0){}
+    gameComponents() : screenWidth(1000), screenHeight(1000), deltaTime(0), globalTime(0) {}
 } GameComponents;
 
+extern struct gameScore{
+    unsigned int itNum;
+    bool firstIt;
+    int long score;
 
-
+    gameScore() : itNum(0), firstIt(true), score(0) {}
+} GameScore; 
 
 
 

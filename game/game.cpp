@@ -8,6 +8,7 @@
 #include "game.hpp"
 GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0) {
     window.setFramerateLimit(30);
+    GameScore.score = 100; 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
@@ -56,7 +57,7 @@ void GameManager::runGame() {
     }
 }
 
-void GameManager::createAssets( ){
+void GameManager::createAssets(){
     Rain* rain = new Rain({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/raindrop.png");
     rainDrops.push_back(rain);
     playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "/Users/student/projects/sfml_game2/assets/sprites/player.png");
@@ -73,6 +74,12 @@ void GameManager::createMoreAssets(){
         rainDrops.push_back(rain);
 
         rainRespawnTime = 1.0f; 
+    }
+
+    if(!(GameScore.score % 500) && GameScore.firstIt){
+        ++GameScore.itNum;
+        GameScore.firstIt = false; 
+        rainRespawnTime -= GameScore.itNum * 0.1; 
     }
 }
 
@@ -113,14 +120,20 @@ void GameManager::handleEventInput(){
 }
 
 void GameManager::checkEvent(){
-    for (const auto& rain : rainDrops) {
-           sf::FloatRect rainBounds = rain->returnSpritesShape().getGlobalBounds();
-           if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(rainBounds)) {
-               GameEvents.playerDead = true;
-           }
-       }
-    if(!rainDrops.size())
-        GameEvents.playerWin = true;
+    for (auto it = rainDrops.begin(); it != rainDrops.end(); /* no increment here */) {
+        sf::FloatRect rainBounds = (*it)->returnSpritesShape().getGlobalBounds();
+        if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(rainBounds)) {
+            GameScore.score -= 100; 
+            it = rainDrops.erase(it); 
+        } else {
+            ++it; 
+        }
+    }
+
+    if(GameScore.score <= -500){
+        GameEvents.playerDead = true;
+        std::cout << GameScore.score; 
+    }
 }
 
 void GameManager::handleGameEvents(){

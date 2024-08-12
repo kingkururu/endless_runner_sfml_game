@@ -10,3 +10,4 @@
 gameComponents GameComponents;
 flagEvents FlagEvents;
 gameEvents GameEvents;
+gameScore GameScore; 
