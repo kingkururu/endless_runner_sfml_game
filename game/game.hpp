@@ -37,9 +37,17 @@ private:
     sf::Clock clock;
     
     Sprite* background; 
+
     Player* playerSprite;
+
     std::vector<Rain*> rainDrops;
     float rainRespawnTime; 
+
+    std::vector<Coin*> coins;
+    float coinRespawnTime;
+
+    std::vector<Lightning*> lightnings;
+    float lightningRespawnTime; 
 
     std::vector<TextClass*> endMessage;
     std::string endingText;

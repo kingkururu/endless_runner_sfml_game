@@ -62,7 +62,15 @@ void Player::updatePlayer(){
 }
 
 //Enemy class
-void Rain::updateRain(sf::Vector2f playerPos){
+void Rain::updateRain(){
     position.y += speed * GameComponents.deltaTime;
     updatePos();
+}
+
+void Coin::updateCoin(){
+    position.y += speed * GameComponents.deltaTime;
+    updatePos();
+}
+
+void Lightning::updateLightning(){
 }

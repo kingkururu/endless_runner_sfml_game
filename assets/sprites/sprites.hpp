@@ -50,7 +50,7 @@ class Rain : public Sprite{
 public:
     Rain(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Rain( ) override{ };
-    void updateRain(sf::Vector2f playerPos);
+    void updateRain();
     
 private:
     float speed = 100;
@@ -60,7 +60,14 @@ class Lightning : public Sprite{
     public:
     Lightning(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Lightning() override{};
+    void updateLightning(); 
 };
 
+class Coin : public Sprite{
+public:
+    Coin(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
+    ~Coin() override{};
+    void updateCoin(); 
+};
 
 #endif /* sprites_hpp */
