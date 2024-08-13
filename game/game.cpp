@@ -50,8 +50,12 @@ void GameManager::destroyAll(){
     backgroundMusic = nullptr;
     delete playerDeadSound;
     playerDeadSound = nullptr;
-    delete victorySound;
-    victorySound = nullptr;
+    delete rainSound;
+    rainSound = nullptr;
+    delete lightningSound;
+    lightningSound = nullptr;
+    delete coinSound;
+    coinSound = nullptr;
 }
 
 void GameManager::runGame() {
@@ -79,10 +83,12 @@ void GameManager::createAssets(){
     lightnings.push_back(lightning); 
     playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "/Users/student/projects/sfml_game2/assets/sprites/player.png");
     background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "/Users/student/projects/sfml_game2/assets/sprites/background.png");
-    backgroundMusic = new MusicClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/backgroundMusic.ogg");
+    backgroundMusic = new MusicClass("/Users/student/projects/sfml_game2/assets/sound/backgroundMusic.mp3");
     backgroundMusic->returnMusic()->play();
-    playerDeadSound = new SoundClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/playerDead.wav");
-    victorySound = new SoundClass("/Users/student/projects/sfmlgame1/sfmlgame1/assets/sound/victorySound.wav");
+    playerDeadSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/dead.wav");
+    coinSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/ding.wav");
+    rainSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/splash.wav");
+    lightningSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/thunder.mp3");
 }
 
 void GameManager::createMoreAssets(){
@@ -157,6 +163,7 @@ void GameManager::checkEvent(){
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(rainBounds)) {
             GameScore.playerHit -= 100; 
             it = rainDrops.erase(it); 
+            rainSound->returnSound()->play();
         } else {
             ++it; 
         }
@@ -167,6 +174,7 @@ void GameManager::checkEvent(){
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(coinBounds)) {
             GameScore.score += 100; 
             it = coins.erase(it); 
+            coinSound->returnSound()->play();
         } else {
             ++it; 
         }
@@ -177,6 +185,7 @@ void GameManager::checkEvent(){
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(lightningBounds)) {
             GameScore.playerHit -= 300; 
             it = lightnings.erase(it); 
+            lightningSound->returnSound()->play();
         } else {
             ++it; 
         }
@@ -189,12 +198,7 @@ void GameManager::checkEvent(){
 }
 
 void GameManager::handleGameEvents(){
-    if(GameEvents.playerWin){
-        endingText = "player wins! time elapsed:\n";
-        victorySound->returnSound()->play();
-        GameEvents.gameEnd = true;
-    }
-    else if(GameEvents.playerDead){
+    if(GameEvents.playerDead){
         endingText = "player lose! time elapsed:\n";
         playerDeadSound->returnSound()->play();
         GameEvents.gameEnd = true;
@@ -303,7 +307,6 @@ void GameManager::restartGame(){
     createAssets();
     
     GameEvents.gameEnd = false;
-    GameEvents.playerWin = false;
     GameEvents.playerDead = false;
     
     GameComponents.globalTime = 0.0f;

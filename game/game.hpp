@@ -54,7 +54,9 @@ private:
     
     MusicClass* backgroundMusic;
     SoundClass* playerDeadSound;
-    SoundClass* victorySound;
+    SoundClass* coinSound;
+    SoundClass* rainSound;
+    SoundClass* lightningSound; 
 };
 
 #endif /* game_hpp */
