@@ -44,18 +44,7 @@ void Player::updatePlayer(){
     if(FlagEvents.dPressed){
         position.x += speed * GameComponents.deltaTime;
     }
-    
-    if(GameEvents.playerWin){
-        spriteCreated->setScale(sf::Vector2f{1.0f, 1.0f});
-        spriteCreated->rotate(1.0f);
-        
-        unsigned int color[3];
-        for (int i = 0; i < 3; i ++){
-            color[i] = rand() % 255;
-        }
-        spriteCreated->setColor(sf::Color(color[0],color[1],color[2]));
-        
-    } else if(GameEvents.playerDead){
+    if(GameEvents.playerDead){
         spriteCreated->setColor(sf::Color(200, 0, 0));
     }
     updatePos();
