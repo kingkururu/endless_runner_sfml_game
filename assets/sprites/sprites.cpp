@@ -36,6 +36,10 @@ void Sprite::updatePos(){
     spriteCreated->setPosition(position);
 }
 
+void Background::updateBackground(){
+
+}
+
 //Player class
 void Player::updatePlayer(){
     if(FlagEvents.aPressed){
@@ -62,4 +66,9 @@ void Coin::updateCoin(){
 }
 
 void Lightning::updateLightning(){
+    
 }
+
+// void Heart::updateHeart(){
+//     if(GameScore.playerHit == )
+// }

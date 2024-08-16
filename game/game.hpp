@@ -51,7 +51,8 @@ private:
 
     std::vector<TextClass*> endMessage;
     std::string endingText;
-    
+
+
     MusicClass* backgroundMusic;
     SoundClass* playerDeadSound;
     SoundClass* coinSound;

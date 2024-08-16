@@ -6,7 +6,7 @@
 //
 
 #include "game.hpp"
-GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(3.0) {
+GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(30.0) {
     window.setFramerateLimit(30);
     GameScore.score = 100; 
     GameScore.playerHit = 0; 
@@ -81,6 +81,8 @@ void GameManager::createAssets(){
     coins.push_back(coin);
     Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "/Users/student/projects/sfml_game2/assets/sprites/lightning1.png");
     lightnings.push_back(lightning); 
+    // for(int i = 0)
+
     playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "/Users/student/projects/sfml_game2/assets/sprites/player.png");
     background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "/Users/student/projects/sfml_game2/assets/sprites/background.png");
     backgroundMusic = new MusicClass("/Users/student/projects/sfml_game2/assets/sound/backgroundMusic.mp3");
@@ -183,7 +185,7 @@ void GameManager::checkEvent(){
     for (auto it = lightnings.begin(); it != lightnings.end();) {
         sf::FloatRect lightningBounds = (*it)->returnSpritesShape().getGlobalBounds();
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(lightningBounds)) {
-            GameScore.playerHit -= 300; 
+         //   GameScore.playerHit -= 200; 
             it = lightnings.erase(it); 
             lightningSound->returnSound()->play();
         } else {
@@ -205,6 +207,7 @@ void GameManager::handleGameEvents(){
     }
     
     if(GameEvents.gameEnd){
+      //  background->updateBackground(); 
         endingText.append(std::to_string(GameComponents.globalTime));
         endingText.append(" seconds");
         TextClass* endMessage1 = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "/Users/student/projects/sfmlgame1/sfmlgame1/assets/fonts/arial.ttf", endingText);

@@ -37,6 +37,13 @@ protected:
     float speed = 200;
 };
 
+class Background : public Sprite{
+public:
+    Background(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
+    ~Background( ) override{ };
+    void updateBackground();
+};
+
 //player class
 class Player : public Sprite{
 public:
@@ -69,5 +76,12 @@ public:
     ~Coin() override{};
     void updateCoin(); 
 };
+
+class Heart : public Sprite{
+public:
+    Heart(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
+    ~Heart() override{};
+    void updateHeart(); 
+}; 
 
 #endif /* sprites_hpp */
