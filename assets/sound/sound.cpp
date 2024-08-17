@@ -1,8 +1,8 @@
 //
 //  sound.cpp
-//  sfmlgame1
+//  sfmlgame2
 //
-//  Created by Sunmyoung Yun on 2024/02/03.
+//  Created by Sunmyoung Yun on 2024/08
 //
 
 #include "sound.hpp"

@@ -54,8 +54,7 @@ private:
 
     TextClass* scoreText; 
 
-    // const int heartsNum = 5;
-    Heart* hearts[5]; 
+    Heart* heart; 
 
     MusicClass* backgroundMusic;
     SoundClass* playerDeadSound;

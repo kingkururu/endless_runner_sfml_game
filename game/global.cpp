@@ -1,8 +1,8 @@
 //
 //  global.cpp
-//  sfmlgame1
+//  sfmlgame2
 //
-//  Created by Sunmyoung Yun on 2024/03/11.
+//  Created by Sunmyoung Yun on 2024/08
 //
 
 #include "global.hpp"

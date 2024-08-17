@@ -52,10 +52,8 @@ void GameManager::destroyAll(){
     delete scoreText;
     scoreText = nullptr; 
 
-    for (size_t i = 0; i < 5; ++i) {
-        delete hearts[i];
-        hearts[i] = nullptr; 
-    }
+    delete heart;
+    heart = nullptr; 
     
     delete backgroundMusic;
     backgroundMusic = nullptr;
@@ -99,12 +97,9 @@ void GameManager::createAssets(){
     Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "assets/sprites/lightning1.png");
     lightnings.push_back(lightning); 
 
-    for(size_t i = 0; i < 5; ++i){
-        Heart* heart = new Heart({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{0.2,0.2}, "assets/sprites/heart1.png"); 
-        hearts[i] = heart; 
-    }
+    heart = new Heart({15, 0}, {0.7,0.7}, "assets/sprites/heart.png"); 
 
-    scoreText = new TextClass(sf::Vector2f{0.0f, 0.0f}, 50, sf::Color::White, "assets/fonts/pixelFont.ttf", "score: " + std::to_string(GameScore.score));
+    scoreText = new TextClass({15, 50}, 50, sf::Color::Black, "assets/fonts/pixelFont.ttf", "score: " + std::to_string(GameScore.score));
     
     playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "assets/sprites/player.png");
     
@@ -229,7 +224,7 @@ void GameManager::checkEvent(){
 
 void GameManager::handleGameEvents(){
     if(GameEvents.playerDead){
-        endingText = "player dead! time elapsed:\n";
+        endingText = "player dead! \ntotal time elapsed:\n";
         playerDeadSound->returnSound()->play();
         GameEvents.gameEnd = true;
     }
@@ -237,8 +232,8 @@ void GameManager::handleGameEvents(){
     if(GameEvents.gameEnd){
       //  background->updateBackground(); 
         endingText.append(std::to_string(GameComponents.globalTime));
-        endingText.append(" seconds");
-        TextClass* endMessage1 = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "assets/fonts/pixelFont.ttf", endingText);
+        endingText.append(" seconds\n press B to replay");
+        TextClass* endMessage1 = new TextClass({15, static_cast<float>(GameComponents.screenHeight)/3}, 70, sf::Color::Red, "assets/fonts/pixelFont.ttf", endingText);
         endMessage.push_back(endMessage1);
         
         backgroundMusic->returnMusic()->stop();
@@ -276,10 +271,6 @@ void GameManager::updateSprites() {
     if(playerSprite->getMoveState())
         playerSprite->updatePlayer();
 
-    // for (size_t i = 0; i < 5; ++i) {
-        
-    // }
-
     scoreText->updateText("score: " + std::to_string(GameScore.score)); 
 }
 
@@ -287,13 +278,6 @@ void GameManager::draw() {
     window.clear();
     window.draw(background->returnSpritesShape());
     
-    if(scoreText->getVisibleState())
-        window.draw(*scoreText->getText());
-
-    for (TextClass* text : endMessage){
-        if(text->getVisibleState())
-            window.draw(*text->getText());
-    }
     for (Rain* rain : rainDrops){
         if(rain->getVisibleState())
             window.draw(rain->returnSpritesShape());
@@ -308,9 +292,16 @@ void GameManager::draw() {
     }
     window.draw(playerSprite->returnSpritesShape());
     
-    for (size_t i = 0; i < 5; ++i) 
-        window.draw(hearts[i]->returnSpritesShape()); 
+    window.draw(heart->returnSpritesShape()); 
 
+    if(scoreText->getVisibleState())
+        window.draw(*scoreText->getText());
+
+    for (TextClass* text : endMessage){
+        if(text->getVisibleState())
+            window.draw(*text->getText());
+    }
+    
     window.display();
 }
 

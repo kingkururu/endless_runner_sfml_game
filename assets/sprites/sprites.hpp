@@ -1,8 +1,8 @@
 //
 //  sprites.hpp
-//  sfmlgame1
+//  sfmlgame2
 //
-//  Created by Sunmyoung Yun on 2024/01/07.
+//  Created by Sunmyoung Yun on 2024/08
 //
 
 #ifndef sprites_hpp
