@@ -1,8 +1,8 @@
 //
 //  game.hpp
-//  sfmlgame1
+//  sfmlgame2
 //
-//  Created by Sunmyoung Yun on 2024/01/29.
+//  Created by Sunmyoung Yun on 2024/08
 //
 #ifndef game_hpp
 #define game_hpp
@@ -53,9 +53,9 @@ private:
     std::string endingText;
 
     TextClass* scoreText; 
-    
-    //const int heartsNum = 5;
-    //Heart* hearts[5]; 
+
+    // const int heartsNum = 5;
+    Heart* hearts[5]; 
 
     MusicClass* backgroundMusic;
     SoundClass* playerDeadSound;
