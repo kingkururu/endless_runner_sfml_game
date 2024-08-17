@@ -1,20 +1,21 @@
 //
 //  game.cpp
-//  sfmlgame1
+//  sfmlgame2
 //
-//  Created by Sunmyoung Yun on 2024/01/29.
+//  Created by Sunmyoung Yun on 2024/08
 //
 
 #include "game.hpp"
 GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(30.0) {
     window.setFramerateLimit(30);
-    GameScore.score = 100; 
+    GameScore.score = 0; 
     GameScore.playerHit = 0; 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 GameManager::~GameManager() {
     destroyAll();
+    std::cout << "game destroyed" << std::endl; 
 }
 
 void GameManager::destroyAll(){
@@ -81,7 +82,9 @@ void GameManager::createAssets(){
     coins.push_back(coin);
     Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "/Users/student/projects/sfml_game2/assets/sprites/lightning1.png");
     lightnings.push_back(lightning); 
-    // for(int i = 0)
+
+    // Heart* heart = new Heart({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/heart1.png"); 
+    // hearts.push_back(heart); 
 
     playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "/Users/student/projects/sfml_game2/assets/sprites/player.png");
     background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "/Users/student/projects/sfml_game2/assets/sprites/background.png");
@@ -145,14 +148,13 @@ void GameManager::handleEventInput(){
                     FlagEvents.aPressed = true;
                     break;
                 case sf::Keyboard::B:
-                    destroyAll();
                     restartGame();
                     break;
                 default:
                     break;
             }
         }
-        else if (event.type == sf::Event::KeyReleased){
+        if (event.type == sf::Event::KeyReleased){
             FlagEvents.dPressed = false;
             FlagEvents.aPressed = false;
         }
@@ -195,13 +197,13 @@ void GameManager::checkEvent(){
 
     if(GameScore.playerHit <= -500){
         GameEvents.playerDead = true;
-        std::cout << GameScore.score; 
+        std::cout << "final score: " << GameScore.score << std::endl; 
     }
 }
 
 void GameManager::handleGameEvents(){
     if(GameEvents.playerDead){
-        endingText = "player lose! time elapsed:\n";
+        endingText = "player dead! time elapsed:\n";
         playerDeadSound->returnSound()->play();
         GameEvents.gameEnd = true;
     }
@@ -305,9 +307,9 @@ void GameManager::deleteAssets() {
 }
 
 void GameManager::restartGame(){
-    window.clear();
     std::cout << "new game" << std::endl;
-    createAssets();
+
+    window.clear();
     
     GameEvents.gameEnd = false;
     GameEvents.playerDead = false;
@@ -315,4 +317,22 @@ void GameManager::restartGame(){
     GameComponents.globalTime = 0.0f;
     endMessage.clear();
     endingText = "";
+
+    GameScore.playerHit = 0;
+    GameScore.score = 0;
+
+    playerSprite->setMoveState(true);
+
+     for (Rain* rain : rainDrops){
+        rain->setMoveState(true); 
+    }
+    for (Coin* coin : coins){
+        coin->setMoveState(true);
+    }
+    for (Lightning* lightning : lightnings){
+        lightning->setMoveState(true);
+    }
+    backgroundMusic->returnMusic()->play();
+
 }
+

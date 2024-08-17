@@ -38,7 +38,7 @@ extern struct gameScore{
     unsigned int itNum;
     bool firstIt;
     int playerHit; 
-    int long score;
+    int score;
 
     gameScore() : itNum(0), firstIt(true), playerHit(0), score(0) {}
 } GameScore; 

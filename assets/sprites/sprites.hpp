@@ -32,9 +32,9 @@ protected:
     sf::Vector2f size;
     sf::Texture* skin = nullptr;
     sf::Sprite* spriteCreated;
-    bool visibleState = true;
-    bool moveState = true;
-    float speed = 200;
+    bool visibleState ;
+    bool moveState;
+    float speed;
 };
 
 class Background : public Sprite{

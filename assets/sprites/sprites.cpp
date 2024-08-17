@@ -7,7 +7,8 @@
 #include "sprites.hpp"
 
 //base class (sprite)
-Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite){
+Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true), moveState(true),
+    speed(200.0){
     
     if(!skin->loadFromFile(texturePath)){
         std::cerr << "Erorr in loading sprite texture from: " << texturePath << std::endl;

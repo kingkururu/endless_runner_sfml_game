@@ -52,6 +52,8 @@ private:
     std::vector<TextClass*> endMessage;
     std::string endingText;
 
+    //const int heartsNum = 5;
+    //Heart* hearts[5]; 
 
     MusicClass* backgroundMusic;
     SoundClass* playerDeadSound;
