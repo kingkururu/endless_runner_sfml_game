@@ -80,44 +80,44 @@ void GameManager::runGame() {
 }
 
 void GameManager::createAssets(){
-    Rain* rain = new Rain({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/raindrop.png");
+    Rain* rain = new Rain({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.2,0.2}, "assets/sprites/raindrop.png");
     rainDrops.push_back(rain);
-    Coin* coin = new Coin({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{0.03, 0.03}, "/Users/student/projects/sfml_game2/assets/sprites/coin.png"); 
+    Coin* coin = new Coin({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{0.03, 0.03}, "assets/sprites/coin.png"); 
     coins.push_back(coin);
-    Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "/Users/student/projects/sfml_game2/assets/sprites/lightning1.png");
+    Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "assets/sprites/lightning1.png");
     lightnings.push_back(lightning); 
 
-    // Heart* heart = new Heart({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/heart1.png"); 
+    // Heart* heart = new Heart({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{0.2,0.2}, "assets/sprites/heart1.png"); 
     // hearts.push_back(heart); 
-    scoreText = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "/Users/student/projects/sfml_game2/assets/fonts/pixelFont.ttf", "score: " + std::to_string(GameScore.score));
+    scoreText = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "assets/fonts/pixelFont.ttf", "score: " + std::to_string(GameScore.score));
 
-    playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "/Users/student/projects/sfml_game2/assets/sprites/player.png");
-    background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "/Users/student/projects/sfml_game2/assets/sprites/background.png");
-    backgroundMusic = new MusicClass("/Users/student/projects/sfml_game2/assets/sound/backgroundMusic.mp3");
+    playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "assets/sprites/player.png");
+    background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "assets/sprites/background.png");
+    backgroundMusic = new MusicClass("assets/sound/backgroundMusic.mp3");
     backgroundMusic->returnMusic()->play();
-    playerDeadSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/dead.wav");
-    coinSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/ding.wav");
-    rainSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/splash.wav");
-    lightningSound = new SoundClass("/Users/student/projects/sfml_game2/assets/sound/thunder.mp3");
+    playerDeadSound = new SoundClass("assets/sound/dead.wav");
+    coinSound = new SoundClass("assets/sound/ding.wav");
+    rainSound = new SoundClass("assets/sound/splash.wav");
+    lightningSound = new SoundClass("assets/sound/thunder.mp3");
 }
 
 void GameManager::createMoreAssets(){
     if(rainRespawnTime <= 0){
-        Rain* rain = new Rain({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/raindrop.png");
+        Rain* rain = new Rain({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.2,0.2}, "assets/sprites/raindrop.png");
         rainDrops.push_back(rain);
 
         rainRespawnTime = 1.0f; 
     }
 
     if(coinRespawnTime <= 0){
-        Coin* coin = new Coin({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.03,0.03}, "/Users/student/projects/sfml_game2/assets/sprites/coin.png");
+        Coin* coin = new Coin({static_cast<float>(std::rand() % GameComponents.screenWidth),0}, sf::Vector2f{0.03,0.03}, "assets/sprites/coin.png");
         coins.push_back(coin);
 
         coinRespawnTime = 3.0f; 
     }
 
     if(lightningRespawnTime <= 0){
-        Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "/Users/student/projects/sfml_game2/assets/sprites/lightning1.png");
+        Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "assets/sprites/lightning1.png");
         lightnings.push_back(lightning); 
 
         lightningRespawnTime = 5.0; 
@@ -217,7 +217,7 @@ void GameManager::handleGameEvents(){
       //  background->updateBackground(); 
         endingText.append(std::to_string(GameComponents.globalTime));
         endingText.append(" seconds");
-        TextClass* endMessage1 = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "/Users/student/projects/sfml_game2/assets/fonts/pixelFont.ttf", endingText);
+        TextClass* endMessage1 = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "assets/fonts/pixelFont.ttf", endingText);
         endMessage.push_back(endMessage1);
         
         backgroundMusic->returnMusic()->stop();
