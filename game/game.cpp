@@ -42,6 +42,10 @@ void GameManager::destroyAll(){
         text = nullptr;
     }
     endMessage.clear();
+
+    delete scoreText;
+    scoreText = nullptr; 
+    
     delete playerSprite;
     playerSprite = nullptr;
     delete background;
@@ -85,6 +89,7 @@ void GameManager::createAssets(){
 
     // Heart* heart = new Heart({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{0.2,0.2}, "/Users/student/projects/sfml_game2/assets/sprites/heart1.png"); 
     // hearts.push_back(heart); 
+    scoreText = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "/Users/student/projects/sfml_game2/assets/fonts/pixelFont.ttf", "score: " + std::to_string(GameScore.score));
 
     playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "/Users/student/projects/sfml_game2/assets/sprites/player.png");
     background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "/Users/student/projects/sfml_game2/assets/sprites/background.png");
@@ -212,7 +217,7 @@ void GameManager::handleGameEvents(){
       //  background->updateBackground(); 
         endingText.append(std::to_string(GameComponents.globalTime));
         endingText.append(" seconds");
-        TextClass* endMessage1 = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "/Users/student/projects/sfmlgame1/sfmlgame1/assets/fonts/arial.ttf", endingText);
+        TextClass* endMessage1 = new TextClass(sf::Vector2f{0.0f, 0.0f}, 20, sf::Color::White, "/Users/student/projects/sfml_game2/assets/fonts/pixelFont.ttf", endingText);
         endMessage.push_back(endMessage1);
         
         backgroundMusic->returnMusic()->stop();
@@ -246,12 +251,17 @@ void GameManager::updateSprites() {
     }
     if(playerSprite->getMoveState())
         playerSprite->updatePlayer();
+
+    scoreText->updateText("score: " + std::to_string(GameScore.score)); 
 }
 
 void GameManager::draw() {
     window.clear();
     window.draw(background->returnSpritesShape());
     
+    if(scoreText->getVisibleState())
+        window.draw(*scoreText->getText());
+
     for (TextClass* text : endMessage){
         if(text->getVisibleState())
             window.draw(*text->getText());
@@ -333,6 +343,5 @@ void GameManager::restartGame(){
         lightning->setMoveState(true);
     }
     backgroundMusic->returnMusic()->play();
-
 }
 

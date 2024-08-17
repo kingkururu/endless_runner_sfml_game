@@ -28,3 +28,7 @@ TextClass::~TextClass() {
     delete text;
     text = nullptr;
 }
+
+void TextClass::updateText(const std::string& newText){
+    text->setString(newText); 
+}

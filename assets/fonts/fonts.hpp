@@ -20,6 +20,7 @@ public:
     ~TextClass();
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
+    void updateText(const std::string& newText); 
 
 private:
     sf::Vector2f position;
