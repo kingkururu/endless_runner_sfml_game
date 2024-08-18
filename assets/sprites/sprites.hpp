@@ -26,7 +26,7 @@ public:
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
     bool const getMoveState() const { return moveState; }
     void setMoveState(bool newState) { moveState = newState; }
-    void setAnimation(std::vector<sf::IntRect> AnimationRects) { animationRects = AnimationRects; }; 
+    void setAnimation(std::vector<sf::IntRect> AnimationRects) { animationRects = AnimationRects; } 
     void setRects(int animNum); 
 
 protected:
@@ -73,12 +73,15 @@ class Lightning : public Sprite{
     Lightning(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Lightning() override{};
     void updateLightning(); 
+    bool getFirstIt() { return lightningFirstIt; } 
+    bool setFirstIt(bool it) {lightningFirstIt = it; }
 
     private:
     float visibleDuration = 2.0; 
     float elapsedTime {}; 
     float changeAnimTime = 0.2; 
     int lightningCurrentIndex{}; 
+    bool lightningFirstIt = true; 
 };
 
 class Coin : public Sprite{

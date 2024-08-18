@@ -5,6 +5,8 @@
 //  Created by Sunmyoung Yun on 2024/08
 //
 
+#pragma once
+
 #ifndef global_hpp
 #define global_hpp
 
@@ -14,7 +16,6 @@
 extern struct flagEvents{
     bool aPressed;
     bool dPressed;
-    bool mouseClicked;
     
     flagEvents() : aPressed(false), dPressed(false){}
 } FlagEvents;
@@ -35,12 +36,10 @@ extern struct gameComponents{
 } GameComponents;
 
 extern struct gameScore{
-    unsigned int itNum;
-    bool firstIt;
     int playerHit; 
     int score;
 
-    gameScore() : itNum(0), firstIt(true), playerHit(0), score(0) {}
+    gameScore() : playerHit(0), score(0) {}
 } GameScore; 
 
 

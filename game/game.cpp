@@ -6,8 +6,8 @@
 //
 
 #include "game.hpp"
-GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(8.0), playerSetRectTime(0.4), playerCurrentIndex(6) {
-    window.setFramerateLimit(30);
+GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2", sf::Style::Titlebar | sf::Style::Close), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(10.0), playerSetRectTime(0.4), playerCurrentIndex(6) {
+    window.setFramerateLimit(60);
     GameScore.score = 0; 
     GameScore.playerHit = 0; 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
@@ -150,11 +150,11 @@ void GameManager::createAssets(){
     for(int i = 0; i < 14; ++i){
         playerAnimRect.push_back(sf::IntRect{43 * i, 0, 43, 42}); 
     }
-    playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 265}, sf::Vector2f{1.5f,1.5f}, "assets/sprites/player.png");
+    playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 65}, sf::Vector2f{1.5f,1.5f}, "assets/sprites/player.png");
     playerSprite->setAnimation(playerAnimRect);
     playerSprite->setRects(playerCurrentIndex); 
 
-    background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "assets/sprites/background.png");
+    background = new Sprite({0.0f, 0.0f}, {1.0,1.0}, "assets/sprites/background.png");
 }
 
 void GameManager::createMoreAssets(){
@@ -174,7 +174,7 @@ void GameManager::createMoreAssets(){
     }
 
     if(lightningRespawnTime <= 0){
-        Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth) - 150, 0}, sf::Vector2f{3.9, 3.9}, "assets/sprites/lightning.png");
+        Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth) - 150, -100}, sf::Vector2f{3.9, 3.9}, "assets/sprites/lightning.png");
         lightnings.push_back(lightning); 
         lightning->setAnimation(lightningAnimRect); 
         lightning->setRects(0); 
@@ -251,10 +251,10 @@ void GameManager::checkEvent(){
 
     for (auto it = lightnings.begin(); it != lightnings.end();) {
         sf::FloatRect lightningBounds = (*it)->returnSpritesShape().getGlobalBounds();
-        if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(lightningBounds)) {
+        if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(lightningBounds) && (*it)->getFirstIt()) {
             GameScore.playerHit -= 2; 
-            delete *it; 
-            it = lightnings.erase(it); 
+            (*it)->setFirstIt(false); 
+            break;
         } else {
             ++it; 
         }
@@ -303,7 +303,7 @@ void GameManager::handleGameEvents(){
     if(GameEvents.gameEnd){
         endingText.append(std::to_string(GameComponents.globalTime));
         endingText.append(" seconds\n press B to replay");
-        TextClass* endMessage1 = new TextClass({15, static_cast<float>(GameComponents.screenHeight)/3}, 70, sf::Color::Magenta, "assets/fonts/pixelFont.ttf", endingText);
+        TextClass* endMessage1 = new TextClass({15, static_cast<float>(GameComponents.screenHeight)/3}, 40, sf::Color::Magenta, "assets/fonts/pixelFont.ttf", endingText);
         endMessage.push_back(endMessage1);
         
         backgroundMusic->returnMusic()->stop();
