@@ -19,56 +19,82 @@ GameManager::~GameManager() {
 }
 
 void GameManager::destroyAll(){
-    delete background;
-    background = nullptr;
-
+    if (background != nullptr) {
+        delete background;
+        background = nullptr;
+    }
+    
+    if (playerSprite != nullptr) {
     delete playerSprite;
     playerSprite = nullptr;
+    }
 
     for (Rain* rain : rainDrops) {
-        delete rain;
-        rain = nullptr;
+        if(rain != nullptr){
+            delete rain;
+            rain = nullptr;
+        }
     }
     rainDrops.clear();
 
     for (Coin* coin : coins) {
-        delete coin;
-        coin = nullptr;
+        if(coin != nullptr){
+            delete coin;
+            coin = nullptr;
+        }
     }
     coins.clear();
   
     for (Lightning* lightning : lightnings) {
-        delete lightning;
-        lightning = nullptr;
+        if(lightning != nullptr){
+            delete lightning;
+            lightning = nullptr;
+        }
     }
     lightnings.clear();
 
     for (TextClass* text : endMessage){
-        delete text;
-        text = nullptr;
+        if(text != nullptr){
+            delete text;
+            text = nullptr;
+        }
     }
     endMessage.clear();
 
-    delete scoreText;
-    scoreText = nullptr; 
+    if(scoreText != nullptr){
+        delete scoreText;
+        scoreText = nullptr; 
+    }
 
-    delete heart;
-    heart = nullptr; 
+    if(heart != nullptr){
+        delete heart;
+        heart = nullptr; 
+    }
     
-    delete backgroundMusic;
-    backgroundMusic = nullptr;
+    if(backgroundMusic != nullptr){
+        delete backgroundMusic;
+        backgroundMusic = nullptr;
+    }
 
-    delete playerDeadSound;
-    playerDeadSound = nullptr;
+    if(playerDeadSound != nullptr){
+        delete playerDeadSound;
+        playerDeadSound = nullptr;
+    }
 
-    delete rainSound;
-    rainSound = nullptr;
+    if(rainSound != nullptr){
+        delete rainSound;
+        rainSound = nullptr;
+    }
 
-    delete lightningSound;
-    lightningSound = nullptr;
+    if(lightningSound != nullptr){
+        delete lightningSound;
+        lightningSound = nullptr;
+    }
 
-    delete coinSound;
-    coinSound = nullptr;
+    if(coinSound != nullptr){
+        delete coinSound;
+        coinSound = nullptr;
+    }
 }
 
 void GameManager::runGame() {
@@ -97,7 +123,13 @@ void GameManager::createAssets(){
     Lightning* lightning = new Lightning({static_cast<float>(std::rand() % GameComponents.screenWidth), 0}, sf::Vector2f{3.0, 3.0}, "assets/sprites/lightning1.png");
     lightnings.push_back(lightning); 
 
-    heart = new Heart({15, 0}, {0.7,0.7}, "assets/sprites/heart.png"); 
+    for(int i = 0; i < 6; ++i){
+        heartAnimRect.push_back(sf::IntRect{0, 78 * i, 389, 78}); 
+    }
+
+    heart = new Heart({15, 0}, {0.7,0.7}, "assets/sprites/heart.png");  
+    heart->setAnimation(heartAnimRect);
+    heart->setRects(0);  
 
     scoreText = new TextClass({15, 50}, 50, sf::Color::Black, "assets/fonts/pixelFont.ttf", "score: " + std::to_string(GameScore.score));
     
@@ -169,6 +201,7 @@ void GameManager::handleEventInput(){
                     FlagEvents.aPressed = true;
                     break;
                 case sf::Keyboard::B:
+                    backgroundMusic->returnMusic()->stop();
                     restartGame();
                     break;
                 default:
@@ -186,7 +219,7 @@ void GameManager::checkEvent(){
     for (auto it = rainDrops.begin(); it != rainDrops.end();) {
         sf::FloatRect rainBounds = (*it)->returnSpritesShape().getGlobalBounds();
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(rainBounds)) {
-            GameScore.playerHit -= 100; 
+            --GameScore.playerHit; 
             it = rainDrops.erase(it); 
             rainSound->returnSound()->play();
         } else {
@@ -216,10 +249,12 @@ void GameManager::checkEvent(){
         }
     }
 
-    if(GameScore.playerHit <= -500){
+    if(GameScore.playerHit <= -5){
         GameEvents.playerDead = true;
         std::cout << "final score: " << GameScore.score << std::endl; 
     }
+
+    heart->setRects(GameScore.playerHit * -1);
 }
 
 void GameManager::handleGameEvents(){
@@ -311,9 +346,11 @@ void GameManager::deleteAssets() {
         if(rain->getVisibleState()) {
             ++it;
         } else {
-            delete rain;
-            rain = nullptr;
-            it = rainDrops.erase(it);
+            if(rain != nullptr){
+                delete rain;
+                rain = nullptr;
+                it = rainDrops.erase(it);
+            }
         }
     }
     for (auto it = coins.begin(); it != coins.end();) {
@@ -321,9 +358,11 @@ void GameManager::deleteAssets() {
         if(coin->getVisibleState()) {
             ++it;
         } else {
-            delete coin;
-            coin = nullptr;
-            it = coins.erase(it);
+            if(coin != nullptr){
+                delete coin;
+                coin = nullptr;
+                it = coins.erase(it);
+            }
         }
     }
     for (auto it = lightnings.begin(); it != lightnings.end();) {
@@ -331,9 +370,11 @@ void GameManager::deleteAssets() {
         if(lightning->getVisibleState()) {
             ++it;
         } else {
-            delete lightning;
-            lightning = nullptr;
-            it = lightnings.erase(it);
+            if(lightning != nullptr){
+                delete lightning;
+                lightning = nullptr;
+                it = lightnings.erase(it);
+            }
         }
     }
 }

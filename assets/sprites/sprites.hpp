@@ -82,6 +82,12 @@ public:
     Heart(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Heart() override{};
     void updateHeart(); 
+    void setAnimation(std::vector<sf::IntRect> AnimationRects) { animationRects = AnimationRects; }; 
+    void setRects(int animNum); 
+
+    private:
+    std::vector<sf::IntRect> animationRects; 
+    int animNum {}; 
 }; 
 
 #endif /* sprites_hpp */

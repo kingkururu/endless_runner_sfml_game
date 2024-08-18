@@ -39,6 +39,10 @@ private:
     Sprite* background; 
 
     Player* playerSprite;
+    std::vector<sf::IntRect> playerAnimRect;
+
+    Heart* heart; 
+    std::vector<sf::IntRect> heartAnimRect;
 
     std::vector<Rain*> rainDrops;
     float rainRespawnTime; 
@@ -53,8 +57,6 @@ private:
     std::string endingText;
 
     TextClass* scoreText; 
-
-    Heart* heart; 
 
     MusicClass* backgroundMusic;
     SoundClass* playerDeadSound;

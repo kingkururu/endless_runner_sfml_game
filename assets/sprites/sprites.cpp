@@ -73,3 +73,7 @@ void Lightning::updateLightning(){
 // void Heart::updateHeart(){
 //     if(GameScore.playerHit == )
 // }
+
+void Heart::setRects(int animNum){
+    spriteCreated->setTextureRect(animationRects[animNum]); 
+}
