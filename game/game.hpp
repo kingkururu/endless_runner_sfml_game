@@ -52,6 +52,7 @@ private:
 
     std::vector<Lightning*> lightnings;
     float lightningRespawnTime; 
+    std::vector<sf::IntRect> lightningAnimRect;
 
     std::vector<TextClass*> endMessage;
     std::string endingText;
