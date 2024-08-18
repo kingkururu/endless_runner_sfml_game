@@ -6,7 +6,7 @@
 //
 
 #include "game.hpp"
-GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(30.0) {
+GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2"), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(30.0), playerSetRectTime(0.4), playerCurrentIndex(6) {
     window.setFramerateLimit(30);
     GameScore.score = 0; 
     GameScore.playerHit = 0; 
@@ -141,7 +141,7 @@ void GameManager::createAssets(){
     }
     playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 260}, sf::Vector2f{1.5f,1.5f}, "assets/sprites/player.png");
     playerSprite->setAnimation(playerAnimRect);
-    playerSprite->setRects(0); 
+    playerSprite->setRects(playerCurrentIndex); 
 
     background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "assets/sprites/background.png");
     
@@ -188,6 +188,7 @@ void GameManager::countTime(){
     rainRespawnTime -= GameComponents.deltaTime; 
     coinRespawnTime -= GameComponents.deltaTime;
     lightningRespawnTime -= GameComponents.deltaTime;
+    playerSetRectTime -= GameComponents.deltaTime; 
 }
 
 void GameManager::handleEventInput(){
@@ -224,6 +225,7 @@ void GameManager::checkEvent(){
         sf::FloatRect rainBounds = (*it)->returnSpritesShape().getGlobalBounds();
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(rainBounds)) {
             --GameScore.playerHit; 
+            delete *it; 
             it = rainDrops.erase(it); 
             rainSound->returnSound()->play();
         } else {
@@ -235,6 +237,7 @@ void GameManager::checkEvent(){
         sf::FloatRect coinBounds = (*it)->returnSpritesShape().getGlobalBounds();
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(coinBounds)) {
             GameScore.score += 100; 
+            delete *it; 
             it = coins.erase(it); 
             coinSound->returnSound()->play();
         } else {
@@ -246,6 +249,7 @@ void GameManager::checkEvent(){
         sf::FloatRect lightningBounds = (*it)->returnSpritesShape().getGlobalBounds();
         if(playerSprite->returnSpritesShape().getGlobalBounds().intersects(lightningBounds)) {
          //   GameScore.playerHit -= 200; 
+            delete *it; 
             it = lightnings.erase(it); 
             lightningSound->returnSound()->play();
         } else {
@@ -259,6 +263,31 @@ void GameManager::checkEvent(){
     }
 
     heart->setRects(GameScore.playerHit * -1);
+
+    if(playerSetRectTime <= 0 && FlagEvents.aPressed){
+        if(playerCurrentIndex < 0){
+            playerCurrentIndex = 6;
+        }
+        --playerCurrentIndex; 
+        playerSprite->setRects(playerCurrentIndex); 
+
+    } else if(playerSetRectTime <= 0 && FlagEvents.dPressed){
+        if(playerCurrentIndex > 13){
+            playerCurrentIndex = 7;
+        }
+        ++playerCurrentIndex;
+        playerSprite->setRects(playerCurrentIndex); 
+
+    } else {
+        if(playerCurrentIndex == 6){
+            playerCurrentIndex = 7; 
+            playerSprite->setRects(playerCurrentIndex);
+        }
+        else{
+            playerCurrentIndex = 6;
+            playerSprite->setRects(playerCurrentIndex); 
+        }
+    }
 }
 
 void GameManager::handleGameEvents(){

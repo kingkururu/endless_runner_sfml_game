@@ -30,8 +30,8 @@ void Sprite::setRects(int animNum){
 }
 
 void Sprite::updatePos(){
-    if (position.x > GameComponents.screenWidth + 80) {
-        position.x = GameComponents.screenWidth + 80;
+    if (position.x > GameComponents.screenWidth - 57) {
+        position.x = GameComponents.screenWidth - 57;
     } else if (position.x < - 10) {
         position.x = - 10;
     }
@@ -58,18 +58,6 @@ void Player::updatePlayer(){
     }
     updatePos();
 }
-
-// void Player::setRects(){
-//     if(FlagEvents.aPressed){
-//         0,1,2,3,4,5
-//     }
-//     else if(FlagEvents.dPressed){
-//         8,9,10,11,12,13
-//     }
-//     else {
-//         6,7,
-//     }
-// }
 
 //Enemy class
 void Rain::updateRain(){

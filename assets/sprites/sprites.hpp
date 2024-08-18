@@ -55,7 +55,6 @@ public:
     Player(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Player() override{};
     void updatePlayer();
-   // void setRects(); 
 };
 
 //enemy class

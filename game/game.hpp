@@ -40,6 +40,8 @@ private:
 
     Player* playerSprite;
     std::vector<sf::IntRect> playerAnimRect;
+    float playerSetRectTime; 
+    int playerCurrentIndex{};
 
     Heart* heart; 
     std::vector<sf::IntRect> heartAnimRect;
