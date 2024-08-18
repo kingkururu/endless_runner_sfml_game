@@ -6,7 +6,7 @@
 //
 
 #include "game.hpp"
-GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 2", sf::Style::Titlebar | sf::Style::Close), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(10.0), playerSetRectTime(0.4), playerCurrentIndex(6) {
+GameManager::GameManager() : window(sf::VideoMode(GameComponents.screenHeight, GameComponents.screenWidth), "sfml game 3", sf::Style::Titlebar | sf::Style::Close), rainRespawnTime(1.0), coinRespawnTime(3.0), lightningRespawnTime(10.0), playerSetRectTime(0.4), playerCurrentIndex(6) {
     window.setFramerateLimit(60);
     GameScore.score = 0; 
     GameScore.playerHit = 0; 
