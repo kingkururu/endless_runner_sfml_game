@@ -73,6 +73,16 @@ void Coin::updateCoin(){
 }
 
 void Lightning::updateLightning(){
-    
+    elapsedTime += GameComponents.deltaTime;
+
+    if(elapsedTime > changeAnimTime){
+        if(lightningCurrentIndex >= 2)
+            lightningCurrentIndex = -1;
+        ++lightningCurrentIndex;
+        setRects(lightningCurrentIndex); 
+    }
+    if(elapsedTime > visibleDuration){
+        setVisibleState(false); 
+    }
 }
 

@@ -48,6 +48,7 @@ private:
 
     std::vector<Rain*> rainDrops;
     float rainRespawnTime; 
+    std::vector<sf::IntRect> rainAnimRect;
 
     std::vector<Coin*> coins;
     float coinRespawnTime;
@@ -55,6 +56,8 @@ private:
     std::vector<Lightning*> lightnings;
     float lightningRespawnTime; 
     std::vector<sf::IntRect> lightningAnimRect;
+    int lightningCurrentIndex{};
+    float lightningSetRectTime; 
 
     std::vector<TextClass*> endMessage;
     std::string endingText;

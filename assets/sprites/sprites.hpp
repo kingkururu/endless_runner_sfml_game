@@ -73,6 +73,12 @@ class Lightning : public Sprite{
     Lightning(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Lightning() override{};
     void updateLightning(); 
+
+    private:
+    float visibleDuration = 2.0; 
+    float elapsedTime {}; 
+    float changeAnimTime = 0.2; 
+    int lightningCurrentIndex{}; 
 };
 
 class Coin : public Sprite{
