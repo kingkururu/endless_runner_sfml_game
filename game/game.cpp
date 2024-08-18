@@ -133,8 +133,13 @@ void GameManager::createAssets(){
 
     scoreText = new TextClass({15, 50}, 50, sf::Color::Black, "assets/fonts/pixelFont.ttf", "score: " + std::to_string(GameScore.score));
     
-    playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 400}, sf::Vector2f{1.0f,1.0f}, "assets/sprites/player.png");
-    
+    for(int i = 0; i < 14; ++i){
+        playerAnimRect.push_back(sf::IntRect{43 * i, 0, 43, 42}); 
+    }
+    playerSprite = new Player({static_cast<float>(GameComponents.screenWidth / 2), static_cast<float>(GameComponents.screenHeight) - 260}, sf::Vector2f{1.5f,1.5f}, "assets/sprites/player.png");
+    playerSprite->setAnimation(playerAnimRect);
+    playerSprite->setRects(0); 
+
     background = new Sprite(sf::Vector2f{0.0f, 0.0f}, sf::Vector2f{1.0,1.0}, "assets/sprites/background.png");
     
     backgroundMusic = new MusicClass("assets/sound/backgroundMusic.mp3");
@@ -201,7 +206,6 @@ void GameManager::handleEventInput(){
                     FlagEvents.aPressed = true;
                     break;
                 case sf::Keyboard::B:
-                    backgroundMusic->returnMusic()->stop();
                     restartGame();
                     break;
                 default:
@@ -380,6 +384,8 @@ void GameManager::deleteAssets() {
 }
 
 void GameManager::restartGame(){
+    backgroundMusic->returnMusic()->stop();
+
     std::cout << "new game" << std::endl;
 
     window.clear();

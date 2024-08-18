@@ -26,6 +26,8 @@ public:
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
     bool const getMoveState() const { return moveState; }
     void setMoveState(bool newState) { moveState = newState; }
+    void setAnimation(std::vector<sf::IntRect> AnimationRects) { animationRects = AnimationRects; }; 
+    void setRects(int animNum); 
 
 protected:
     sf::Vector2f position;
@@ -35,6 +37,9 @@ protected:
     bool visibleState ;
     bool moveState;
     float speed;
+    float gravity; 
+    int animNum {}; 
+    std::vector<sf::IntRect> animationRects; 
 };
 
 class Background : public Sprite{
@@ -48,8 +53,9 @@ public:
 class Player : public Sprite{
 public:
     Player(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
-    ~Player( ) override{ };
+    ~Player() override{};
     void updatePlayer();
+   // void setRects(); 
 };
 
 //enemy class
@@ -60,7 +66,7 @@ public:
     void updateRain();
     
 private:
-    float speed = 100;
+    float speed = 200;
 };
 
 class Lightning : public Sprite{
@@ -81,13 +87,6 @@ class Heart : public Sprite{
 public:
     Heart(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Heart() override{};
-    void updateHeart(); 
-    void setAnimation(std::vector<sf::IntRect> AnimationRects) { animationRects = AnimationRects; }; 
-    void setRects(int animNum); 
-
-    private:
-    std::vector<sf::IntRect> animationRects; 
-    int animNum {}; 
 }; 
 
 #endif /* sprites_hpp */

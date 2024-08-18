@@ -31,7 +31,7 @@ extern struct gameComponents{
     float deltaTime;
     float globalTime;
     
-    gameComponents() : screenWidth(1000), screenHeight(1000), deltaTime(0), globalTime(0) {}
+    gameComponents() : screenWidth(600), screenHeight(600), deltaTime(0), globalTime(0) {}
 } GameComponents;
 
 extern struct gameScore{

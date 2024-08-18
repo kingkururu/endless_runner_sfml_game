@@ -8,7 +8,7 @@
 
 //base class (sprite)
 Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true), moveState(true),
-    speed(200.0){
+    speed(200.0), gravity(9.8){
     
     if(!skin->loadFromFile(texturePath)){
         std::cerr << "Erorr in loading sprite texture from: " << texturePath << std::endl;
@@ -23,6 +23,10 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& text
 Sprite::~Sprite(){
     delete skin;
     delete spriteCreated;
+}
+
+void Sprite::setRects(int animNum){
+    spriteCreated->setTextureRect(animationRects[animNum]); 
 }
 
 void Sprite::updatePos(){
@@ -55,13 +59,27 @@ void Player::updatePlayer(){
     updatePos();
 }
 
+// void Player::setRects(){
+//     if(FlagEvents.aPressed){
+//         0,1,2,3,4,5
+//     }
+//     else if(FlagEvents.dPressed){
+//         8,9,10,11,12,13
+//     }
+//     else {
+//         6,7,
+//     }
+// }
+
 //Enemy class
 void Rain::updateRain(){
+    speed += gravity * GameComponents.deltaTime;
     position.y += speed * GameComponents.deltaTime;
     updatePos();
 }
 
 void Coin::updateCoin(){
+    speed += gravity * GameComponents.deltaTime;
     position.y += speed * GameComponents.deltaTime;
     updatePos();
 }
@@ -70,10 +88,3 @@ void Lightning::updateLightning(){
     
 }
 
-// void Heart::updateHeart(){
-//     if(GameScore.playerHit == )
-// }
-
-void Heart::setRects(int animNum){
-    spriteCreated->setTextureRect(animationRects[animNum]); 
-}
