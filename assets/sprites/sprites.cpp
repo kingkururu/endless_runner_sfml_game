@@ -6,15 +6,12 @@
 //
 #include "sprites.hpp"
 
-//base class (sprite)
-Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true), moveState(true),
-    speed(200.0), gravity(9.8){
-    
+// //base class (sprite)
+Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
     if(!skin->loadFromFile(texturePath)){
         std::cerr << "Erorr in loading sprite texture from: " << texturePath << std::endl;
         return;
     }
-    
     spriteCreated->setTexture(*skin);
     spriteCreated->setPosition(position);
     spriteCreated->setScale(size);
@@ -25,12 +22,8 @@ Sprite::~Sprite(){
     delete spriteCreated;
 }
 
-void Sprite::setRects(int animNum){
-    spriteCreated->setTextureRect(animationRects[animNum]); 
-}
-
-void Sprite::updatePos(){
-    if (position.x > GameComponents.screenWidth - 57) {
+void NonStatic::updatePos(){
+  if (position.x > GameComponents.screenWidth - 57) {
         position.x = GameComponents.screenWidth - 57;
     } else if (position.x < - 10) {
         position.x = - 10;
@@ -41,48 +34,51 @@ void Sprite::updatePos(){
     spriteCreated->setPosition(position);
 }
 
-void Background::updateBackground(){
-
+void NonStatic::setRects(int animNum){
+    spriteCreated->setTextureRect(animationRects[animNum]); 
 }
 
-//Player class
-void Player::updatePlayer(){
-    if(FlagEvents.aPressed){
-        position.x -= speed * GameComponents.deltaTime;
-    }
-    if(FlagEvents.dPressed){
-        position.x += speed * GameComponents.deltaTime;
-    }
-    if(GameEvents.playerDead){
-        spriteCreated->setColor(sf::Color(200, 0, 0));
-    }
-    updatePos();
-}
-
-//Enemy class
-void Rain::updateRain(){
-    speed += gravity * GameComponents.deltaTime;
-    position.y += speed * GameComponents.deltaTime;
-    updatePos();
-}
-
-void Coin::updateCoin(){
-    speed += gravity * GameComponents.deltaTime;
-    position.y += speed * GameComponents.deltaTime;
-    updatePos();
-}
-
-void Lightning::updateLightning(){
-    elapsedTime += GameComponents.deltaTime;
-
+void NonStatic::changeAnimation(float deltaTime){
+    elapsedTime += deltaTime;
     if(elapsedTime > changeAnimTime){
-        if(lightningCurrentIndex >= 2)
-            lightningCurrentIndex = -1;
-        ++lightningCurrentIndex;
-        setRects(lightningCurrentIndex); 
+        if(currentIndex >= indexMax)
+        currentIndex = -1;
+    ++currentIndex;
+    setRects(currentIndex); 
     }
-    if(elapsedTime > visibleDuration){
+    
+    if(elapsedTime > visibleDuration)
         setVisibleState(false); 
-    }
 }
+
+// //Player class
+void Player::updatePlayer(){
+    // if(FlagEvents.aPressed){
+    //     position.x -= speed * GameComponents.deltaTime;
+    // }
+    // if(FlagEvents.dPressed){
+    //     position.x += speed * GameComponents.deltaTime;
+    // }
+    // if(GameEvents.playerDead){
+    //     spriteCreated->setColor(sf::Color(200, 0, 0));
+    // }
+    updatePos();
+}
+
+void Obstacle::updateObstacle(){
+
+
+
+
+    updatePos(); 
+}
+
+
+
+// /Liniear movement ( free fall )
+// void Rain::updateRain(){
+//     speed += gravity * GameComponents.deltaTime;
+//     position.y += speed * GameComponents.deltaTime;
+//     updatePos();
+// }
 
