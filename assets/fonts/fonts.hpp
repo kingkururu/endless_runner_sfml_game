@@ -12,10 +12,11 @@
 #include <string>
 #include <iostream> 
 #include <SFML/Graphics.hpp>
+#include <stdexcept>
 
 class TextClass{
 public:
-    TextClass(sf::Vector2f position, unsigned int size, sf::Color color, const std::string& fontPath, const std::string& testMessage);
+    explicit TextClass(sf::Vector2f position, unsigned int size, sf::Color color, const std::string& fontPath, const std::string& testMessage);
     sf::Text* const getText() const { return text; }
     ~TextClass();
     bool const getVisibleState() const { return visibleState; }

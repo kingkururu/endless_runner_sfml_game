@@ -8,13 +8,14 @@
 #ifndef sound_hpp
 #define sound_hpp
 
-#include <stdio.h>
+#include <string>
+#include <stdexcept>
 #include <SFML/Audio.hpp>
 #include <iostream>
 
 class MusicClass{
 public:
-    MusicClass(const std::string& musicPath);
+    explicit MusicClass(const std::string& musicPath);
     sf::Music* const returnMusic() const { return music; }
     ~MusicClass(){ delete music; music = nullptr; }
     
@@ -24,7 +25,7 @@ private:
 
 class SoundClass{
 public:
-    SoundClass(const std::string& musicPath);
+    explicit SoundClass(const std::string& soundPath);
     sf::Sound* const returnSound() const { return sound; }
     ~SoundClass(){ delete sound; sound = nullptr; delete soundBuffer; soundBuffer = nullptr; }
 

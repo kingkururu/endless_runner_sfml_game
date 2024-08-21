@@ -9,17 +9,22 @@
 
 TextClass::TextClass(sf::Vector2f position, unsigned int size, sf::Color color, const std::string& fontPath, const std::string& testMessage)
     : position(position), size(size), color(color), font(new sf::Font), text(new sf::Text) {
-            
+
+    try{   
         if (!font->loadFromFile(fontPath)) {
-            // Handle error loading font
-            std::cerr << "Error loading font from file: " << fontPath << std::endl;
-            return;
+            throw std::runtime_error("error loading font from file: " + fontPath);
         }
-    text->setFont(*font);
-    text->setCharacterSize(size);
-    text->setFillColor(color);
-    text->setPosition(position);
-    text->setString(testMessage);
+        text->setFont(*font);
+        text->setCharacterSize(size);
+        text->setFillColor(color);
+        text->setPosition(position);
+        text->setString(testMessage);
+    }
+
+    catch(const std::exception& e){
+        std::cerr << e.what() << std::endl;
+        visibleState = false;
+    }
 }
 
 TextClass::~TextClass() {
@@ -30,5 +35,9 @@ TextClass::~TextClass() {
 }
 
 void TextClass::updateText(const std::string& newText){
-    text->setString(newText); 
+    if(text){
+        text->setString(newText); 
+    } else {
+        std::cerr << "text not initialized" << std::endl; 
+    }
 }

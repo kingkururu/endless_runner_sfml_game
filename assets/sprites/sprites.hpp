@@ -13,11 +13,11 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "global.hpp"
-#include <ctime>
+#include <stdexcept>
 
 class Sprite{
 public:
-    Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath);
+    explicit Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath);
     virtual ~Sprite();
     sf::Vector2f const getSpritePos() const { return position; };
     sf::Sprite const returnSpritesShape(){ return *spriteCreated; }
@@ -34,19 +34,19 @@ protected:
 
 class Static : public Sprite{
 public:
-    Static(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
+    explicit Static(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
     ~Static() override{};
 };
 
 class Background : public Static{
 public:
-    Background(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Static(position, size, texturePath) {}
+    explicit Background(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Static(position, size, texturePath) {}
     ~Background() override{};
 };
 
 class NonStatic : public Sprite{
 public:
-    NonStatic(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : Sprite(position, size, texturePath), animationRects(animationRects), speed(speed) {}
+   explicit NonStatic(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : Sprite(position, size, texturePath), animationRects(animationRects), speed(speed) {}
     ~NonStatic() override{}; 
     void updatePos(); 
     bool const getMoveState() const { return moveState; }
@@ -75,14 +75,14 @@ protected:
 
 class Player : public NonStatic{
 public:
-    Player(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, size, texturePath, animationRects, speed) {}
+    explicit Player(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, size, texturePath, animationRects, speed) {}
     ~Player() override {}; 
     void updatePlayer(); 
 };
 
 class Obstacle : public NonStatic{
 public:
-    Obstacle(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, size, texturePath, animationRects, speed) {}
+    explicit Obstacle(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, size, texturePath, animationRects, speed) {}
     ~Obstacle() override {}; 
     void updateObstacle();
 };

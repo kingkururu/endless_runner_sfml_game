@@ -8,9 +8,9 @@
 #include "game.hpp"
 
 int main( ){
-    GameManager makeGame;
+    GameManager makeGame("title", 600, 600, 60);
 
-    makeGame.runGame( );
+    makeGame.runGame();
     
     return 0; 
 }

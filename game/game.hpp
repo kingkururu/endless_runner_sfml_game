@@ -15,10 +15,11 @@
 #include "sound.hpp"
 #include "fonts.hpp"
 #include "global.hpp"
+#include <stdexcept>
 
 class GameManager {
 public:
-    GameManager();
+    GameManager(const std::string& title = "Game Title", unsigned int height = 600, unsigned int width = 600, unsigned int frameRate = 60);
     void runGame();
     
 private:
@@ -45,9 +46,9 @@ private:
     std::unique_ptr<SoundClass> playerDeadSound;
 
     const std::string gameTitle{}; 
-    const int screenHeight{};
-    const int screenWidth{};
-    const int frameLimit{};
+    unsigned int screenHeight{};
+    unsigned int screenWidth{};
+    unsigned int frameLimit{};
 };
 
 #endif /* game_hpp */

@@ -8,15 +8,32 @@
 #include "sound.hpp"
 
 MusicClass::MusicClass(const std::string& musicPath) : music(new sf::Music){
-    if(!music->openFromFile(musicPath)){
-        std::cerr << "Error loading music from file: " << musicPath << std::endl;
+    try{
+        if(!music->openFromFile(musicPath)){
+            throw std::runtime_error("Error in loading music from file: " + musicPath);
+        }
+    }
+
+    catch (const std::exception& e ){
+        std::cerr << e.what() << std::endl;
+        delete music;
+        music = nullptr; 
     }
 }
 
-SoundClass::SoundClass(const std::string& musicPath) : soundBuffer(new sf::SoundBuffer), sound(new sf::Sound){
-    if(!soundBuffer->loadFromFile(musicPath)){
-        std::cerr << "Error loading sound from file: " << musicPath << std::endl;
-        return;
+SoundClass::SoundClass(const std::string& soundPath) : soundBuffer(new sf::SoundBuffer), sound(new sf::Sound){
+    try{
+        if(!soundBuffer->loadFromFile(soundPath)){
+            throw std::runtime_error("Error in loading sound from file: " + soundPath);
+        }
+        sound->setBuffer(*soundBuffer);
     }
-    sound->setBuffer(*soundBuffer);
+
+    catch(const std::exception& e){
+        std::cerr << e.what() << std::endl;
+        delete soundBuffer;
+        delete sound;
+        soundBuffer = nullptr;
+        sound = nullptr; 
+    }
 }
