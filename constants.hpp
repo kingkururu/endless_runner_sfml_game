@@ -14,6 +14,7 @@ namespace Constants {
     constexpr unsigned int SCREEN_WIDTH = 600;
     constexpr unsigned int SCREEN_HEIGHT = 600; 
     constexpr unsigned int FRAME_LIMIT = 60;
+    constexpr const char* GAME_TITLE = "SFML game 3"; 
 
     //basic animation standards
     constexpr float ANIMATION_FRAME_DURATION = 0.1f;
