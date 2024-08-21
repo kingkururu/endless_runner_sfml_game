@@ -1,34 +1,30 @@
-//
-//  sprites.cpp
-//  sfmlgame2
-//
-//  Created by Sunmyoung Yun on 2024/08
-//
+
+
 #include "sprites.hpp"
+#include "constants.hpp"
+
 using namespace GameData;
 
-//base class (sprite)
-Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
-    
-    try{
-        if(!skin->loadFromFile(texturePath)){
-            throw std::runtime_error("Erorr in loading sprite texture from: " + texturePath);
-            return;
+// base class (sprite)
+Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) 
+    : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
+    try {
+        if (!skin->loadFromFile(texturePath)) {
+            throw std::runtime_error("Error in loading sprite texture from: " + texturePath);
         }
 
         sf::Vector2u textureSize = skin->getSize();
-        if (!textureSize.x || !textureSize.y){
+        if (!textureSize.x || !textureSize.y) {
             throw std::runtime_error("Loaded texture has size 0: " + texturePath);
         }
     
-    spriteCreated->setTexture(*skin);
-    spriteCreated->setPosition(position);
-    spriteCreated->setScale(size);
+        spriteCreated->setTexture(*skin);
+        spriteCreated->setPosition(position);
+        spriteCreated->setScale(size);
     }
-
-    catch (const std::exception& e){
+    catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
-        visibleState = false; 
+        visibleState = false;
     }
 }
 
@@ -39,20 +35,20 @@ Sprite::~Sprite(){
     spriteCreated = nullptr; 
 }
 
-void NonStatic::updatePos(){
-    try{
+void NonStatic::updatePos() {
+    try {
         if (position.x > GameComponents.screenWidth) {
-                position.x = GameComponents.screenWidth;
-            } else if (position.x < - 10) {
-                position.x = - 10;
-            }
-            if (position.y > GameComponents.screenHeight + 80) 
-                setVisibleState(false); 
-
-            spriteCreated->setPosition(position);
+            position.x = GameComponents.screenWidth;
+        } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
+            position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
         }
+        if (position.y > GameComponents.screenHeight + Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT) {
+            setVisibleState(false);
+        }
+        spriteCreated->setPosition(position);
+    }
     catch (const std::exception& e) {
-        std::cerr << "Error in updating postion: " << e.what() << std::endl;
+        std::cerr << "Error in updating position: " << e.what() << std::endl;
     }
 }
 
@@ -71,45 +67,45 @@ void NonStatic::setRects(int animNum){
     
 }
 
-void NonStatic::changeAnimation(float deltaTime){
-    try{
+void NonStatic::changeAnimation(float deltaTime) {
+    try {
         elapsedTime += deltaTime;
-        if(elapsedTime > changeAnimTime){
-            if(currentIndex >= indexMax)
+        if (elapsedTime > Constants::ANIMATION_CHANGE_TIME) {
+            if (currentIndex >= indexMax) {
                 currentIndex = -1;
+            }
             ++currentIndex;
-            setRects(currentIndex); 
+            setRects(currentIndex);
         }
         
-        if(elapsedTime > visibleDuration)
-            setVisibleState(false);    
+        if (elapsedTime > visibleDuration) {
+            setVisibleState(false);
+        }
     }
-
-    catch (const std::exception& e){
+    catch (const std::exception& e) {
         std::cerr << "Error in changing animation: " << e.what() << std::endl;
     }
-    
 }
 
-// //Player class
-void Player::updatePlayer(){
-    try{
-        if(FlagEvents.aPressed){
-            position.x -= speed * GameComponents.deltaTime;
+// Player class
+void Player::updatePlayer() {
+    try {
+        if (FlagEvents.aPressed) {
+            position.x -= Constants::PLAYER_SPEED * GameComponents.deltaTime;
         }
-        if(FlagEvents.dPressed){
-            position.x += speed * GameComponents.deltaTime;
+        if (FlagEvents.dPressed) {
+            position.x += Constants::PLAYER_SPEED * GameComponents.deltaTime;
         }
-        if(GameEvents.playerDead){
-            spriteCreated->setColor(sf::Color(200, 0, 0));
+        if (GameEvents.playerDead) {
+            spriteCreated->setColor(Constants::PLAYER_DEAD_COLOR);
         }
         updatePos();
     }
-
-    catch(std::exception& e){
-        std::cerr << "error in updating player: " << e.what() << std::endl;
+    catch (std::exception& e) {
+        std::cerr << "Error in updating player: " << e.what() << std::endl;
     }
 }
+
 
 void Obstacle::updateObstacle(){
     try{

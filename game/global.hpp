@@ -6,6 +6,7 @@
 //
 
 #pragma once
+#include "constants.hpp" 
 
 namespace GameData{
     extern struct flagEvents{
@@ -27,14 +28,14 @@ namespace GameData{
         float deltaTime;
         float globalTime;
         
-        gameComponents() : screenWidth(600), screenHeight(600), deltaTime(0), globalTime(0) {}
+        gameComponents() : screenWidth(Constants::SCREEN_WIDTH), screenHeight(Constants::SCREEN_HEIGHT), deltaTime(0), globalTime(0) {}
     } GameComponents;
 
     extern struct gameScore{
         int playerHit; 
         int score;
 
-        gameScore() : playerHit(0), score(0) {}
+        gameScore() : playerHit(Constants::INITIAL_PLAYER_HIT), score(Constants::INITIAL_SCORE) {}
     } GameScore; 
 
 }
