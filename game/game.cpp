@@ -1,6 +1,6 @@
 //
 //  game.cpp
-//  sfmlgame2
+//  sfmlgame3
 //
 //  Created by Sunmyoung Yun on 2024/08
 //
@@ -35,11 +35,7 @@ void GameManager::runGame() {
 
 void GameManager::createAssets(){
    try {
-        // background = std::make_unique<Background>(sf::Vector2f(0, 0), sf::Vector2f(screenWidth, screenHeight), "path/to/background.png");
-        // playerSprite = std::make_unique<Player>(sf::Vector2f(100, 100), sf::Vector2f(50, 50), "path/to/player.png", {}, 5.0f);
-        // textSprite = std::make_unique<TextClass>(sf::Vector2f(10, 10), 24, sf::Color::White, "path/to/font.ttf", "Hello World");
-        backgroundMusic = std::make_unique<MusicClass>("path/to/music.ogg");
-        playerDeadSound = std::make_unique<SoundClass>("path/to/sound.wav");
+        backgroundMusic = std::make_unique<MusicClass>(Constants::BACKGROUNDMUSIC_PATH);
     } 
     
     catch (const std::exception& e) {

@@ -1,8 +1,8 @@
 //
 //  main.cpp
-//  sfmlgame1
+//  sfmlgame3
 //
-//  Created by Sunmyoung Yun on 2024/01/04.
+//  Created by Sunmyoung Yun on 2024/08
 //
 
 #include "game.hpp"
