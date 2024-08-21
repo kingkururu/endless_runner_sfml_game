@@ -5,8 +5,9 @@
 //  Created by Sunmyoung Yun on 2024/08
 //
 #include "sprites.hpp"
+using namespace GameData;
 
-// //base class (sprite)
+//base class (sprite)
 Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
     
     try{

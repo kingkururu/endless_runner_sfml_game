@@ -7,7 +7,9 @@
 
 #include "global.hpp"
 
-gameComponents GameComponents;
-flagEvents FlagEvents;
-gameEvents GameEvents;
-gameScore GameScore; 
+namespace GameData {
+    gameComponents GameComponents;
+    flagEvents FlagEvents;
+    gameEvents GameEvents;
+    gameScore GameScore;     
+}
