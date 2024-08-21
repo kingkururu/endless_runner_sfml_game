@@ -11,51 +11,6 @@ GameManager::GameManager() : window(sf::VideoMode(screenHeight, screenWidth), ga
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
-GameManager::~GameManager() {
-    destroyAll();
-    std::cout << "game destroyed" << std::endl; 
-}
-
-void GameManager::destroyAll(){
-    if (obstacle1) {
-        delete obstacle1;
-        obstacle1 = nullptr;
-    }
-    
-    if (playerSprite) {
-    delete playerSprite;
-    playerSprite = nullptr;
-    }
-
-    for (Obstacle* obstacle : obstacles) {
-        if(obstacle){
-            delete obstacle;
-            obstacle = nullptr;
-        }
-    }
-    obstacles.clear();
-
-    if(background){
-        delete background;
-        background = nullptr;
-    }
-
-    if(textSprite){
-        delete textSprite;
-        textSprite = nullptr;
-    }
-
-    if(backgroundMusic){
-        delete backgroundMusic;
-        backgroundMusic = nullptr;
-    }
-
-    if(playerDeadSound){
-        delete playerDeadSound;
-        playerDeadSound = nullptr;
-    }
-}
-
 void GameManager::runGame() {
     createAssets();
     while (window.isOpen()) {
@@ -63,7 +18,6 @@ void GameManager::runGame() {
             countTime();
             handleEventInput();
             handleGameEvents();            
-            deleteAssets();
         }
         updateSprites();
         handleEventInput();
@@ -118,10 +72,6 @@ void GameManager::handleGameEvents(){
 void GameManager::updateSprites() {
     
     window.display();
-}
-
-void GameManager::deleteAssets() {
-   
 }
 
 void GameManager::restartGame(){

@@ -9,6 +9,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <memory>
+#include <vector>
 #include "sprites.hpp"
 #include "sound.hpp"
 #include "fonts.hpp"
@@ -17,7 +19,6 @@
 class GameManager {
 public:
     GameManager();
-    ~GameManager();
     void runGame();
     
 private:
@@ -27,28 +28,21 @@ private:
     void handleGameEvents();
     void updateSprites();
     void draw();
-    void deleteAssets();
     void restartGame();
-    void destroyAll();
 
     sf::RenderWindow window;
     sf::Clock clock;
     float deltaTime {};
     float globalTime {}; 
     
-    Obstacle* obstacle1; 
-
-    std::vector<Obstacle*> obstacles; 
-
-    Static* background; 
-
-    Player* playerSprite;
-    
-    TextClass* textSprite; 
-
-    MusicClass* backgroundMusic;
-
-    SoundClass* playerDeadSound;
+    // Use std::unique_ptr for managing the lifetime of objects
+    std::unique_ptr<Obstacle> obstacle1; 
+    std::vector<std::unique_ptr<Obstacle>> obstacles; 
+    std::unique_ptr<Static> background; 
+    std::unique_ptr<Player> playerSprite;
+    std::unique_ptr<TextClass> textSprite; 
+    std::unique_ptr<MusicClass> backgroundMusic;
+    std::unique_ptr<SoundClass> playerDeadSound;
 
     const std::string gameTitle{}; 
     const int screenHeight{};
