@@ -8,7 +8,7 @@
 #include "fonts.hpp"
 
 TextClass::TextClass(sf::Vector2f position, unsigned int size, sf::Color color, const std::string& fontPath, const std::string& testMessage)
-    : position(position), size(size), color(color), font(new sf::Font), text(new sf::Text) {
+    : position(position), size(size), color(color), font(std::make_unique<sf::Font>()), text(std::make_unique<sf::Text>()) {
 
     try{   
         if (!font->loadFromFile(fontPath)) {
@@ -25,13 +25,6 @@ TextClass::TextClass(sf::Vector2f position, unsigned int size, sf::Color color, 
         std::cerr << e.what() << std::endl;
         visibleState = false;
     }
-}
-
-TextClass::~TextClass() {
-    delete font;
-    font = nullptr;
-    delete text;
-    text = nullptr;
 }
 
 void TextClass::updateText(const std::string& newText){
