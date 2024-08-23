@@ -33,13 +33,6 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& text
     }
 }
 
-Sprite::~Sprite(){
-    delete skin;
-    skin = nullptr;
-    delete spriteCreated;
-    spriteCreated = nullptr; 
-}
-
 void NonStatic::updatePos() {
     try {
         if (position.x > GameComponents.screenWidth) {
@@ -111,7 +104,7 @@ void Player::updatePlayer() {
     }
 }
 
-
+//obstacle class
 void Obstacle::updateObstacle(){
     try{
         updatePos();
