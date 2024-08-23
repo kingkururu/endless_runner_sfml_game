@@ -17,8 +17,8 @@
 class TextClass{
 public:
     explicit TextClass(sf::Vector2f position, unsigned int size, sf::Color color, const std::string& fontPath, const std::string& testMessage);
-    std::unique_ptr<sf::Text>& getText() { return text; }
-    const std::unique_ptr<sf::Text>& getText() const { return text; }
+    sf::Text& getText() { return *text; }
+    const sf::Text& getText() const { return *text; }
 
     ~TextClass() = default;
     bool const getVisibleState() const { return visibleState; }

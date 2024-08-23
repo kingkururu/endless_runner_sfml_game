@@ -18,17 +18,18 @@
 class Sprite{
 public:
     explicit Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath);
-    virtual ~Sprite();
+    virtual ~Sprite() = default;
     sf::Vector2f const getSpritePos() const { return position; };
-    sf::Sprite const returnSpritesShape(){ return *spriteCreated; }
+    sf::Sprite& const returnSpritesShape() const { return *spriteCreated; }
+    sf::Sprite& returnSpritesShape() { return *spriteCreated; }
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
 
 protected:
     sf::Vector2f position {};
     sf::Vector2f size {};
-    sf::Texture* skin = nullptr;
-    sf::Sprite* spriteCreated {};
+    std::unique_ptr<sf::Texture> skin;
+    std::unique_ptr<sf::Sprite> spriteCreated;
     bool visibleState {};
 };
 

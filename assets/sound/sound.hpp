@@ -17,8 +17,8 @@
 class SoundClass{
 public:
     explicit SoundClass(const std::string& soundPath, float volume = 100.0f);
-    std::unique_ptr<sf::Sound>& returnSound() { return sound; }
-    const std::unique_ptr<sf::Sound>& returnSound() const { return sound; }
+    sf::Sound& returnSound() { return *sound; }
+    const sf::Sound& returnSound() const { return *sound; }
     ~SoundClass() = default; 
     void setVolume(float volume);
     float const getVolume() { return volume; } 
