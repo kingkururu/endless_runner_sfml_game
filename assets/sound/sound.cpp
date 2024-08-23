@@ -7,33 +7,39 @@
 
 #include "sound.hpp"
 
-MusicClass::MusicClass(const std::string& musicPath) : music(new sf::Music){
-    try{
-        if(!music->openFromFile(musicPath)){
-            throw std::runtime_error("Error in loading music from file: " + musicPath);
-        }
-    }
-
-    catch (const std::exception& e ){
-        std::cerr << e.what() << std::endl;
-        delete music;
-        music = nullptr; 
-    }
-}
-
-SoundClass::SoundClass(const std::string& soundPath) : soundBuffer(new sf::SoundBuffer), sound(new sf::Sound){
+SoundClass::SoundClass(const std::string& soundPath, float volume) : soundBuffer(std::make_unique<sf::SoundBuffer>()), sound(std::make_unique<sf::Sound>()), volume(volume){
     try{
         if(!soundBuffer->loadFromFile(soundPath)){
             throw std::runtime_error("Error in loading sound from file: " + soundPath);
         }
         sound->setBuffer(*soundBuffer);
+        sound->setVolume(volume); 
     }
 
     catch(const std::exception& e){
         std::cerr << e.what() << std::endl;
-        delete soundBuffer;
-        delete sound;
-        soundBuffer = nullptr;
-        sound = nullptr; 
+        soundBuffer.reset();
+        sound.reset(); 
     }
 }
+
+MusicClass::MusicClass(const std::string& musicPath, float volume) : SoundClass(musicPath, volume), music(std::make_unique<sf::Music>()) {
+    try {
+        if (!music->openFromFile(musicPath)) {
+            throw std::runtime_error("Error loading music from file: " + musicPath);
+        }
+        music->setVolume(volume);
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        music.reset();
+    }
+}
+
+void SoundClass::setVolume(float newVolume){
+    volume = newVolume;
+
+    if(sound){
+        sound->setVolume(volume); 
+    }
+}
+

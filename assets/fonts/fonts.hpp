@@ -8,16 +8,18 @@
 #ifndef fonts_hpp
 #define fonts_hpp
 
-#include <stdio.h>
+#include <SFML/Graphics.hpp>
+#include <memory>
 #include <string>
 #include <iostream> 
-#include <SFML/Graphics.hpp>
 #include <stdexcept>
 
 class TextClass{
 public:
     explicit TextClass(sf::Vector2f position, unsigned int size, sf::Color color, const std::string& fontPath, const std::string& testMessage);
-    const sf::Text* const getText() const { return text.get(); }
+    std::unique_ptr<sf::Text>& getText() { return text; }
+    const std::unique_ptr<sf::Text>& getText() const { return text; }
+
     ~TextClass() = default;
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
