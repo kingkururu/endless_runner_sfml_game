@@ -1,7 +1,7 @@
 # .coderabbit.yaml
 
 # Set the primary language of the repository
-language: "cpp"
+language: "en"  # Corrected value
 
 # Instructions on the tone and type of reviews
 tone_instructions: "Please ensure that the code follows C++ best practices, is well-documented, and that error handling is implemented correctly."
