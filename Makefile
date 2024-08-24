@@ -1,15 +1,15 @@
 # Compiler and linker flags
-CXX = g++
-CXXFLAGS = -std=c++17 -Wall -w -I./game -I./assets/sprites -I./assets/fonts -I./assets/sound -I.
+CXX = clang++  
+CXXFLAGS = -std=c++17 -Wall -I./src -I./src/global -I./src/game -I./src/assets/sprites -I./src/assets/fonts -I./src/assets/sound -I.
 LDFLAGS = -L/opt/homebrew/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 # Source files and target
-SRC = main.cpp \
-      game/game.cpp \
-      game/global.cpp \
-      assets/sprites/sprites.cpp \
-      assets/fonts/fonts.cpp \
-      assets/sound/sound.cpp
+SRC = src/main.cpp \
+      src/game/game.cpp \
+      src/game/global.cpp \
+      src/assets/sprites/sprites.cpp \
+      src/assets/fonts/fonts.cpp \
+      src/assets/sound/sound.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)

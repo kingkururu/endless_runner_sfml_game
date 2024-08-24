@@ -12,7 +12,7 @@
 #include <string>
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "global.hpp"
+#include "global.hpp" 
 #include <stdexcept>
 
 class Sprite{
@@ -20,7 +20,7 @@ public:
     explicit Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath);
     virtual ~Sprite() = default;
     sf::Vector2f const getSpritePos() const { return position; };
-    sf::Sprite& const returnSpritesShape() const { return *spriteCreated; }
+   // sf::Sprite& returnSpritesShape() const { return *spriteCreated; }
     sf::Sprite& returnSpritesShape() { return *spriteCreated; }
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }

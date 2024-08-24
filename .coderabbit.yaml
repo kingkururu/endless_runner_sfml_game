@@ -1,0 +1,20 @@
+type: object
+language: "en"
+tone_instructions: "friendly"
+early_access: true
+enable_free_tier: true
+
+reviews:
+  enabled: true
+  strictness: "high"
+  auto_request: true
+
+chat:
+  enabled: true
+  response_time: "fast"
+
+knowledge_base:
+  enabled: true
+  custom_sources:
+    - url: "https://example.com"
+      weight: 0.8
