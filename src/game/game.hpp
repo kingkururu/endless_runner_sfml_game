@@ -46,7 +46,7 @@ private:
     std::unique_ptr<SoundClass> playerDeadSound;
 
     const std::string gameTitle{}; 
-    unsigned int screenHeight{};
+    unsigned int screenHeight{}; 
     unsigned int screenWidth{};
     unsigned int frameLimit{};
 };

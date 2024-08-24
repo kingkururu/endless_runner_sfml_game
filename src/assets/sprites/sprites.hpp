@@ -20,7 +20,6 @@ public:
     explicit Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath);
     virtual ~Sprite() = default;
     sf::Vector2f const getSpritePos() const { return position; };
-   // sf::Sprite& returnSpritesShape() const { return *spriteCreated; }
     sf::Sprite& returnSpritesShape() { return *spriteCreated; }
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
@@ -47,7 +46,7 @@ public:
 
 class NonStatic : public Sprite{
 public:
-   explicit NonStatic(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : Sprite(position, size, texturePath), animationRects(animationRects), speed(speed) {}
+   explicit NonStatic(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : Sprite(position, size, texturePath), speed(speed), animationRects(animationRects) {}
     ~NonStatic() override{}; 
     void updatePos(); 
     bool const getMoveState() const { return moveState; }
