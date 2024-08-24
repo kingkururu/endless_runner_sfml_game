@@ -1,20 +1,29 @@
-type: object
-language: "en"
-tone_instructions: "friendly"
+# .coderabbit.yaml
+
+# Set the primary language of the repository
+language: "cpp"
+
+# Instructions on the tone and type of reviews
+tone_instructions: "Please ensure that the code follows C++ best practices, is well-documented, and that error handling is implemented correctly."
+
+# Access settings
 early_access: true
 enable_free_tier: true
 
+# Review configuration
 reviews:
-  enabled: true
-  strictness: "high"
-  auto_request: true
+  enable: true
+  run_on_pr: true
+  run_on_commit: false
+  comment_on_code: true
+  comment_on_pr: true
 
+# Chat configuration for in-PR support
 chat:
-  enabled: true
-  response_time: "fast"
+  enable: true
+  prompt: "Please provide detailed explanations for complex code sections and suggest optimizations."
 
+# Knowledge base integration
 knowledge_base:
-  enabled: true
-  custom_sources:
-    - url: "https://example.com"
-      weight: 0.8
+  enable: true
+  url: "https://your-knowledge-base-url"
