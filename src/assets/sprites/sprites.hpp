@@ -12,7 +12,6 @@
 #include <string>
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "global.hpp" 
 #include <stdexcept>
 
 class Sprite{

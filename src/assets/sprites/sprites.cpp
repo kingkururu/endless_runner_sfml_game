@@ -8,8 +8,6 @@
 #include "sprites.hpp"
 #include "constants.hpp"
 
-using namespace GameData;
-
 // base class (sprite)
 Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath) 
     : position(position), scale(scale), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
@@ -35,12 +33,12 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, const std::string& tex
 
 void NonStatic::updatePos() {
     try {
-        if (position.x > GameComponents.screenWidth) {
-            position.x = GameComponents.screenWidth;
+        if (position.x > Constants::SCREEN_WIDTH) {
+            position.x = Constants::SCREEN_WIDTH;
         } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
             position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
         }
-        if (position.y > GameComponents.screenHeight + Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT) {
+        if (position.y > Constants::SCREEN_HEIGHT + Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT) {
             setVisibleState(false);
         }
         spriteCreated->setPosition(position);
@@ -88,15 +86,6 @@ void NonStatic::changeAnimation(float deltaTime) {
 // Player class
 void Player::updatePlayer() {
     try {
-        if (FlagEvents.aPressed) {
-            position.x -= Constants::PLAYER_SPEED * GameComponents.deltaTime;
-        }
-        if (FlagEvents.dPressed) {
-            position.x += Constants::PLAYER_SPEED * GameComponents.deltaTime;
-        }
-        if (GameEvents.playerDead) {
-            spriteCreated->setColor(Constants::PLAYER_DEAD_COLOR);
-        }
         updatePos();
     }
     catch (std::exception& e) {

@@ -14,7 +14,6 @@
 #include "sprites.hpp"
 #include "sound.hpp"
 #include "fonts.hpp"
-#include "global.hpp"
 #include <stdexcept>
 
 class GameManager {
@@ -40,6 +39,10 @@ private:
     unsigned int screenHeight{};
     unsigned int screenWidth{};
     unsigned int frameLimit{};
+
+    //Game states
+    bool gameEnd = false; 
+    unsigned int score {}; 
     
     //Sprites 
     std::unique_ptr<Background> background; 

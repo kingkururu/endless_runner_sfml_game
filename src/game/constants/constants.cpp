@@ -40,7 +40,7 @@ namespace Constants {
     const float BULLET_ACCELERATION = -20.0f;
     const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
 
-    const sf::Vector2f SLIME_POSITION = {SCREEN_WIDTH - 90, static_cast<float>(std::rand() % SCREEN_HEIGHT) - 60};
+    const sf::Vector2f SLIME_POSITION = {static_cast<float>(std::rand() % SCREEN_WIDTH) - 60, 0};
     const sf::Vector2f SLIME_SCALE = {0.35, 0.35};
     const std::vector<sf::IntRect> SLIMESPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
     const char* SLIMESPRITE_PATH = "src/assets/sprites/png/slime.png";

@@ -11,14 +11,14 @@ using namespace GameData;
 GameManager::GameManager(const std::string& title, unsigned int height, unsigned int width, unsigned int frameRate) : window(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close), gameTitle(title), screenHeight(height), screenWidth(width),  frameLimit(frameRate) {
     window.setFramerateLimit(frameLimit);
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
+    gameEnd = false; 
 }
 
 void GameManager::runGame() {
     try{
         createAssets();
         while (window.isOpen()) {
-            if(!GameEvents.gameEnd){
+            if(!gameEnd){
                 countTime();
                 handleEventInput();
                 handleGameEvents();            
