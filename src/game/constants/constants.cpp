@@ -13,7 +13,6 @@ namespace Constants {
     const unsigned int FRAME_LIMIT = 60;
     const char* GAME_TITLE = "SFML game 3";
 
-    const int INITIAL_PLAYER_HIT = 0;
     const int INITIAL_SCORE = 0;
 
     const float ANIMATION_FRAME_DURATION = 0.1f;
@@ -34,7 +33,7 @@ namespace Constants {
     const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
 
     const sf::Vector2f BULLET_POSITION = {0.0, 0.0};
-    const sf::Vector2f BULLET_SCALE = {2.0, 2.0};
+    const sf::Vector2f BULLET_SCALE = {2.5, 2.5};
     const std::vector<sf::IntRect> BULLETSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
     const float BULLET_SPEED = 200.0f;
     const float BULLET_ACCELERATION = -20.0f;

@@ -40,8 +40,8 @@ private:
 
     //Game states
     unsigned int score = Constants::INITIAL_SCORE;
-    int playerHit = Constants::INITIAL_PLAYER_HIT;  
     bool gameEnd = false; 
+
     bool spaceBpressed = false; 
     bool mouseClicked = false;
     sf::Vector2i mouseClickedPos {}; 
@@ -49,7 +49,7 @@ private:
     //Sprites 
     std::unique_ptr<Background> background; 
     std::unique_ptr<Player> playerSprite;
-    std::vector<std::unique_ptr<NonStatic>> bullets; 
+    std::vector<std::unique_ptr<Bullet>> bullets; 
     std::vector<std::unique_ptr<Obstacle>> bushes; 
     std::vector<std::unique_ptr<Obstacle>> slimes; 
 

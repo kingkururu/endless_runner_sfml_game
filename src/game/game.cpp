@@ -24,7 +24,6 @@ void GameManager::runGame() {
                 handleEventInput();
                 handleGameEvents();            
             }
-            updateSprites();
             handleEventInput();
             draw();
         }    
@@ -100,43 +99,114 @@ void GameManager::handleEventInput(){
 }
 
 void GameManager::handleGameEvents(){
-       
+    //run game states
+    if(!gameEnd){
+        //respawn objects
+        updateSprites(); 
+    }
+    else {
+        playerSprite->setMoveState(false);
+
+        for(auto& slime : slimes)
+            slime->setMoveState(false);
+
+        for(auto& bullet : bullets)
+            bullet->setMoveState(false);
+
+        for(auto& bush : bushes)
+            bush->setMoveState(false);
+    }
+
+    //run game events
+    if(mouseClicked){
+
+    }
+    if(spaceBpressed){
+
+    }       
 }
 
 void GameManager::updateSprites() {
-    
+    try {
+        if(playerSprite->getMoveState())
+            playerSprite->updatePlayer();
+    } catch(const std::exception& e) {
+        std::cerr << "Exception in updateSprites (Player): " << e.what() << std::endl;
+    }
+
+    try {
+        for(auto& slime : slimes){
+            if(slime->getMoveState())
+                slime->updateObstacle();
+        }
+    } catch(const std::exception& e) {
+        std::cerr << "Exception in updateSprites (Slimes): " << e.what() << std::endl;
+    }
+
+    try {
+        for(auto& bush : bushes){
+            if(bush->getMoveState())
+                bush->updateObstacle();
+        }
+    } catch(const std::exception& e) {
+        std::cerr << "Exception in updateSprites (Bushes): " << e.what() << std::endl;
+    }
+
+    try {
+        for(auto& bullet : bullets){
+            if(bullet->getMoveState())
+                bullet->updateBullet();
+        }
+    } catch(const std::exception& e) {
+        std::cerr << "Exception in updateSprites (Bullets): " << e.what() << std::endl;
+    }
+
     window.display();
 }
 
 void GameManager::restartGame(){
-  
+    playerSprite->setMoveState(true);
+
+    for(auto& slime : slimes)
+        slime->setMoveState(true);
+
+    for(auto& bullet : bullets)
+        bullet->setMoveState(true);
+
+    for(auto& bush : bushes)
+        bush->setMoveState(true); 
 }
 
 void GameManager::draw(){
-    window.clear();
+    try {
+        window.clear();
 
-    if (background->getVisibleState()) {
-        window.draw(background->returnSpritesShape());
-    }
-    if (playerSprite->getVisibleState()) {
-        window.draw(playerSprite->returnSpritesShape());
-    }
-    for (const auto& bullet : bullets) {
-        if (bullet->getVisibleState()) {
-            window.draw(bullet->returnSpritesShape());
+        if (background->getVisibleState()) {
+            window.draw(background->returnSpritesShape());
         }
-    }
-    for (const auto& bush : bushes) {
-        if (bush->getVisibleState()) {
-            window.draw(bush->returnSpritesShape());
+        if (playerSprite->getVisibleState()) {
+            window.draw(playerSprite->returnSpritesShape());
         }
-    }
-    for (const auto& slime : slimes) {
-        if (slime->getVisibleState()) {
-            window.draw(slime->returnSpritesShape());
+        for (const auto& bullet : bullets) {
+            if (bullet->getVisibleState()) {
+                window.draw(bullet->returnSpritesShape());
+            }
         }
-    }
-    if(endingText->getVisibleState()){
-        window.draw(endingText->getText()); 
+        for (const auto& bush : bushes) {
+            if (bush->getVisibleState()) {
+                window.draw(bush->returnSpritesShape());
+            }
+        }
+        for (const auto& slime : slimes) {
+            if (slime->getVisibleState()) {
+                window.draw(slime->returnSpritesShape());
+            }
+        }
+        if(endingText->getVisibleState()){
+            window.draw(endingText->getText()); 
+        }
+    } catch(const std::exception& e) {
+        std::cerr << "Exception in draw: " << e.what() << std::endl;
     }
 }
+
