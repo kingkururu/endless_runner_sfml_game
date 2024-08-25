@@ -17,7 +17,7 @@
 
 class Sprite{
 public:
-    explicit Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath);
+    explicit Sprite(sf::Vector2f position, sf::Vector2f scale = {1.0f, 1.0f}, const std::string& texturePath = "");
     virtual ~Sprite() = default;
     sf::Vector2f const getSpritePos() const { return position; };
    // sf::Sprite& returnSpritesShape() const { return *spriteCreated; }
@@ -27,7 +27,7 @@ public:
 
 protected:
     sf::Vector2f position {};
-    sf::Vector2f size {};
+    sf::Vector2f scale {};
     std::unique_ptr<sf::Texture> skin;
     std::unique_ptr<sf::Sprite> spriteCreated;
     bool visibleState {};
@@ -35,19 +35,19 @@ protected:
 
 class Static : public Sprite{
 public:
-    explicit Static(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Sprite(position, size, texturePath) {}
+    explicit Static(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath) : Sprite(position, scale, texturePath) {}
     ~Static() override{};
 };
 
 class Background : public Static{
 public:
-    explicit Background(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) : Static(position, size, texturePath) {}
+    explicit Background(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath) : Static(position, scale, texturePath) {}
     ~Background() override{};
 };
 
 class NonStatic : public Sprite{
 public:
-   explicit NonStatic(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : Sprite(position, size, texturePath), animationRects(animationRects), speed(speed) {}
+   explicit NonStatic(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath, float speed, const std::vector<sf::IntRect> animationRects) : Sprite(position, scale, texturePath),speed(speed), animationRects(animationRects) {}
     ~NonStatic() override{}; 
     void updatePos(); 
     bool const getMoveState() const { return moveState; }
@@ -76,14 +76,14 @@ protected:
 
 class Player : public NonStatic{
 public:
-    explicit Player(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, size, texturePath, animationRects, speed) {}
+    explicit Player(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, scale, texturePath, speed, animationRects) {}
     ~Player() override {}; 
     void updatePlayer(); 
 };
 
 class Obstacle : public NonStatic{
 public:
-    explicit Obstacle(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, size, texturePath, animationRects, speed) {}
+    explicit Obstacle(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, scale, texturePath, speed, animationRects) {}
     ~Obstacle() override {}; 
     void updateObstacle();
 };

@@ -11,8 +11,8 @@
 using namespace GameData;
 
 // base class (sprite)
-Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& texturePath) 
-    : position(position), size(size), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
+Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath) 
+    : position(position), scale(scale), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
     try {
         if (!skin->loadFromFile(texturePath)) {
             throw std::runtime_error("Error in loading sprite texture from: " + texturePath);
@@ -25,7 +25,7 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f size, const std::string& text
     
         spriteCreated->setTexture(*skin);
         spriteCreated->setPosition(position);
-        spriteCreated->setScale(size);
+        spriteCreated->setScale(scale);
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;

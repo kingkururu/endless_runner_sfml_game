@@ -19,7 +19,7 @@
 
 class GameManager {
 public:
-    GameManager(const std::string& title = "Game Title", unsigned int height = 600, unsigned int width = 600, unsigned int frameRate = 60);
+    GameManager(const std::string& title = "Game Title basic", unsigned int height = 300, unsigned int width = 300, unsigned int frameRate = 60);
     void runGame();
     
 private:
@@ -39,7 +39,7 @@ private:
     // Use std::unique_ptr for managing the lifetime of objects
     std::unique_ptr<Obstacle> obstacle1; 
     std::vector<std::unique_ptr<Obstacle>> obstacles; 
-    std::unique_ptr<Static> background; 
+    std::unique_ptr<Background> background; 
     std::unique_ptr<Player> playerSprite;
     std::unique_ptr<TextClass> textSprite; 
     std::unique_ptr<MusicClass> backgroundMusic;

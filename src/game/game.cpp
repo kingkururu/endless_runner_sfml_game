@@ -35,6 +35,7 @@ void GameManager::runGame() {
 
 void GameManager::createAssets(){
    try {
+        background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_PATH);
         backgroundMusic = std::make_unique<MusicClass>(Constants::BACKGROUNDMUSIC_PATH);
     } 
     
@@ -94,7 +95,7 @@ void GameManager::restartGame(){
 void GameManager::draw(){
     window.clear();
     if (background) {
-       // window.draw(*background->returnSpritesShape());
+        window.draw(background->returnSpritesShape());
     }
     if (playerSprite) {
       //  window.draw(*playerSprite->returnSpritesShape());

@@ -11,8 +11,8 @@
 
 namespace Constants {
     //basic game components
-    constexpr unsigned int SCREEN_WIDTH = 600;
-    constexpr unsigned int SCREEN_HEIGHT = 600; 
+    constexpr unsigned int SCREEN_WIDTH = 960;
+    constexpr unsigned int SCREEN_HEIGHT = 540; 
     constexpr unsigned int FRAME_LIMIT = 60;
     constexpr const char* GAME_TITLE = "SFML game 3"; 
 
@@ -40,9 +40,12 @@ namespace Constants {
 
     //paths to sprites
     constexpr const char* PLAYERSPRITE_PATH = "";
+    constexpr const char* BACKGROUND_PATH ="src/assets/sprites/png/background.png"; 
 
     //paths to sounds&Music
     constexpr const char* BACKGROUNDMUSIC_PATH = ""; 
+    const sf::Vector2f BACKGROUND_POSITION = {0.0, 0.0};
+    const sf::Vector2f BACKGROUND_SCALE = {.5, .5}; 
 
     //paths to fonts 
     constexpr const char* FORNTS_PATH = ""; 
