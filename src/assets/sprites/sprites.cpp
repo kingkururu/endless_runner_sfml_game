@@ -115,7 +115,16 @@ void Obstacle::updateObstacle(){
     }
 }
 
+//bullet class
+void Bullet::updateBullet(){
+    try{
+        updatePos();
+    }
 
+    catch(std::exception& e){
+        std::cerr << "error in updating obstacle: " << e.what() << std::endl;
+    }
+}
 
 // /Liniear movement ( free fall )
 // void Rain::updateRain(){

@@ -37,6 +37,7 @@ namespace Constants {
     constexpr const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
     const sf::Vector2f PLAYER_POSITION = {0.0, 0.0};
     const sf::Vector2f PLAYER_SCALE = {.5, .5}; 
+    const std::vector<sf::IntRect> PLAYERSPRITE_RECTS = {sf::IntRect{0, 0, 0,0 }}; 
     constexpr float PLAYER_SPEED = 200.0f;
     const sf::Color PLAYER_DEAD_COLOR = sf::Color(200,0,0);
 
@@ -51,12 +52,15 @@ namespace Constants {
     constexpr const char* SLIMESPRITE_PATH = "src/assets/sprites/png/slime.png";
     const sf::Vector2f SLIME_POSITION = {0.0, 0.0};
     const sf::Vector2f SLIME_SCALE = {.5, .5}; 
+    std::vector<sf::IntRect> SLIMESPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
+
     constexpr float SLIME_SPEED = 200.0f;
     constexpr float SLIME_ACCELERATION = -20.0f;
 
     //bush components (non-static) / non-animated
     constexpr const char* BUSHSPRITE_PATH = "src/assets/sprites/png/bush1.png";
     const sf::Vector2f BUSH_POSITION = {0.0, 0.0};
+    std::vector<sf::IntRect> BUSHSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
     const sf::Vector2f BUSH_SCALE = {.5, .5}; 
     constexpr float BUSH_SPEED = 200.0f;
     constexpr float BUSH_ACCELERATION = -20.0f;

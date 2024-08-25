@@ -88,4 +88,11 @@ public:
     void updateObstacle();
 };
 
+class Bullet : public NonStatic{
+   public:
+    explicit Bullet(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath, float speed) : NonStatic(position, scale, texturePath, speed, animationRects) {}
+    ~Bullet() override {}; 
+    void updateBullet();  
+};
+
 #endif /* sprites_hpp */
