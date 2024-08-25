@@ -31,24 +31,35 @@ private:
     void draw();
     void restartGame();
 
+    //Game components
     sf::RenderWindow window;
     sf::Clock clock;
     float deltaTime {};
     float globalTime {}; 
-    
-    // Use std::unique_ptr for managing the lifetime of objects
-    std::unique_ptr<Obstacle> obstacle1; 
-    std::vector<std::unique_ptr<Obstacle>> obstacles; 
-    std::unique_ptr<Background> background; 
-    std::unique_ptr<Player> playerSprite;
-    std::unique_ptr<TextClass> textSprite; 
-    std::unique_ptr<MusicClass> backgroundMusic;
-    std::unique_ptr<SoundClass> playerDeadSound;
-
     const std::string gameTitle{}; 
     unsigned int screenHeight{};
     unsigned int screenWidth{};
     unsigned int frameLimit{};
+    
+    //Sprites 
+    std::unique_ptr<Background> background; 
+    std::unique_ptr<Player> playerSprite;
+    std::vector<std::unique_ptr<NonStatic>> bullets; 
+    std::vector<std::unique_ptr<Obstacle>> bushes; 
+    std::vector<std::unique_ptr<Obstacle>> slimes; 
+
+    //Music and sounds
+    std::unique_ptr<MusicClass> backgroundMusic;
+
+    std::unique_ptr<SoundClass> playerDeadSound;
+    std::unique_ptr<SoundClass> playerJumpSound;
+    std::unique_ptr<SoundClass> bulletSound;
+    std::unique_ptr<SoundClass> obstHitSound;
+
+    //Fonts and texts
+    std::unique_ptr<TextClass> endingText;
+    std::string endingMessage = "";
+
 };
 
 #endif /* game_hpp */

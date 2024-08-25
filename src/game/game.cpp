@@ -35,8 +35,9 @@ void GameManager::runGame() {
 
 void GameManager::createAssets(){
    try {
-        background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_PATH);
+        background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUNDSPRITE_PATH);
         backgroundMusic = std::make_unique<MusicClass>(Constants::BACKGROUNDMUSIC_PATH);
+        backgroundMusic->returnMusic()->play(); 
     } 
     
     catch (const std::exception& e) {
@@ -65,7 +66,7 @@ void GameManager::handleEventInput(){
                     FlagEvents.aPressed = true;
                     break;
                 case sf::Keyboard::B:
-                    //backgroundMusic->returnMusic()->stop();
+                    backgroundMusic->returnMusic()->stop();
                     restartGame();
                     break;
                 default:
@@ -98,9 +99,6 @@ void GameManager::draw(){
         window.draw(background->returnSpritesShape());
     }
     if (playerSprite) {
-      //  window.draw(*playerSprite->returnSpritesShape());
-    }
-    if (textSprite) {
-    //    window.draw(*textSprite->getText());
+        window.draw(playerSprite->returnSpritesShape());
     }
 }
