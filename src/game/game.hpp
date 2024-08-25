@@ -58,8 +58,6 @@ private:
 
     //Fonts and texts
     std::unique_ptr<TextClass> endingText;
-    std::string endingMessage = "";
-
 };
 
 #endif /* game_hpp */

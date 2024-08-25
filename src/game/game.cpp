@@ -38,7 +38,7 @@ void GameManager::createAssets(){
         //sprites
         background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUNDSPRITE_PATH);
         playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYERSPRITE_PATH, Constants::PLAYERSPRITE_RECTS, Constants::PLAYER_SPEED);
-        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLETSPRITE_PATH, Constants::BULLET_SPEED)); 
+        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLETSPRITE_PATH, Constants::BULLETSPRITES_RECTS, Constants::BULLET_SPEED)); 
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSHSPRITE_PATH, Constants::BUSHSPRITES_RECTS, Constants::BUSH_SPEED)); 
         slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIMESPRITE_PATH, Constants::SLIMESPRITE_RECTS, Constants::SLIME_SPEED));
 
@@ -51,9 +51,9 @@ void GameManager::createAssets(){
         backgroundMusic->returnMusic()->play(); 
         
         //text
-        endingText = std::make_unique<TextClass>(endingMessage); 
+        endingText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_PATH, Constants::TEXT_MESSAGE); 
     } 
-    
+
     catch (const std::exception& e) {
         std::cerr << "Exception caught in createAssets: " << e.what() << std::endl;
     }
@@ -109,28 +109,29 @@ void GameManager::restartGame(){
 
 void GameManager::draw(){
     window.clear();
+
     if (background->getVisibleState()) {
         window.draw(background->returnSpritesShape());
     }
     if (playerSprite->getVisibleState()) {
         window.draw(playerSprite->returnSpritesShape());
     }
-    
     for (const auto& bullet : bullets) {
         if (bullet->getVisibleState()) {
             window.draw(bullet->returnSpritesShape());
         }
     }
-
     for (const auto& bush : bushes) {
         if (bush->getVisibleState()) {
             window.draw(bush->returnSpritesShape());
         }
     }
-
     for (const auto& slime : slimes) {
         if (slime->getVisibleState()) {
             window.draw(slime->returnSpritesShape());
         }
+    }
+    if(endingText->getVisibleState()){
+        window.draw(endingText->getText()); 
     }
 }

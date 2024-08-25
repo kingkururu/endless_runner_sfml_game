@@ -90,7 +90,7 @@ public:
 
 class Bullet : public NonStatic{
    public:
-    explicit Bullet(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath, float speed) : NonStatic(position, scale, texturePath, speed, animationRects) {}
+    explicit Bullet(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath, const std::vector<sf::IntRect> animationRects, float speed) : NonStatic(position, scale, texturePath, speed, animationRects) {}
     ~Bullet() override {}; 
     void updateBullet();  
 };
