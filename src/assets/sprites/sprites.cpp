@@ -6,7 +6,6 @@
 //
 
 #include "sprites.hpp"
-#include "constants.hpp"
 
 // base class (sprite)
 Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath) 

@@ -6,10 +6,11 @@
 //
 
 #include "game.hpp"
-using namespace GameData;
 
-GameManager::GameManager(const std::string& title, unsigned int height, unsigned int width, unsigned int frameRate) : window(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close), gameTitle(title), screenHeight(height), screenWidth(width),  frameLimit(frameRate) {
-    window.setFramerateLimit(frameLimit);
+GameManager::GameManager()
+    : window(sf::VideoMode(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT), Constants::GAME_TITLE, sf::Style::Titlebar | sf::Style::Close) 
+{
+    window.setFramerateLimit(Constants::FRAME_LIMIT);
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     gameEnd = false; 
 }
@@ -74,11 +75,8 @@ void GameManager::handleEventInput(){
         }
         if (event.type == sf::Event::KeyPressed){
             switch (event.key.code){
-                case sf::Keyboard::D:
-                    FlagEvents.dPressed = true;
-                    break;
-                case sf::Keyboard::A:
-                    FlagEvents.aPressed = true;
+                case sf::Keyboard::Space: 
+                    spaceBpressed = true;
                     break;
                 case sf::Keyboard::B:
                     backgroundMusic->returnMusic()->stop();
@@ -89,8 +87,14 @@ void GameManager::handleEventInput(){
             }
         }
         if (event.type == sf::Event::KeyReleased){
-            FlagEvents.dPressed = false;
-            FlagEvents.aPressed = false;
+            spaceBpressed = false;
+        }
+        if (event.type == sf::Event::MouseButtonPressed){
+           mouseClickedPos = sf::Mouse::getPosition(window); 
+           mouseClicked = true; 
+        }
+        if (event.type == sf::Event::MouseButtonReleased){
+            mouseClicked = false;
         }
     }
 }

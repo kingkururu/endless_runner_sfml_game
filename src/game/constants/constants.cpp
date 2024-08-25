@@ -34,7 +34,7 @@ namespace Constants {
     const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
 
     const sf::Vector2f BULLET_POSITION = {0.0, 0.0};
-    const sf::Vector2f BULLET_SCALE = {0.5, 0.5};
+    const sf::Vector2f BULLET_SCALE = {2.0, 2.0};
     const std::vector<sf::IntRect> BULLETSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
     const float BULLET_SPEED = 200.0f;
     const float BULLET_ACCELERATION = -20.0f;

@@ -8,7 +8,7 @@
 #include "game.hpp"
 
 int main( ){
-    GameManager makeGame(Constants::GAME_TITLE, Constants::SCREEN_HEIGHT, Constants::SCREEN_WIDTH, Constants::FRAME_LIMIT);
+    GameManager makeGame;
 
     makeGame.runGame();
     

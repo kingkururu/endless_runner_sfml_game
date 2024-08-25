@@ -11,8 +11,9 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
-#include <SFML/Graphics.hpp>
 #include <stdexcept>
+#include <SFML/Graphics.hpp>
+#include "constants.hpp"
 
 class Sprite{
 public:

@@ -7,18 +7,20 @@
 #ifndef game_hpp
 #define game_hpp
 
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <stdexcept>
+#include <SFML/Graphics.hpp>
+
 #include "sprites.hpp"
 #include "sound.hpp"
 #include "fonts.hpp"
-#include <stdexcept>
+#include "constants.hpp"
 
 class GameManager {
 public:
-    GameManager(const std::string& title = "Game Title basic", unsigned int height = 300, unsigned int width = 300, unsigned int frameRate = 60);
+    GameManager();
     void runGame();
     
 private:
@@ -35,15 +37,15 @@ private:
     sf::Clock clock;
     float deltaTime {};
     float globalTime {}; 
-    const std::string gameTitle{}; 
-    unsigned int screenHeight{};
-    unsigned int screenWidth{};
-    unsigned int frameLimit{};
 
     //Game states
+    unsigned int score = Constants::INITIAL_SCORE;
+    int playerHit = Constants::INITIAL_PLAYER_HIT;  
     bool gameEnd = false; 
-    unsigned int score {}; 
-    
+    bool spaceBpressed = false; 
+    bool mouseClicked = false;
+    sf::Vector2i mouseClickedPos {}; 
+
     //Sprites 
     std::unique_ptr<Background> background; 
     std::unique_ptr<Player> playerSprite;
