@@ -26,8 +26,8 @@ namespace Constants {
     const sf::Vector2f BACKGROUND_SCALE = {0.5, 0.5};
     const char* BACKGROUNDSPRITE_PATH = "src/assets/sprites/png/background.png";
 
-    const sf::Vector2f PLAYER_POSITION = {0.0, 0.0};
-    const sf::Vector2f PLAYER_SCALE = {0.5, 0.5};
+    const sf::Vector2f PLAYER_POSITION = {0.0, SCREEN_HEIGHT - 120};
+    const sf::Vector2f PLAYER_SCALE = {3.0, 3.0};
     const std::vector<sf::IntRect> PLAYERSPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
     const float PLAYER_SPEED = 200.0f;
     const sf::Color PLAYER_DEAD_COLOR = sf::Color(200, 0, 0);
@@ -40,16 +40,16 @@ namespace Constants {
     const float BULLET_ACCELERATION = -20.0f;
     const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
 
-    const sf::Vector2f SLIME_POSITION = {0.0, 0.0};
-    const sf::Vector2f SLIME_SCALE = {0.5, 0.5};
+    const sf::Vector2f SLIME_POSITION = {SCREEN_WIDTH - 90, static_cast<float>(std::rand() % SCREEN_HEIGHT) - 60};
+    const sf::Vector2f SLIME_SCALE = {0.35, 0.35};
     const std::vector<sf::IntRect> SLIMESPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
     const char* SLIMESPRITE_PATH = "src/assets/sprites/png/slime.png";
 
     const float SLIME_SPEED = 200.0f;
     const float SLIME_ACCELERATION = -20.0f;
 
-    const sf::Vector2f BUSH_POSITION = {0.0, 0.0};
-    const sf::Vector2f BUSH_SCALE = {0.5, 0.5};
+    const sf::Vector2f BUSH_POSITION = {SCREEN_WIDTH - 100, SCREEN_HEIGHT - 130};
+    const sf::Vector2f BUSH_SCALE = {3.0, 3.0};
     const std::vector<sf::IntRect> BUSHSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
     const float BUSH_SPEED = 200.0f;
     const float BUSH_ACCELERATION = -20.0f;
