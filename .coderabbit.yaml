@@ -13,6 +13,7 @@ exclude_patterns:
   - "**/node_modules/**"
   - "**/vendor/**"
   - "**/build/**"
+minimum_severity: LOW
 
 # Access settings
 early_access: true

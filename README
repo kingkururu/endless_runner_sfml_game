@@ -6,11 +6,27 @@ Simple game project made with C++ & SFML
 
 --------------------------------------------------------- Assets sources
 SPRITES:
-Main player sprite
+Main player 
+https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
 
+Bushes
+https://craftpix.net/freebies/free-top-down-bushes-pixel-art/
+
+Slime
+https://craftpix.net/freebies/free-slime-sprite-sheets-pixel-art/
+
+Forest background 
+https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
+ 
 SOUND: 
 Background music
+https://pixabay.com/music/video-games-chiptune-grooving-142242/
+
+Player dead sound
+https://freesound.org/people/kwahmah_02/sounds/259701/
 
 FONT:
 Pixel font
-https://www.dafont.com/llpixel.font
+https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
+ 
+
