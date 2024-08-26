@@ -10,6 +10,7 @@
 GameManager::GameManager()
     : window(sf::VideoMode(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT), Constants::GAME_TITLE, sf::Style::Titlebar | sf::Style::Close) 
 {
+    Constants::loadTextures();
     window.setFramerateLimit(Constants::FRAME_LIMIT);
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     gameEnd = false; 
@@ -37,11 +38,11 @@ void GameManager::runGame() {
 void GameManager::createAssets(){
    try {
         //sprites
-        background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUNDSPRITE_PATH);
-        playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYERSPRITE_PATH, Constants::PLAYERSPRITE_RECTS, Constants::PLAYER_SPEED);
-        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLETSPRITE_PATH, Constants::BULLETSPRITES_RECTS, Constants::BULLET_SPEED)); 
-        bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSHSPRITE_PATH, Constants::BUSHSPRITES_RECTS, Constants::BUSH_SPEED)); 
-        slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIMESPRITE_PATH, Constants::SLIMESPRITE_RECTS, Constants::SLIME_SPEED));
+        background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_TEXTURE);
+        playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYER_SPEED);
+        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLET_SPEED)); 
+        bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSH_SPEED)); 
+        slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIME_SPEED));
 
         //sounds and music
         playerDeadSound = std::make_unique<SoundClass>(Constants::PLAYERDEADSOUND_PATH);

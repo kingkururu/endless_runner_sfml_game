@@ -8,21 +8,40 @@
 #include "sprites.hpp"
 
 // base class (sprite)
-Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, const std::string& texturePath) 
-    : position(position), scale(scale), skin(new sf::Texture), spriteCreated(new sf::Sprite), visibleState(true) {
-    try {
-        if (!skin->loadFromFile(texturePath)) {
-            throw std::runtime_error("Error in loading sprite texture from: " + texturePath);
-        }
+// Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, const sf::Texture texture) 
+//     : position(position), scale(scale), texture(texture), spriteCreated(new sf::Sprite), visibleState(true) {
+//     try {
 
-        sf::Vector2u textureSize = skin->getSize();
-        if (!textureSize.x || !textureSize.y) {
-            throw std::runtime_error("Loaded texture has size 0: " + texturePath);
-        }
+//         sf::Vector2u textureSize = texture->getSize();
+//         if (!textureSize.x || !textureSize.y) {
+//             throw std::runtime_error("Loaded texture has size 0");
+//         }
     
-        spriteCreated->setTexture(*skin);
-        spriteCreated->setPosition(position);
-        spriteCreated->setScale(scale);
+//         spriteCreated->setTexture(*texture);
+//         spriteCreated->setPosition(position);
+//         spriteCreated->setScale(scale);
+//     }
+//     catch (const std::exception& e) {
+//         std::cerr << e.what() << std::endl;
+//         visibleState = false;
+//     }
+// }
+Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, std::shared_ptr<sf::Texture> texture)
+    : position(position), scale(scale), texture(texture), spriteCreated(std::make_unique<sf::Sprite>()), visibleState(true) {
+    try {
+        if (texture) { 
+            sf::Vector2u textureSize = texture->getSize();
+            if (!textureSize.x || !textureSize.y) {
+                throw std::runtime_error("Loaded texture has size 0");
+            }
+
+            spriteCreated->setTexture(*texture);
+            spriteCreated->setPosition(position);
+            spriteCreated->setScale(scale);
+
+        } else {
+            throw std::runtime_error("Texture is no longer available");
+        }
     }
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;

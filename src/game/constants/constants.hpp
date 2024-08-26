@@ -10,6 +10,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <iostream> 
 
 namespace Constants {
     // basic game components
@@ -34,6 +35,7 @@ namespace Constants {
     extern const sf::Vector2f BACKGROUND_POSITION;
     extern const sf::Vector2f BACKGROUND_SCALE;
     extern const char* BACKGROUNDSPRITE_PATH;
+    extern std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE;  
 
     // player components (non-static) / animated 
     extern const sf::Vector2f PLAYER_POSITION;
@@ -42,6 +44,7 @@ namespace Constants {
     extern const float PLAYER_SPEED;
     extern const sf::Color PLAYER_DEAD_COLOR;
     extern const char* PLAYERSPRITE_PATH;
+    extern std::shared_ptr<sf::Texture> PLAYER_TEXTURE;
 
     // bullet components (non-static) / non-animated
     extern const sf::Vector2f BULLET_POSITION;
@@ -50,12 +53,14 @@ namespace Constants {
     extern const float BULLET_SPEED;
     extern const float BULLET_ACCELERATION;
     extern const char* BULLETSPRITE_PATH;
+    extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
 
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
     extern const sf::Vector2f SLIME_SCALE;
     extern const std::vector<sf::IntRect> SLIMESPRITE_RECTS;
     extern const char* SLIMESPRITE_PATH;
+    extern std::shared_ptr<sf::Texture> SLIME_TEXTURE;
 
     extern const float SLIME_SPEED;
     extern const float SLIME_ACCELERATION;
@@ -67,6 +72,7 @@ namespace Constants {
     extern const float BUSH_SPEED;
     extern const float BUSH_ACCELERATION;
     extern const char* BUSHSPRITE_PATH;
+    extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
 
     // text components
     extern const sf::Vector2f TEXT_POSITION;
@@ -81,4 +87,6 @@ namespace Constants {
     extern const char* PLAYERJUMPSOUND_PATH;
     extern const char* BULLETSOUND_PATH;
     extern const char* OBSTHITSOUND_PATH;
+
+    extern void loadTextures(); 
 }
