@@ -46,6 +46,7 @@ namespace Constants {
     extern const sf::Color PLAYER_DEAD_COLOR;
     extern const char* PLAYERSPRITE_PATH;
     extern std::shared_ptr<sf::Texture> PLAYER_TEXTURE;
+    extern const unsigned int PLAYERANIM_MAX_INDEX; 
 
     // bullet components (non-static) / non-animated
     extern const sf::Vector2f BULLET_POSITION;
@@ -55,6 +56,7 @@ namespace Constants {
     extern const float BULLET_ACCELERATION;
     extern const char* BULLETSPRITE_PATH;
     extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
+    extern const unsigned int BULLETANIM_MAX_INDEX; 
 
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
@@ -62,7 +64,7 @@ namespace Constants {
     extern std::vector<sf::IntRect> SLIMESPRITE_RECTS;
     extern const char* SLIMESPRITE_PATH;
     extern std::shared_ptr<sf::Texture> SLIME_TEXTURE;
-
+    extern const unsigned int SLIMEANIM_MAX_INDEX; 
     extern const float SLIME_SPEED;
     extern const float SLIME_ACCELERATION;
 
@@ -74,6 +76,7 @@ namespace Constants {
     extern const float BUSH_ACCELERATION;
     extern const char* BUSHSPRITE_PATH;
     extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
+    extern const unsigned int BUSHANIM_MAX_INDEX; 
 
     // text components
     extern const sf::Vector2f TEXT_POSITION;

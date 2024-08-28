@@ -48,7 +48,7 @@ void NonStatic::updatePos() {
 
 void NonStatic::setRects(int animNum){
     try{
-        if(animNum < 0 || animNum >= animationRects.size()){
+        if(animNum < 0 || animNum >= indexMax){
             throw std::out_of_range("Animation index out of range. ");
         }
 
@@ -58,26 +58,24 @@ void NonStatic::setRects(int animNum){
     catch(const std::exception& e){
         std::cerr << "error in setting texture rectangle: " << e.what() << std::endl;
     }
-    
 }
 
 void NonStatic::changeAnimation(float deltaTime) {
     try {
         elapsedTime += deltaTime;
         if (elapsedTime > Constants::ANIMATION_CHANGE_TIME) {
+            elapsedTime = 0.0;
+            ++currentIndex; 
+
             if (currentIndex >= indexMax) {
-                currentIndex = -1;
+                currentIndex = 0; 
             }
-            ++currentIndex;
-            setRects(currentIndex);
-        }
-        
-        if (elapsedTime > visibleDuration) {
-            setVisibleState(false);
+            setRects(currentIndex); 
         }
     }
     catch (const std::exception& e) {
-        std::cerr << "Error in changing animation: " << e.what() << std::endl;
+        std::cerr << "Error in changing animation, current index: " << currentIndex 
+                  << " - " << e.what() << std::endl;
     }
 }
 
@@ -112,11 +110,3 @@ void Bullet::updateBullet(){
         std::cerr << "error in updating obstacle: " << e.what() << std::endl;
     }
 }
-
-// /Liniear movement ( free fall )
-// void Rain::updateRain(){
-//     speed += gravity * GameComponents.deltaTime;
-//     position.y += speed * GameComponents.deltaTime;
-//     updatePos();
-// }
-
