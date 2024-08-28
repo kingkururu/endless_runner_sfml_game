@@ -41,7 +41,7 @@ namespace Constants {
     // player components (non-static) / animated 
     extern const sf::Vector2f PLAYER_POSITION;
     extern const sf::Vector2f PLAYER_SCALE;
-    extern const std::vector<sf::IntRect> PLAYERSPRITE_RECTS;
+    extern std::vector<sf::IntRect> PLAYERSPRITE_RECTS;
     extern const float PLAYER_SPEED;
     extern const sf::Color PLAYER_DEAD_COLOR;
     extern const char* PLAYERSPRITE_PATH;
@@ -50,7 +50,7 @@ namespace Constants {
     // bullet components (non-static) / non-animated
     extern const sf::Vector2f BULLET_POSITION;
     extern const sf::Vector2f BULLET_SCALE;
-    extern const std::vector<sf::IntRect> BULLETSPRITES_RECTS;
+    extern std::vector<sf::IntRect> BULLETSPRITES_RECTS;
     extern const float BULLET_SPEED;
     extern const float BULLET_ACCELERATION;
     extern const char* BULLETSPRITE_PATH;
@@ -59,7 +59,7 @@ namespace Constants {
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
     extern const sf::Vector2f SLIME_SCALE;
-    extern const std::vector<sf::IntRect> SLIMESPRITE_RECTS;
+    extern std::vector<sf::IntRect> SLIMESPRITE_RECTS;
     extern const char* SLIMESPRITE_PATH;
     extern std::shared_ptr<sf::Texture> SLIME_TEXTURE;
 
@@ -69,7 +69,7 @@ namespace Constants {
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;
     extern const sf::Vector2f BUSH_SCALE;
-    extern const std::vector<sf::IntRect> BUSHSPRITES_RECTS;
+    extern std::vector<sf::IntRect> BUSHSPRITES_RECTS;
     extern const float BUSH_SPEED;
     extern const float BUSH_ACCELERATION;
     extern const char* BUSHSPRITE_PATH;
@@ -106,5 +106,5 @@ namespace Constants {
     extern const float OBSTHITSOUND_VOLUME;
 
     // load textures, fonts, music, and sound
-    extern void loadTextures(); 
+    extern void initialize(); 
 }

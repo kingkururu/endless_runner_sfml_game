@@ -9,7 +9,7 @@
 
 GameManager::GameManager()
     : window(sf::VideoMode(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT), Constants::GAME_TITLE, sf::Style::Titlebar | sf::Style::Close) {
-    Constants::loadTextures();
+    Constants::initialize();
     window.setFramerateLimit(Constants::FRAME_LIMIT);
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     gameEnd = false; 
@@ -39,9 +39,14 @@ void GameManager::createAssets(){
         //sprites
         background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_TEXTURE);
         playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYER_SPEED);
-        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLET_SPEED)); 
+        playerSprite->setRects(1); 
+
+        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLET_SPEED));
+
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSH_SPEED)); 
+
         slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIME_SPEED));
+        slimes[0]->setRects(1); 
 
         //sounds and music
         playerDeadSound = std::make_unique<SoundClass>(Constants::PLAYERDEAD_SOUNDBUFF, Constants::PLAYERDEADSOUND_VOLUME);
@@ -128,16 +133,20 @@ void GameManager::handleGameEvents(){
 
 void GameManager::updateSprites() {
     try {
-        if(playerSprite->getMoveState())
-            playerSprite->updatePlayer();
+        if(playerSprite->getMoveState()){
+            playerSprite->changeAnimation(deltaTime);  
+            playerSprite->updatePlayer();   
+        }
     } catch(const std::exception& e) {
         std::cerr << "Exception in updateSprites (Player): " << e.what() << std::endl;
     }
 
     try {
         for(auto& slime : slimes){
-            if(slime->getMoveState())
+            if(slime->getMoveState()){
+                slime->changeAnimation(deltaTime);  
                 slime->updateObstacle();
+            }
         }
     } catch(const std::exception& e) {
         std::cerr << "Exception in updateSprites (Slimes): " << e.what() << std::endl;
@@ -145,8 +154,10 @@ void GameManager::updateSprites() {
 
     try {
         for(auto& bush : bushes){
-            if(bush->getMoveState())
+            if(bush->getMoveState()){
+                bush->changeAnimation(deltaTime);
                 bush->updateObstacle();
+            }
         }
     } catch(const std::exception& e) {
         std::cerr << "Exception in updateSprites (Bushes): " << e.what() << std::endl;
@@ -154,8 +165,10 @@ void GameManager::updateSprites() {
 
     try {
         for(auto& bullet : bullets){
-            if(bullet->getMoveState())
+            if(bullet->getMoveState()){
+                bullet->changeAnimation(deltaTime); 
                 bullet->updateBullet();
+            }
         }
     } catch(const std::exception& e) {
         std::cerr << "Exception in updateSprites (Bullets): " << e.what() << std::endl;

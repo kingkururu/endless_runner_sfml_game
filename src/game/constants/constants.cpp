@@ -28,7 +28,8 @@ namespace Constants {
 
     const sf::Vector2f PLAYER_POSITION = {0.0, SCREEN_HEIGHT - 120};
     const sf::Vector2f PLAYER_SCALE = {3.0, 3.0};
-    const std::vector<sf::IntRect> PLAYERSPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
+    std::vector<sf::IntRect> PLAYERSPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
+    
     const float PLAYER_SPEED = 200.0f;
     const sf::Color PLAYER_DEAD_COLOR = sf::Color(200, 0, 0);
     const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
@@ -36,7 +37,8 @@ namespace Constants {
 
     const sf::Vector2f BULLET_POSITION = PLAYER_POSITION;
     const sf::Vector2f BULLET_SCALE = {2.5, 2.5};
-    const std::vector<sf::IntRect> BULLETSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
+    std::vector<sf::IntRect> BULLETSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
+
     const float BULLET_SPEED = 200.0f;
     const float BULLET_ACCELERATION = -20.0f;
     const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
@@ -44,7 +46,8 @@ namespace Constants {
     
     const sf::Vector2f SLIME_POSITION = {static_cast<float>(std::rand() % SCREEN_WIDTH) - 60, 0};
     const sf::Vector2f SLIME_SCALE = {0.35, 0.35};
-    const std::vector<sf::IntRect> SLIMESPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
+    std::vector<sf::IntRect> SLIMESPRITE_RECTS = {sf::IntRect{0, 0, 0, 0}};
+
     const char* SLIMESPRITE_PATH = "src/assets/sprites/png/slime.png";
     std::shared_ptr<sf::Texture> SLIME_TEXTURE = std::make_shared<sf::Texture>();
 
@@ -53,7 +56,8 @@ namespace Constants {
 
     const sf::Vector2f BUSH_POSITION = {SCREEN_WIDTH - 100, SCREEN_HEIGHT - 130};
     const sf::Vector2f BUSH_SCALE = {3.0, 3.0};
-    const std::vector<sf::IntRect> BUSHSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
+    std::vector<sf::IntRect> BUSHSPRITES_RECTS = {sf::IntRect{0, 0, 0, 0}};
+
     const float BUSH_SPEED = 200.0f;
     const float BUSH_ACCELERATION = -20.0f;
     const char* BUSHSPRITE_PATH = "src/assets/sprites/png/bush1.png";
@@ -87,7 +91,7 @@ namespace Constants {
     const float OBSTHITSOUND_VOLUME = 100.0f; 
 
 
-    void loadTextures() {
+    void initialize() {
         //load sprite texture
         if (!BACKGROUND_TEXTURE->loadFromFile(BACKGROUNDSPRITE_PATH)) {
             std::cerr << "Failed to load background texture from file: " << BACKGROUNDSPRITE_PATH << std::endl;
@@ -128,6 +132,17 @@ namespace Constants {
         if (!OBSTHIT_SOUNDBUFF->loadFromFile(OBSTHITSOUND_PATH)) {
             std::cerr << "Failed to load bush texture from file: " << OBSTHITSOUND_PATH << std::endl;
         }
+
+        //make rects for animations     //at this current moment player is only player_run.png
+        for(int i = 0; i < 5; ++i ){
+            PLAYERSPRITE_RECTS.push_back(sf::IntRect{ 32 * i, 0, 32, 32}); 
+        }
+        for(int i = 0; i < 5; ++i ){
+            SLIMESPRITE_RECTS.push_back(sf::IntRect{ 490 * i, 0, 490, 242}); 
+        }
+        // for(int i = 0; i < ; ++i ){
+        //     BUSHSPRITES_RECTS.push_back(sf::IntRect{0, 78 * i, 389, 78}); 
+        // }
     }
 }
 
