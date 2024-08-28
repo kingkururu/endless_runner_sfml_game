@@ -9,6 +9,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <iostream> 
 
@@ -82,13 +83,28 @@ namespace Constants {
     extern std::shared_ptr<sf::Font> TEXT_FONT; 
     extern const char* TEXT_MESSAGE;
 
-    // paths to sounds & Music
+    // music components 
     extern const char* BACKGROUNDMUSIC_PATH;
-    extern const char* PLAYERDEADSOUND_PATH;
-    extern const char* PLAYERJUMPSOUND_PATH;
-    extern const char* BULLETSOUND_PATH;
-    extern const char* OBSTHITSOUND_PATH;
-    //extern std::shared_ptr<sf::
+    extern std::shared_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC;
+    extern const float BACKGROUNDMUSIC_VOLUME; 
 
+    // sound components
+    extern const char* PLAYERDEADSOUND_PATH;
+    extern std::shared_ptr<sf::SoundBuffer> PLAYERDEAD_SOUNDBUFF;
+    extern const float PLAYERDEADSOUND_VOLUME;
+
+    extern const char* PLAYERJUMPSOUND_PATH;
+    extern std::shared_ptr<sf::SoundBuffer> PLAYERJUMP_SOUNDBUFF;
+    extern const float PLAYERJUMPSOUND_VOLUME;
+
+    extern const char* BULLETSOUND_PATH;
+    extern std::shared_ptr<sf::SoundBuffer> BULLET_SOUNDBUFF;
+    extern const float BULLETSOUND_VOLUME;
+
+    extern const char* OBSTHITSOUND_PATH;
+    extern std::shared_ptr<sf::SoundBuffer> OBSTHIT_SOUNDBUFF;
+    extern const float OBSTHITSOUND_VOLUME;
+
+    // load textures, fonts, music, and sound
     extern void loadTextures(); 
 }

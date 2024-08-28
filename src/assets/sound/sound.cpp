@@ -7,12 +7,13 @@
 
 #include "sound.hpp"
 
-SoundClass::SoundClass(const std::string& soundPath, float volume) : soundBuffer(std::make_unique<sf::SoundBuffer>()), sound(std::make_unique<sf::Sound>()), volume(volume){
+SoundClass::SoundClass(std::weak_ptr<sf::SoundBuffer> soundBuffer, float volume) : soundBuffer(soundBuffer), sound(std::make_unique<sf::Sound>()), volume(volume){
     try{
-        if(!soundBuffer->loadFromFile(soundPath)){
-            throw std::runtime_error("Error in loading sound from file: " + soundPath);
+        auto soundBuff = soundBuffer.lock();
+        if(!soundBuff){
+            throw std::runtime_error("failed loading sound buffer");
         }
-        sound->setBuffer(*soundBuffer);
+        sound->setBuffer(*soundBuff);
         sound->setVolume(volume); 
     }
 
@@ -23,12 +24,16 @@ SoundClass::SoundClass(const std::string& soundPath, float volume) : soundBuffer
     }
 }
 
-MusicClass::MusicClass(const std::string& musicPath, float volume) : SoundClass(musicPath, volume), music(std::make_unique<sf::Music>()) {
+MusicClass::MusicClass(std::weak_ptr<sf::Music> musicLoad, float volume)
+    : SoundClass(std::weak_ptr<sf::SoundBuffer>(), volume), weakMusicPtr(musicLoad) {
     try {
-        if (!music->openFromFile(musicPath)) {
-            throw std::runtime_error("Error loading music from file: " + musicPath);
+        auto musicptr = weakMusicPtr.lock();
+        if (!musicptr) {
+            throw std::runtime_error("Error loading music");
         }
+        music = std::make_unique<sf::Music>();
         music->setVolume(volume);
+
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
         music.reset();

@@ -67,36 +67,68 @@ namespace Constants {
     const char* TEXT_MESSAGE = "blank message in text";
 
     const char* BACKGROUNDMUSIC_PATH = "src/assets/sound/mp3,flac,wav/bgm.mp3";
-    //std::shared_ptr<sf::
+    std::shared_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC = std::make_shared<sf::Music>(); 
+    const float BACKGROUNDMUSIC_VOLUME = 100.0f; 
 
     const char* PLAYERDEADSOUND_PATH = "src/assets/sound/mp3,flac,wav/gameEnd.flac";
+    std::shared_ptr<sf::SoundBuffer> PLAYERDEAD_SOUNDBUFF = std::make_shared<sf::SoundBuffer>(); 
+    const float PLAYERDEADSOUND_VOLUME = 100.0f; 
+
     const char* PLAYERJUMPSOUND_PATH = "src/assets/sound/mp3,flac,wav/jump.wav";
+    std::shared_ptr<sf::SoundBuffer> PLAYERJUMP_SOUNDBUFF = std::make_shared<sf::SoundBuffer>(); 
+    const float PLAYERJUMPSOUND_VOLUME = 100.0f; 
+
     const char* BULLETSOUND_PATH = "";
+    std::shared_ptr<sf::SoundBuffer> BULLET_SOUNDBUFF = std::make_shared<sf::SoundBuffer>(); 
+    const float BULLETSOUND_VOLUME = 100.0f; 
+
     const char* OBSTHITSOUND_PATH = "";
+    std::shared_ptr<sf::SoundBuffer> OBSTHIT_SOUNDBUFF = std::make_shared<sf::SoundBuffer>(); 
+    const float OBSTHITSOUND_VOLUME = 100.0f; 
+
 
     void loadTextures() {
+        //load sprite texture
         if (!BACKGROUND_TEXTURE->loadFromFile(BACKGROUNDSPRITE_PATH)) {
             std::cerr << "Failed to load background texture from file: " << BACKGROUNDSPRITE_PATH << std::endl;
         }
-
         if (!PLAYER_TEXTURE->loadFromFile(PLAYERSPRITE_PATH)) {
             std::cerr << "Failed to load player texture from file: " << PLAYERSPRITE_PATH << std::endl;
         }
-
         if (!BULLET_TEXTURE->loadFromFile(BULLETSPRITE_PATH)) {
             std::cerr << "Failed to load bullet texture from file: " << BULLETSPRITE_PATH << std::endl;
         }
-
         if (!SLIME_TEXTURE->loadFromFile(SLIMESPRITE_PATH)) {
             std::cerr << "Failed to load slime texture from file: " << SLIMESPRITE_PATH << std::endl;
         }
-
         if (!BUSH_TEXTURE->loadFromFile(BUSHSPRITE_PATH)) {
             std::cerr << "Failed to load bush texture from file: " << BUSHSPRITE_PATH << std::endl;
         }
+
+        //load font
         if (!TEXT_FONT->loadFromFile(TEXT_PATH)){
             std::cerr << "Failed to load font from file: " << TEXT_PATH << std::endl; 
         }
 
+        //load music
+        if (!BACKGROUNDMUSIC_MUSIC->openFromFile(BACKGROUNDMUSIC_PATH)) {
+            std::cerr << "Failed to load background music from file: " << BACKGROUNDMUSIC_PATH << std::endl;
+        }
+        
+        //load sound
+        if (!PLAYERDEAD_SOUNDBUFF->loadFromFile(PLAYERDEADSOUND_PATH)) {
+            std::cerr << "Failed to load playerdead sound from file: " << PLAYERDEADSOUND_PATH << std::endl;
+        }
+        if (!PLAYERJUMP_SOUNDBUFF->loadFromFile(PLAYERJUMPSOUND_PATH)) {
+            std::cerr << "Failed to load bush texture from file: " << PLAYERJUMPSOUND_PATH << std::endl;
+        }
+        if (!BULLET_SOUNDBUFF->loadFromFile(BULLETSOUND_PATH)) {
+            std::cerr << "Failed to load playerdead sound from file: " << BULLETSOUND_PATH << std::endl;
+        }
+        if (!OBSTHIT_SOUNDBUFF->loadFromFile(OBSTHITSOUND_PATH)) {
+            std::cerr << "Failed to load bush texture from file: " << OBSTHITSOUND_PATH << std::endl;
+        }
     }
 }
+
+

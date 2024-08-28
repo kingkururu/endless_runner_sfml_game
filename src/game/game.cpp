@@ -44,12 +44,12 @@ void GameManager::createAssets(){
         slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIME_SPEED));
 
         //sounds and music
-        playerDeadSound = std::make_unique<SoundClass>(Constants::PLAYERDEADSOUND_PATH);
-        playerJumpSound = std::make_unique<SoundClass>(Constants::PLAYERJUMPSOUND_PATH);
-        bulletSound = std::make_unique<SoundClass>(Constants::BULLETSOUND_PATH);
-        obstHitSound = std::make_unique<SoundClass>(Constants::OBSTHITSOUND_PATH);    
-        backgroundMusic = std::make_unique<MusicClass>(Constants::BACKGROUNDMUSIC_PATH);
-        backgroundMusic->returnMusic()->play(); 
+        playerDeadSound = std::make_unique<SoundClass>(Constants::PLAYERDEAD_SOUNDBUFF, Constants::PLAYERDEADSOUND_VOLUME);
+        playerJumpSound = std::make_unique<SoundClass>(Constants::PLAYERJUMP_SOUNDBUFF, Constants::PLAYERJUMPSOUND_VOLUME);
+        bulletSound = std::make_unique<SoundClass>(Constants::BULLET_SOUNDBUFF, Constants::BULLETSOUND_VOLUME);
+        obstHitSound = std::make_unique<SoundClass>(Constants::OBSTHIT_SOUNDBUFF, Constants::OBSTHITSOUND_VOLUME);    
+        backgroundMusic = std::make_unique<MusicClass>(Constants::BACKGROUNDMUSIC_MUSIC, Constants::BACKGROUNDMUSIC_VOLUME);
+        backgroundMusic->returnMusic().play(); 
         
         //text
         endingText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE); 
@@ -78,7 +78,7 @@ void GameManager::handleEventInput(){
                     spaceBpressed = true;
                     break;
                 case sf::Keyboard::B:
-                    backgroundMusic->returnMusic()->stop();
+                    backgroundMusic->returnMusic().stop();
                     restartGame();
                     break;
                 default:

@@ -16,7 +16,7 @@
 
 class SoundClass{
 public:
-    explicit SoundClass(const std::string& soundPath, float volume = 100.0f);
+    explicit SoundClass(std::weak_ptr<sf::SoundBuffer> soundBuffer, float volume);
     sf::Sound& returnSound() { return *sound; }
     const sf::Sound& returnSound() const { return *sound; }
     ~SoundClass() = default; 
@@ -24,21 +24,23 @@ public:
     float const getVolume() { return volume; } 
 
 protected:
-    std::unique_ptr<sf::SoundBuffer> soundBuffer;
+    std::weak_ptr<sf::SoundBuffer> soundBuffer;
     std::unique_ptr<sf::Sound> sound;
-    float volume {}; 
+    float volume = 100.0f; 
 };
 
 class MusicClass : public SoundClass {
 public:
-    explicit MusicClass(const std::string& musicPath, float volume = 100.0f);
-    
-    std::unique_ptr<sf::Music>& returnMusic() { return music; } 
-    const std::unique_ptr<sf::Music>& returnMusic() const { return music; }
-     ~MusicClass() = default; 
+    explicit MusicClass(std::weak_ptr<sf::Music> musicLoad, float volume);
+
+    sf::Music& returnMusic() { return *music; } 
+    //const sf::Music& returnMusic() const { return *music; }
+    ~MusicClass() = default; 
 
 private:
+    std::weak_ptr<sf::Music> weakMusicPtr;
     std::unique_ptr<sf::Music> music;
+
 };
 
 #endif /* sound_hpp */
