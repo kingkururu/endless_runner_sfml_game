@@ -40,11 +40,8 @@ void GameManager::createAssets(){
         background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_TEXTURE);
         playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYER_SPEED, Constants::PLAYERANIM_MAX_INDEX);
         playerSprite->setRects(0); 
-
         bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLET_SPEED, Constants::BULLETANIM_MAX_INDEX));
-
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSH_SPEED, Constants::BUSHANIM_MAX_INDEX)); 
-
         slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIME_SPEED, Constants::SLIMEANIM_MAX_INDEX));
         slimes[0]->setRects(0); 
 
@@ -133,48 +130,36 @@ void GameManager::handleGameEvents(){
 
 void GameManager::updateSprites() {
     try {
-        if(playerSprite->getMoveState()){
+        if (playerSprite->getMoveState()) {
             playerSprite->changeAnimation(deltaTime);  
             playerSprite->updatePlayer();   
         }
-    } catch(const std::exception& e) {
-        std::cerr << "Exception in updateSprites (Player): " << e.what() << std::endl;
-    }
 
-    try {
-        for(auto& slime : slimes){
-            if(slime->getMoveState()){
+        for (auto& slime : slimes) {
+            if (slime->getMoveState()) {
                 slime->changeAnimation(deltaTime);  
                 slime->updateObstacle();
             }
         }
-    } catch(const std::exception& e) {
-        std::cerr << "Exception in updateSprites (Slimes): " << e.what() << std::endl;
-    }
 
-    try {
-        for(auto& bush : bushes){
-            if(bush->getMoveState()){
-                bush->changeAnimation(deltaTime);
+        for (auto& bush : bushes) {
+            if (bush->getMoveState()) {
                 bush->updateObstacle();
             }
         }
-    } catch(const std::exception& e) {
-        std::cerr << "Exception in updateSprites (Bushes): " << e.what() << std::endl;
-    }
 
-    try {
-        for(auto& bullet : bullets){
-            if(bullet->getMoveState()){
-                bullet->changeAnimation(deltaTime); 
+        for (auto& bullet : bullets) {
+            if (bullet->getMoveState()) {
                 bullet->updateBullet();
             }
         }
-    } catch(const std::exception& e) {
-        std::cerr << "Exception in updateSprites (Bullets): " << e.what() << std::endl;
-    }
 
-    window.display();
+        window.display();
+    } 
+    
+    catch (const std::exception& e) {
+        std::cerr << "Exception in updateSprites: " << e.what() << std::endl;
+    }
 }
 
 void GameManager::restartGame(){

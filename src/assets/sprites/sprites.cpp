@@ -56,7 +56,7 @@ void NonStatic::setRects(int animNum){
     }
     
     catch(const std::exception& e){
-        std::cerr << "error in setting texture rectangle: " << e.what() << std::endl;
+        std::cerr << "error in setting texture: " << e.what() << "the indexmax is: "<< indexMax << "the current index is "<< animNum << std::endl;
     }
 }
 
@@ -74,39 +74,21 @@ void NonStatic::changeAnimation(float deltaTime) {
         }
     }
     catch (const std::exception& e) {
-        std::cerr << "Error in changing animation, current index: " << currentIndex 
-                  << " - " << e.what() << std::endl;
+        std::cerr << "Error in changing animation, current index: " << currentIndex << " - " << e.what() << std::endl;
     }
 }
 
 // Player class
 void Player::updatePlayer() {
-    try {
-        updatePos();
-    }
-    catch (std::exception& e) {
-        std::cerr << "Error in updating player: " << e.what() << std::endl;
-    }
+    updatePos();
 }
 
 //obstacle class
 void Obstacle::updateObstacle(){
-    try{
-        updatePos();
-    }
-
-    catch(std::exception& e){
-        std::cerr << "error in updating obstacle: " << e.what() << std::endl;
-    }
+    updatePos();
 }
 
 //bullet class
 void Bullet::updateBullet(){
-    try{
-        updatePos();
-    }
-
-    catch(std::exception& e){
-        std::cerr << "error in updating obstacle: " << e.what() << std::endl;
-    }
+    updatePos();
 }

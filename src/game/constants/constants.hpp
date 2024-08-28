@@ -15,98 +15,115 @@
 
 namespace Constants {
     // basic game components
-    extern const unsigned int SCREEN_WIDTH;
-    extern const unsigned int SCREEN_HEIGHT; 
-    extern const unsigned int FRAME_LIMIT;
-    extern const char* GAME_TITLE;
+    constexpr unsigned short SCREEN_WIDTH = 960;
+    constexpr unsigned short SCREEN_HEIGHT = 540;
+    constexpr unsigned short FRAME_LIMIT = 60;
+    constexpr const char* GAME_TITLE = "SFML game 3";
 
     // score components
-    extern const int INITIAL_PLAYER_HIT;
-    extern const int INITIAL_SCORE;
+    constexpr unsigned short INITIAL_SCORE = 0;
 
     // basic animation standards
-    extern const float ANIMATION_FRAME_DURATION;
-    extern const float ANIMATION_CHANGE_TIME;
+    constexpr float ANIMATION_FRAME_DURATION = 0.1f;
+    constexpr float ANIMATION_CHANGE_TIME = 0.2f;
 
     // screen buffers for sprites and texts
-    extern const int SPRITE_OUT_OF_BOUNDS_OFFSET;
-    extern const int SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
+    constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 10;
+    constexpr unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT = 80;
+
+
+    // constexpr unsigned short SCREEN_WIDTH;
+    // constexpr unsigned short SCREEN_HEIGHT; 
+    // constexpr unsigned short FRAME_LIMIT;
+    // constexpr char* GAME_TITLE;
+
+    // // score components
+    // constexpr unsigned short INITIAL_PLAYER_HIT;
+    // constexpr unsigned short INITIAL_SCORE;
+
+    // // basic animation standards
+    // constexpr float ANIMATION_FRAME_DURATION;
+    // constexpr float ANIMATION_CHANGE_TIME;
+
+    // // screen buffers for sprites and texts
+    // constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET;
+    // constexpr unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
 
     // background components (static)
     extern const sf::Vector2f BACKGROUND_POSITION;
     extern const sf::Vector2f BACKGROUND_SCALE;
-    extern const char* BACKGROUNDSPRITE_PATH;
+    constexpr const char* BACKGROUNDSPRITE_PATH = "src/assets/sprites/png/background.png";
     extern std::shared_ptr<sf::Texture> BACKGROUND_TEXTURE;  
 
     // player components (non-static) / animated 
     extern const sf::Vector2f PLAYER_POSITION;
     extern const sf::Vector2f PLAYER_SCALE;
     extern std::vector<sf::IntRect> PLAYERSPRITE_RECTS;
-    extern const float PLAYER_SPEED;
+    constexpr float PLAYER_SPEED = 200.0f;
     extern const sf::Color PLAYER_DEAD_COLOR;
-    extern const char* PLAYERSPRITE_PATH;
+    constexpr const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
     extern std::shared_ptr<sf::Texture> PLAYER_TEXTURE;
-    extern const unsigned int PLAYERANIM_MAX_INDEX; 
+    constexpr unsigned short PLAYERANIM_MAX_INDEX = 4; 
 
     // bullet components (non-static) / non-animated
     extern const sf::Vector2f BULLET_POSITION;
     extern const sf::Vector2f BULLET_SCALE;
     extern std::vector<sf::IntRect> BULLETSPRITES_RECTS;
-    extern const float BULLET_SPEED;
-    extern const float BULLET_ACCELERATION;
-    extern const char* BULLETSPRITE_PATH;
+    constexpr float BULLET_SPEED = 200.0f;
+    constexpr float BULLET_ACCELERATION = -20.0f;
+    constexpr const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
     extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
-    extern const unsigned int BULLETANIM_MAX_INDEX; 
+    constexpr short BULLETANIM_MAX_INDEX = 0; 
 
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
     extern const sf::Vector2f SLIME_SCALE;
     extern std::vector<sf::IntRect> SLIMESPRITE_RECTS;
-    extern const char* SLIMESPRITE_PATH;
+    constexpr const char* SLIMESPRITE_PATH = "src/assets/sprites/png/slime.png";
     extern std::shared_ptr<sf::Texture> SLIME_TEXTURE;
-    extern const unsigned int SLIMEANIM_MAX_INDEX; 
-    extern const float SLIME_SPEED;
-    extern const float SLIME_ACCELERATION;
+    constexpr unsigned short SLIMEANIM_MAX_INDEX = 4; 
+    constexpr float SLIME_SPEED = 200.0f;
+    constexpr float SLIME_ACCELERATION = -20.0f;
 
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;
     extern const sf::Vector2f BUSH_SCALE;
     extern std::vector<sf::IntRect> BUSHSPRITES_RECTS;
-    extern const float BUSH_SPEED;
-    extern const float BUSH_ACCELERATION;
-    extern const char* BUSHSPRITE_PATH;
+    constexpr float BUSH_SPEED = 200.0f;
+    constexpr float BUSH_ACCELERATION = -20.0f;
+    constexpr const char* BUSHSPRITE_PATH = "src/assets/sprites/png/bush1.png";
     extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
-    extern const unsigned int BUSHANIM_MAX_INDEX; 
+    constexpr unsigned short BUSHANIM_MAX_INDEX = 0; 
 
     // text components
     extern const sf::Vector2f TEXT_POSITION;
-    extern const unsigned int TEXT_SIZE;
+    constexpr unsigned short TEXT_SIZE = 40;
     extern const sf::Color TEXT_COLOR;
-    extern const char* TEXT_PATH;
+    constexpr const char* TEXT_PATH = "src/assets/fonts/ttf/font1.ttf";
     extern std::shared_ptr<sf::Font> TEXT_FONT; 
-    extern const char* TEXT_MESSAGE;
+    constexpr const char* TEXT_MESSAGE = "blank message in text";
 
     // music components 
-    extern const char* BACKGROUNDMUSIC_PATH;
+    constexpr const char* BACKGROUNDMUSIC_PATH = "src/assets/sound/mp3,flac,wav/bgm.mp3";
     extern std::shared_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC;
-    extern const float BACKGROUNDMUSIC_VOLUME; 
+    constexpr float BACKGROUNDMUSIC_VOLUME = 100.0f; 
 
     // sound components
-    extern const char* PLAYERDEADSOUND_PATH;
+    constexpr const char* PLAYERDEADSOUND_PATH = "src/assets/sound/mp3,flac,wav/gameEnd.flac";
     extern std::shared_ptr<sf::SoundBuffer> PLAYERDEAD_SOUNDBUFF;
-    extern const float PLAYERDEADSOUND_VOLUME;
+    constexpr float PLAYERDEADSOUND_VOLUME = 100.0f; 
 
-    extern const char* PLAYERJUMPSOUND_PATH;
+    constexpr const char* PLAYERJUMPSOUND_PATH = "src/assets/sound/mp3,flac,wav/jump.wav";
     extern std::shared_ptr<sf::SoundBuffer> PLAYERJUMP_SOUNDBUFF;
-    extern const float PLAYERJUMPSOUND_VOLUME;
+    constexpr float PLAYERJUMPSOUND_VOLUME = 100.0f; 
 
-    extern const char* BULLETSOUND_PATH;
+    constexpr const char* BULLETSOUND_PATH = "";
     extern std::shared_ptr<sf::SoundBuffer> BULLET_SOUNDBUFF;
-    extern const float BULLETSOUND_VOLUME;
+    constexpr float BULLETSOUND_VOLUME = 100.0f; 
 
-    extern const char* OBSTHITSOUND_PATH;
+    constexpr const char* OBSTHITSOUND_PATH = "";
     extern std::shared_ptr<sf::SoundBuffer> OBSTHIT_SOUNDBUFF;
-    extern const float OBSTHITSOUND_VOLUME;
+    constexpr float OBSTHITSOUND_VOLUME = 100.0f;
 
     // load textures, fonts, music, and sound
     extern void initialize(); 
