@@ -21,7 +21,8 @@ void GameManager::runGame() {
         while (window.isOpen()) {
             if(!gameEnd){
                 countTime();
-                handleGameEvents();            
+                handleGameEvents();  
+                updateSprites();           
             }
             handleEventInput(); 
             draw();
@@ -103,7 +104,6 @@ void GameManager::handleGameEvents(){
     //run game states
     if(!gameEnd){
         //respawn objects here later
-        updateSprites(); 
     }
     else {
         playerSprite->setMoveState(false);
@@ -172,6 +172,8 @@ void GameManager::restartGame(){
 
     for(auto& bush : bushes)
         bush->setMoveState(true); 
+    
+    gameEnd = false; 
 }
 
 void GameManager::draw(){

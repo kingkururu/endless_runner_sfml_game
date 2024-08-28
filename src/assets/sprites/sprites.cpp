@@ -48,7 +48,7 @@ void NonStatic::updatePos() {
 
 void NonStatic::setRects(int animNum){
     try{
-        if(animNum < 0 || animNum >= indexMax){
+        if(animNum < 0 || animNum > indexMax){
             throw std::out_of_range("Animation index out of range. ");
         }
 

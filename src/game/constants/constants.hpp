@@ -24,8 +24,7 @@ namespace Constants {
     constexpr unsigned short INITIAL_SCORE = 0;
 
     // basic animation standards
-    constexpr float ANIMATION_FRAME_DURATION = 0.1f;
-    constexpr float ANIMATION_CHANGE_TIME = 0.2f;
+    constexpr float ANIMATION_CHANGE_TIME = 0.1f;
 
     // screen buffers for sprites and texts
     constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 10;
