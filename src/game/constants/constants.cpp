@@ -63,9 +63,12 @@ namespace Constants {
     const unsigned int TEXT_SIZE = 40;
     const sf::Color TEXT_COLOR = sf::Color::White;
     const char* TEXT_PATH = "src/assets/fonts/ttf/font1.ttf";
+    std::shared_ptr<sf::Font> TEXT_FONT = std::make_shared<sf::Font>(); 
     const char* TEXT_MESSAGE = "blank message in text";
 
     const char* BACKGROUNDMUSIC_PATH = "src/assets/sound/mp3,flac,wav/bgm.mp3";
+    //std::shared_ptr<sf::
+
     const char* PLAYERDEADSOUND_PATH = "src/assets/sound/mp3,flac,wav/gameEnd.flac";
     const char* PLAYERJUMPSOUND_PATH = "src/assets/sound/mp3,flac,wav/jump.wav";
     const char* BULLETSOUND_PATH = "";
@@ -91,5 +94,9 @@ namespace Constants {
         if (!BUSH_TEXTURE->loadFromFile(BUSHSPRITE_PATH)) {
             std::cerr << "Failed to load bush texture from file: " << BUSHSPRITE_PATH << std::endl;
         }
+        if (!TEXT_FONT->loadFromFile(TEXT_PATH)){
+            std::cerr << "Failed to load font from file: " << TEXT_PATH << std::endl; 
+        }
+
     }
 }

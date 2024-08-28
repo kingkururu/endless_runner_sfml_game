@@ -79,6 +79,7 @@ namespace Constants {
     extern const unsigned int TEXT_SIZE;
     extern const sf::Color TEXT_COLOR;
     extern const char* TEXT_PATH;
+    extern std::shared_ptr<sf::Font> TEXT_FONT; 
     extern const char* TEXT_MESSAGE;
 
     // paths to sounds & Music
@@ -87,6 +88,7 @@ namespace Constants {
     extern const char* PLAYERJUMPSOUND_PATH;
     extern const char* BULLETSOUND_PATH;
     extern const char* OBSTHITSOUND_PATH;
+    //extern std::shared_ptr<sf::
 
     extern void loadTextures(); 
 }

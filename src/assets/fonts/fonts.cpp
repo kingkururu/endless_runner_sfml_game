@@ -7,14 +7,15 @@
 
 #include "fonts.hpp"
 
-TextClass::TextClass(sf::Vector2f position, unsigned int size, sf::Color color, const std::string& fontPath, const std::string& testMessage)
-    : position(position), size(size), color(color), font(std::make_unique<sf::Font>()), text(std::make_unique<sf::Text>()) {
+TextClass::TextClass(sf::Vector2f position, unsigned int size, sf::Color color, std::weak_ptr<sf::Font> font, const std::string& testMessage)
+    : position(position), size(size), color(color), font(font), text(std::make_unique<sf::Text>()) {
 
-    try{   
-        if (!font->loadFromFile(fontPath)) {
-            throw std::runtime_error("error loading font from file: " + fontPath);
+    try{  
+        auto fontptr = font.lock();  
+        if (!fontptr){
+            throw std::runtime_error("font failed to load");
         }
-        text->setFont(*font);
+        text->setFont(*fontptr);
         text->setCharacterSize(size);
         text->setFillColor(color);
         text->setPosition(position);

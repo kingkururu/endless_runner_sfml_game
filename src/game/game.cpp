@@ -52,7 +52,7 @@ void GameManager::createAssets(){
         backgroundMusic->returnMusic()->play(); 
         
         //text
-        endingText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_PATH, Constants::TEXT_MESSAGE); 
+        endingText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE); 
     } 
 
     catch (const std::exception& e) {
