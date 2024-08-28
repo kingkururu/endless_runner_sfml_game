@@ -31,24 +31,6 @@ namespace Constants {
     constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 10;
     constexpr unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT = 80;
 
-
-    // constexpr unsigned short SCREEN_WIDTH;
-    // constexpr unsigned short SCREEN_HEIGHT; 
-    // constexpr unsigned short FRAME_LIMIT;
-    // constexpr char* GAME_TITLE;
-
-    // // score components
-    // constexpr unsigned short INITIAL_PLAYER_HIT;
-    // constexpr unsigned short INITIAL_SCORE;
-
-    // // basic animation standards
-    // constexpr float ANIMATION_FRAME_DURATION;
-    // constexpr float ANIMATION_CHANGE_TIME;
-
-    // // screen buffers for sprites and texts
-    // constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET;
-    // constexpr unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
-
     // background components (static)
     extern const sf::Vector2f BACKGROUND_POSITION;
     extern const sf::Vector2f BACKGROUND_SCALE;

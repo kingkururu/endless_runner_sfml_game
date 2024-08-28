@@ -21,10 +21,9 @@ void GameManager::runGame() {
         while (window.isOpen()) {
             if(!gameEnd){
                 countTime();
-                handleEventInput();
                 handleGameEvents();            
             }
-            handleEventInput();
+            handleEventInput(); 
             draw();
         }    
     }
@@ -103,7 +102,7 @@ void GameManager::handleEventInput(){
 void GameManager::handleGameEvents(){
     //run game states
     if(!gameEnd){
-        //respawn objects
+        //respawn objects here later
         updateSprites(); 
     }
     else {

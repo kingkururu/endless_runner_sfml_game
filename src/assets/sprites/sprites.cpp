@@ -64,13 +64,13 @@ void NonStatic::changeAnimation(float deltaTime) {
     try {
         elapsedTime += deltaTime;
         if (elapsedTime > Constants::ANIMATION_CHANGE_TIME) {
-            elapsedTime = 0.0;
             ++currentIndex; 
 
             if (currentIndex >= indexMax) {
                 currentIndex = 0; 
             }
             setRects(currentIndex); 
+            elapsedTime = 0.0;
         }
     }
     catch (const std::exception& e) {
