@@ -12,10 +12,19 @@
 #include <vector>
 #include <stdexcept>
 
-// #include "sprites.hpp"
-// #include "constants.hpp"
+namespace physics{
+    constexpr float gravity = 9.8;
 
+    void freeFall();
+    void rightToLeftFall(); 
 
+    void moveLeft();
+    void moveRight();
+    
+    void collision(); 
 
+    void aabbColision();
+    void pixelperfect();     
+}
 
 #endif /* game_hpp */
