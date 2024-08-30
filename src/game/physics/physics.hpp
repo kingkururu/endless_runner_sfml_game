@@ -24,14 +24,12 @@ namespace physics{
     void moveRight();
 
     // collisions
-    bool boundingBoxCollsion();
-
-    bool pixelPerfectCollision(const std::shared_ptr<sf::Uint8[]> &bitmask1, 
-                               const sf::Vector2f &position1, 
-                               const sf::Vector2f &size1,
-                               const std::shared_ptr<sf::Uint8[]> &bitmask2, 
-                               const sf::Vector2f &position2, 
-                               const sf::Vector2f &size2);  
+        //circle-shaped sprite 
+    bool circleCollision(const sf::Sprite& sprite1, float radius1, const sf::Sprite& sprite2, float radius2);
+        //axis aligned bounding box
+    bool boundingBoxCollsion(const sf::Vector2f &position1, const sf::Vector2f &size1, const sf::Vector2f &position2, const sf::Vector2f &size2);
+        //pixel perfect 
+    bool pixelPerfectCollision(const std::shared_ptr<sf::Uint8[]> &bitmask1, const sf::Vector2f &position1, const sf::Vector2f &size1, const std::shared_ptr<sf::Uint8[]> &bitmask2, const sf::Vector2f &position2, const sf::Vector2f &size2);  
 }
 
 #endif /* game_hpp */
