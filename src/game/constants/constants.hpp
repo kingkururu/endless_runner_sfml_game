@@ -45,6 +45,7 @@ namespace Constants {
     constexpr const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
     extern std::shared_ptr<sf::Texture> PLAYER_TEXTURE;
     constexpr unsigned short PLAYERANIM_MAX_INDEX = 4; 
+    extern std::shared_ptr<sf::Uint8[]> PLAYER_BITMASK;
 
     // bullet components (non-static) / non-animated
     extern const sf::Vector2f BULLET_POSITION;
@@ -55,6 +56,7 @@ namespace Constants {
     constexpr const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
     extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
     constexpr short BULLETANIM_MAX_INDEX = 0; 
+    extern std::shared_ptr<sf::Uint8[]> BULLET_BITMASK;
 
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
@@ -65,6 +67,7 @@ namespace Constants {
     constexpr unsigned short SLIMEANIM_MAX_INDEX = 4; 
     constexpr float SLIME_SPEED = 200.0f;
     constexpr float SLIME_ACCELERATION = -20.0f;
+    extern std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
 
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;
@@ -75,6 +78,7 @@ namespace Constants {
     constexpr const char* BUSHSPRITE_PATH = "src/assets/sprites/png/bush1.png";
     extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
     constexpr unsigned short BUSHANIM_MAX_INDEX = 0; 
+    extern std::shared_ptr<sf::Uint8[]> BUSH_BITMASK;
 
     // text components
     extern const sf::Vector2f TEXT_POSITION;
