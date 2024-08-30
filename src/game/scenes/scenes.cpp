@@ -30,7 +30,9 @@ void Scene::createAssets() {
 
         // Initialize text
         endingText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
-    } catch (const std::exception& e) {
+    } 
+
+    catch (const std::exception& e) {
         std::cerr << "Exception caught in createAssets: " << e.what() << std::endl;
     }
 }
@@ -60,7 +62,10 @@ void Scene::update(float deltaTime) {
                 bullet->updateBullet();
             }
         }
-    } catch (const std::exception& e) {
+
+    } 
+    
+    catch (const std::exception& e) {
         std::cerr << "Exception in updateSprites: " << e.what() << std::endl;
     }
 }
@@ -94,14 +99,22 @@ void Scene::draw(sf::RenderWindow& window) {
             window.draw(endingText->getText());
         }
 
-        window.display(); // Display the drawn frame
-    } catch (const std::exception& e) {
+        window.display(); 
+
+    } 
+    
+    catch (const std::exception& e) {
         std::cerr << "Exception in draw: " << e.what() << std::endl;
     }
 }
 
 void Scene::handleInput(const sf::Event& event) {
+    //if a pressed .... 
     // Handle input specific to the scene
+}
+
+void Scene::handleGameEvents() { 
+    
 }
 
 void Scene::restart() {

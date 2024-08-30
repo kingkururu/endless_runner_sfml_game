@@ -21,8 +21,8 @@ void GameManager::runGame() {
         while (window.isOpen()) {
             if (!FlagEvents.gameEnd) {
                 countTime();
-                handleGameEvents();
                 scene->update(deltaTime);
+                scene->handleGameEvents(); 
             }
             handleEventInput();
             scene->draw(window);
@@ -49,6 +49,18 @@ void GameManager::handleEventInput() {
                 case sf::Keyboard::Space:
                     FlagEvents.spacePressed = true;
                     break;
+                case sf::Keyboard::A:
+                    FlagEvents.aPressed = true;
+                    break;
+                case sf::Keyboard::S:
+                    FlagEvents.sPressed = true;
+                    break;
+                case sf::Keyboard::W:
+                    FlagEvents.wPressed = true;
+                    break;
+                case sf::Keyboard::D:
+                    FlagEvents.dPressed = true;
+                    break;
                 case sf::Keyboard::B:
                     scene->restart();
                     break;
@@ -58,6 +70,10 @@ void GameManager::handleEventInput() {
         }
         if (event.type == sf::Event::KeyReleased) {
             FlagEvents.spacePressed = false;
+            FlagEvents.sPressed = false;
+            FlagEvents.dPressed = false;
+            FlagEvents.aPressed = false;
+            FlagEvents.wPressed = false;
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             mouseClickedPos = sf::Mouse::getPosition(window);
@@ -67,14 +83,5 @@ void GameManager::handleEventInput() {
             FlagEvents.mouseClicked = false;
         }
         scene->handleInput(event);
-    }
-}
-
-void GameManager::handleGameEvents() {
-    if (FlagEvents.mouseClicked) {
-        // Handle mouse click events
-    }
-    if (FlagEvents.spacePressed) {
-        // Handle space bar press events
     }
 }

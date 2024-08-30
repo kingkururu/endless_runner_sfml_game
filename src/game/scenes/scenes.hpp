@@ -29,6 +29,7 @@ public:
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
     void handleInput(const sf::Event& event);
+    void handleGameEvents();
     void restart();
 
 private:

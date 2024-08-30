@@ -24,8 +24,8 @@ public:
 private:
     void countTime();
     void handleEventInput();
-    void handleGameEvents();
 
+    //game components (not accesible from anywhere else otherthan game manager)
     sf::RenderWindow window;
     sf::Clock clock;
     float deltaTime {};
