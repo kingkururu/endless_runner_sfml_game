@@ -13,10 +13,18 @@
 #include <stdio.h>
 
 extern struct flagEvents{
+    // game states
+    bool gameEnd = false; 
+
+    //keyboard inputs
+    bool wPressed;
     bool aPressed;
+    bool sPressed;
     bool dPressed;
-    
-    flagEvents() : aPressed(false), dPressed(false){}
+    bool spacePressed = false; 
+    bool mouseClicked = false;
+
+    flagEvents() : wPressed(false), aPressed(false), sPressed(false), dPressed(false), spacePressed(false), mouseClicked(false) {}
 } FlagEvents;
 
 

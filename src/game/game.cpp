@@ -12,14 +12,14 @@ GameManager::GameManager()
     Constants::initialize();
     window.setFramerateLimit(Constants::FRAME_LIMIT);
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    gameEnd = false; 
+    FlagEvents.gameEnd = false; 
 }
 
 void GameManager::runGame() {
     try{
         createAssets();
         while (window.isOpen()) {
-            if(!gameEnd){
+            if(!FlagEvents.gameEnd){
                 countTime();
                 handleGameEvents();  
                 updateSprites();           
@@ -77,7 +77,7 @@ void GameManager::handleEventInput(){
         if (event.type == sf::Event::KeyPressed){
             switch (event.key.code){
                 case sf::Keyboard::Space: 
-                    spaceBpressed = true;
+                    FlagEvents.spacePressed = true;
                     break;
                 case sf::Keyboard::B:
                     backgroundMusic->returnMusic().stop();
@@ -88,21 +88,21 @@ void GameManager::handleEventInput(){
             }
         }
         if (event.type == sf::Event::KeyReleased){
-            spaceBpressed = false;
+            FlagEvents.spacePressed = false;
         }
         if (event.type == sf::Event::MouseButtonPressed){
            mouseClickedPos = sf::Mouse::getPosition(window); 
-           mouseClicked = true; 
+           FlagEvents.mouseClicked = true; 
         }
         if (event.type == sf::Event::MouseButtonReleased){
-            mouseClicked = false;
+            FlagEvents.mouseClicked = false;
         }
     }
 }
 
 void GameManager::handleGameEvents(){
     //run game states
-    if(!gameEnd){
+    if(!FlagEvents.gameEnd){
         //respawn objects here later
     }
     else {
@@ -119,10 +119,10 @@ void GameManager::handleGameEvents(){
     }
 
     //run game events
-    if(mouseClicked){
+    if(FlagEvents.mouseClicked){
 
     }
-    if(spaceBpressed){
+    if(FlagEvents.spacePressed){
 
     }       
 }
@@ -173,7 +173,7 @@ void GameManager::restartGame(){
     for(auto& bush : bushes)
         bush->setMoveState(true); 
     
-    gameEnd = false; 
+    FlagEvents.gameEnd = false; 
 }
 
 void GameManager::draw(){

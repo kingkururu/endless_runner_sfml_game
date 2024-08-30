@@ -4,6 +4,8 @@
 //
 //  Created by Sunmyoung Yun on 2024/08
 //
+#pragma once
+
 #ifndef physics_hpp
 #define physics_hpp
 

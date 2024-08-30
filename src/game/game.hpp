@@ -17,6 +17,8 @@
 #include "sound.hpp"
 #include "fonts.hpp"
 #include "constants.hpp"
+#include "physics.hpp"
+#include "flags.hpp"
 
 class GameManager {
 public:
@@ -37,14 +39,9 @@ private:
     sf::Clock clock;
     float deltaTime {};
     float globalTime {}; 
-
-    //Game states
-    unsigned int score = Constants::INITIAL_SCORE;
-    bool gameEnd = false; 
-
-    bool spaceBpressed = false; 
-    bool mouseClicked = false;
+    
     sf::Vector2i mouseClickedPos {}; 
+    unsigned int score = Constants::INITIAL_SCORE;
 
     //Sprites 
     std::unique_ptr<Background> background; 
