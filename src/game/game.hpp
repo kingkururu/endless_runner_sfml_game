@@ -30,9 +30,7 @@ private:
     sf::Clock clock;
     float deltaTime {};
     float globalTime {};
-    
     sf::Vector2i mouseClickedPos {};
-    unsigned int score = Constants::INITIAL_SCORE;
 
     // Scene
     std::unique_ptr<Scene> scene;

@@ -19,13 +19,14 @@
 #include "sprites.hpp"
 #include "sound.hpp"
 #include "fonts.hpp"
-
+#include "constants.hpp"
 
 class Scene {
 public:
     Scene();
 
     void createAssets();
+    void createMoreAssets(); 
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
     void handleInput(const sf::Event& event);
@@ -51,6 +52,9 @@ private:
 
     // Fonts and texts
     std::unique_ptr<TextClass> endingText;
+
+    // other game components 
+    unsigned int score = Constants::INITIAL_SCORE;
 };
 
 

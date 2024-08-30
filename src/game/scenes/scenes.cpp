@@ -37,6 +37,10 @@ void Scene::createAssets() {
     }
 }
 
+void Scene::createMoreAssets(){
+
+} 
+
 void Scene::update(float deltaTime) {
     try {
         if (playerSprite->getMoveState()) {
@@ -114,7 +118,7 @@ void Scene::handleInput(const sf::Event& event) {
 }
 
 void Scene::handleGameEvents() { 
-    
+    //if game end.... scene end...
 }
 
 void Scene::restart() {
