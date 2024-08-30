@@ -4,6 +4,7 @@
 //
 //  Created by Sunmyoung Yun on 2024/08
 //
+#pragma once
 
 #ifndef sprites_hpp
 #define sprites_hpp
