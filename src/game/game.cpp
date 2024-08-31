@@ -62,18 +62,14 @@ void GameManager::handleEventInput() {
                     FlagEvents.dPressed = true;
                     break;
                 case sf::Keyboard::B:
-                    scene->restart();
+                    FlagEvents.bPressed = true;
                     break;
                 default:
                     break;
             }
         }
         if (event.type == sf::Event::KeyReleased) {
-            FlagEvents.spacePressed = false;
-            FlagEvents.sPressed = false;
-            FlagEvents.dPressed = false;
-            FlagEvents.aPressed = false;
-            FlagEvents.wPressed = false;
+            FlagEvents.flagKeyReleased(); 
         }
         if (event.type == sf::Event::MouseButtonPressed) {
             mouseClickedPos = sf::Mouse::getPosition(window);
@@ -82,6 +78,6 @@ void GameManager::handleEventInput() {
         if (event.type == sf::Event::MouseButtonReleased) {
             FlagEvents.mouseClicked = false;
         }
-        scene->handleInput(event);
+        scene->handleInput();
     }
 }

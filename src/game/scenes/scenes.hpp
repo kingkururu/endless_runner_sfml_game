@@ -20,6 +20,7 @@
 #include "sound.hpp"
 #include "fonts.hpp"
 #include "constants.hpp"
+#include "flags.hpp"
 
 class Scene {
 public:
@@ -29,7 +30,7 @@ public:
     void createMoreAssets(); 
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
-    void handleInput(const sf::Event& event);
+    void handleInput();
     void handleGameEvents();
     void restart();
 

@@ -112,13 +112,49 @@ void Scene::draw(sf::RenderWindow& window) {
     }
 }
 
-void Scene::handleInput(const sf::Event& event) {
-    //if a pressed .... 
-    // Handle input specific to the scene
+void Scene::handleInput() {
+
+    if(FlagEvents.aPressed){
+        
+    } 
+    if(FlagEvents.sPressed){
+       
+    }
+    if(FlagEvents.wPressed){
+        
+    }
+    if(FlagEvents.dPressed){
+    
+    }
+
+    if(FlagEvents.spacePressed){
+
+    }
+    if(FlagEvents.mouseClicked){
+
+    }
+
+    if(FlagEvents.bPressed){
+        restart();
+    }
 }
 
 void Scene::handleGameEvents() { 
-    //if game end.... scene end...
+    if(FlagEvents.gameEnd){
+       playerSprite->setMoveState(true);
+       
+       for (auto& slime : slimes) {
+            slime->setMoveState(true);
+        }
+
+        for (auto& bullet : bullets) {
+            bullet->setMoveState(true);
+        }
+
+        for (auto& bush : bushes) {
+            bush->setMoveState(true);
+        }
+    }
 }
 
 void Scene::restart() {
@@ -135,4 +171,6 @@ void Scene::restart() {
     for (auto& bush : bushes) {
         bush->setMoveState(true);
     }
+
+    FlagEvents.resetFlags(); 
 }

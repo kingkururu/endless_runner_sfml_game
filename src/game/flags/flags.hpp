@@ -11,20 +11,35 @@
 #define flags_hpp
 
 #include <stdio.h>
+#include <cstring>  
 
 extern struct flagEvents{
     // game states
-    bool gameEnd = false; 
+    bool gameEnd; 
 
     //keyboard inputs
     bool wPressed;
     bool aPressed;
     bool sPressed;
     bool dPressed;
-    bool spacePressed = false; 
-    bool mouseClicked = false;
+    bool bPressed;
+    bool spacePressed; 
+    bool mouseClicked;
 
-    flagEvents() : wPressed(false), aPressed(false), sPressed(false), dPressed(false), spacePressed(false), mouseClicked(false) {}
+    flagEvents() : wPressed(false), aPressed(false), sPressed(false), dPressed(false), bPressed(false), spacePressed(false), mouseClicked(false) {}
+
+    void resetFlags(){
+        std::memset(this, 0, sizeof(*this));
+    }
+
+    void flagKeyReleased(){
+        wPressed = false;
+        aPressed = false;
+        sPressed = false;
+        dPressed = false;
+        bPressed = false;
+    }
+    
 } FlagEvents;
 
 
