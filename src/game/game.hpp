@@ -28,7 +28,6 @@ private:
     //game components (not accesible from anywhere else otherthan game manager)
     sf::RenderWindow window;
     sf::Clock clock;
-    float deltaTime {};
     float globalTime {};
     sf::Vector2i mouseClickedPos {};
 

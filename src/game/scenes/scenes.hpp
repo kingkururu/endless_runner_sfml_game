@@ -28,11 +28,12 @@ public:
 
     void createAssets();
     void createMoreAssets(); 
-    void update(float deltaTime);
+    void update();
     void draw(sf::RenderWindow& window);
-    void handleInput(float deltaTime);
+    void handleInput();
     void handleGameEvents();
     void restart();
+    void setDeltaTime(float deltaTime); 
 
 private:
     sf::RenderWindow* window;
@@ -56,6 +57,7 @@ private:
 
     // other game components 
     unsigned int score = Constants::INITIAL_SCORE;
+    float deltaTime {}; 
 };
 
 

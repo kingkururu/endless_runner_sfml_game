@@ -88,14 +88,14 @@ class Obstacle : public NonStatic{
 public:
     explicit Obstacle(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, const std::vector<sf::IntRect> animationRects, float speed, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, speed, animationRects, indexMax, bitMask) {}
     ~Obstacle() override {}; 
-    void updateObstacle();
+    void updateObstacle(sf::Vector2f newPos);  
 };
 
 class Bullet : public NonStatic{
    public:
     explicit Bullet(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture>texture, const std::vector<sf::IntRect> animationRects, float speed, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, speed, animationRects, indexMax, bitMask) {}
     ~Bullet() override {}; 
-    void updateBullet();  
+    void updateBullet(sf::Vector2f newPos);  
 };
 
 

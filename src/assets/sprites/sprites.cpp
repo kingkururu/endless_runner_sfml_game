@@ -88,12 +88,11 @@ void Player::updatePlayer(sf::Vector2f newPos) {
     position = newPos;  
 }
 
-//obstacle class
-void Obstacle::updateObstacle(){
-    updatePos();
+void Obstacle::updateObstacle(sf::Vector2f newPos){
+    position = newPos;  
 }
 
 //bullet class
-void Bullet::updateBullet(){
-    updatePos();
+void Bullet::updateBullet(sf::Vector2f newPos){
+    position = newPos;  
 }

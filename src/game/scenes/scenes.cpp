@@ -41,36 +41,9 @@ void Scene::createMoreAssets(){
 
 } 
 
-void Scene::update(float deltaTime) {
-    try {
-        playerSprite->changeAnimation(deltaTime);
-        playerSprite->updatePos(); 
-
-        for (auto& slime : slimes) {
-            if (slime->getMoveState()) {
-                slime->changeAnimation(deltaTime);
-                slime->updatePos();
-            }
-        }
-
-        for (auto& bush : bushes) {
-            if (bush->getMoveState()) {
-                bush->updatePos();
-            }
-        }
-
-        for (auto& bullet : bullets) {
-            if (bullet->getMoveState()) {
-                bullet->updatePos();
-            }
-        }
-
-    } 
-    
-    catch (const std::exception& e) {
-        std::cerr << "Exception in updateSprites: " << e.what() << std::endl;
-    }
-}
+void Scene::setDeltaTime(float deltaT){
+    deltaTime = deltaT;  
+} 
 
 void Scene::draw(sf::RenderWindow& window) {
     try {
@@ -110,7 +83,40 @@ void Scene::draw(sf::RenderWindow& window) {
     }
 }
 
-void Scene::handleInput(float deltaTime) {
+void Scene::update() {
+    try {
+        playerSprite->changeAnimation(deltaTime);
+        playerSprite->updatePos(); 
+
+        for (auto& slime : slimes) {
+            if (slime->getMoveState()) {
+                slime->changeAnimation(deltaTime);
+                slime->updatePos();
+            }
+        }
+
+        for (auto& bush : bushes) {
+            if (bush->getMoveState()) {
+                bush->updateObstacle(physics::moveLeft(deltaTime, Constants::BUSH_SPEED, bush->getSpritePos())); 
+                bush->updatePos();
+            }
+        }
+
+        for (auto& bullet : bullets) {
+            if (bullet->getMoveState()) {
+               // bullet->updateBullet(); 
+                bullet->updatePos();
+            }
+        }
+
+    } 
+    
+    catch (const std::exception& e) {
+        std::cerr << "Exception in updateSprites: " << e.what() << std::endl;
+    }
+}
+
+void Scene::handleInput() {
 
     if(playerSprite->getMoveState()){
         if(FlagEvents.aPressed){
