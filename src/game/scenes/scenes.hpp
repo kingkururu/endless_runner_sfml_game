@@ -59,6 +59,9 @@ private:
     // other game components 
     unsigned int score = Constants::INITIAL_SCORE;
     float deltaTime {}; 
+
+    float slimeRespTime {};
+    float bushRespTime {}; 
 };
 
 

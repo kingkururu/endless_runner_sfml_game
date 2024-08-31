@@ -7,7 +7,7 @@
 
 #include "scenes.hpp"
 
-Scene::Scene() : window() {}
+Scene::Scene() : window(), slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME) {}
 
 void Scene::createAssets() {
     try {
