@@ -7,7 +7,7 @@
 
 #include "scenes.hpp"
 
-Scene::Scene() : window(), slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME) {}
+Scene::Scene() : window(), slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME), bulletRespTime(Constants::BULLET_RESPAWN_TIME) {}
 
 void Scene::createAssets() {
     try {
@@ -38,11 +38,25 @@ void Scene::createAssets() {
 }
 
 void Scene::createMoreAssets(){
-
+    if(slimeRespTime <= 0){
+        float newSlimeInterval = Constants::SLIME_INITIAL_RESPAWN_TIME - (globalTime * Constants::SLIME_INTERVAL_DECREMENT);
+        slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
+        slimes[0]->setRects(0);
+        slimeRespTime = std::max(newSlimeInterval, Constants::SLIME_INITIAL_RESPAWN_TIME);
+    }
+    if(bushRespTime <= 0){
+        float newBushInterval = Constants::BUSH_INITIAL_RESPAWN_TIME - (globalTime * Constants::BUSH_INTERVAL_DECREMENT);
+        bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, Constants::BUSH_BITMASK));
+        bushRespTime = std::max(newBushInterval, Constants::BUSH_INITIAL_RESPAWN_TIME);
+    }
 } 
 
-void Scene::setDeltaTime(float deltaT){
+void Scene::setTime(float deltaT, float globalT){
+    globalTime = globalT;
     deltaTime = deltaT;  
+    slimeRespTime -= deltaTime; 
+    bulletRespTime -= deltaTime; 
+    bushRespTime -= deltaTime; 
 } 
 
 void Scene::draw(sf::RenderWindow& window) {

@@ -58,7 +58,7 @@ namespace Constants {
     extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
     constexpr short BULLETANIM_MAX_INDEX = 0; 
     extern std::shared_ptr<sf::Uint8[]> BULLET_BITMASK;
-    constexpr float BULLET_RESPAWN_TIME = 0.2; 
+    constexpr float BULLET_RESPAWN_TIME = 0.9; 
 
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
@@ -70,7 +70,9 @@ namespace Constants {
     constexpr float SLIME_SPEED = 200.0f;
     constexpr float SLIME_ACCELERATION = 1.6;
     extern std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
-    constexpr float SLIME_INITIAL_RESPAWN_TIME = 2.0; 
+    constexpr float SLIME_INITIAL_RESPAWN_TIME = 12.0; 
+    constexpr float SLIME_INTERVAL_DECREMENT = 0.08; 
+
 
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;
@@ -82,7 +84,8 @@ namespace Constants {
     extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
     constexpr unsigned short BUSHANIM_MAX_INDEX = 0; 
     extern std::shared_ptr<sf::Uint8[]> BUSH_BITMASK;
-    constexpr float BUSH_INITIAL_RESPAWN_TIME = 2.2; 
+    constexpr float BUSH_INITIAL_RESPAWN_TIME = 10.0; 
+    constexpr float BUSH_INTERVAL_DECREMENT = 0.08; 
 
     // text components
     extern const sf::Vector2f TEXT_POSITION;

@@ -21,6 +21,7 @@ void GameManager::runGame() {
         while (window.isOpen()) {
             if (!FlagEvents.gameEnd) {
                 countTime();
+                scene->createMoreAssets(); 
                 scene->handleGameEvents(); 
                 scene->update();
             }
@@ -36,7 +37,7 @@ void GameManager::countTime() {
     sf::Time frameTime = clock.restart();
     globalTime += frameTime.asSeconds();
 
-    scene->setDeltaTime(frameTime.asSeconds()); 
+    scene->setTime(frameTime.asSeconds(), globalTime);
 }
 
 void GameManager::handleEventInput() {

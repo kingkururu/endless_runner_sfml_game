@@ -33,7 +33,7 @@ public:
     void handleInput();
     void handleGameEvents();
     void restart();
-    void setDeltaTime(float deltaTime); 
+    void setTime(float deltaTime, float globalTime); 
     void deleteInvisibleSprites(); 
 
 private:
@@ -59,9 +59,11 @@ private:
     // other game components 
     unsigned int score = Constants::INITIAL_SCORE;
     float deltaTime {}; 
+    float globalTime {}; 
 
     float slimeRespTime {};
     float bushRespTime {}; 
+    float bulletRespTime {}; 
 };
 
 
