@@ -18,8 +18,12 @@
 namespace physics{
     constexpr float gravity = 9.8;
 
-    void freeFall();
-    void rightToLeftFall(); 
+    // follow trajectory
+    sf::Vector2f follow(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, sf::Vector2i mouseClickedPos); 
+
+    // falling objects
+    sf::Vector2f freeFall(float deltaTime, float speed, sf::Vector2f originalPo);
+    sf::Vector2f fall(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, short angle); 
 
     // moving player
     sf::Vector2f moveLeft(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0); 
