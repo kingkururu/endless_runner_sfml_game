@@ -27,8 +27,8 @@ namespace Constants {
     constexpr float ANIMATION_CHANGE_TIME = 0.1f;
 
     // screen buffers for sprites and texts
-    constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 10;
-    constexpr unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT = 80;
+    constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 200;
+    constexpr unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT = 200;
 
     // background components (static)
     extern const sf::Vector2f BACKGROUND_POSITION;

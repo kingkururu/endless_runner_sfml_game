@@ -30,7 +30,7 @@ public:
     void createMoreAssets(); 
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
-    void handleInput();
+    void handleInput(float deltaTime);
     void handleGameEvents();
     void restart();
 

@@ -50,7 +50,8 @@ public:
 
 class NonStatic : public Sprite{
 public:
-   explicit NonStatic(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, float speed, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : Sprite(position, scale, texture), speed(speed), animationRects(animationRects), indexMax(indexMax), bitMask(bitMask) {}
+   explicit NonStatic(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, float speed, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask)
+    : Sprite(position, scale, texture), speed(speed), animationRects(animationRects), indexMax(indexMax), bitMask(bitMask) {}
     ~NonStatic() override{}; 
     void updatePos(); 
     bool const getMoveState() const { return moveState; }
@@ -72,8 +73,7 @@ protected:
     int currentIndex {};
     int indexMax {}; 
     float elapsedTime {};
-    float animFrameDuration {};
-    float changeAnimTime {}; 
+    // float changeAnimTime {}; 
     std::weak_ptr<sf::Uint8[]> bitMask{}; 
 };
 
@@ -81,7 +81,7 @@ class Player : public NonStatic{
 public:
    explicit Player(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, const std::vector<sf::IntRect> animationRects, float speed, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, speed, animationRects, indexMax, bitMask) {}
    ~Player() override {}; 
-    void updatePlayer(); 
+    void updatePlayer(sf::Vector2f newPos); 
 };
 
 class Obstacle : public NonStatic{

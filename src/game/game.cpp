@@ -21,8 +21,8 @@ void GameManager::runGame() {
         while (window.isOpen()) {
             if (!FlagEvents.gameEnd) {
                 countTime();
-                scene->update(deltaTime);
                 scene->handleGameEvents(); 
+                scene->update(deltaTime);
             }
             handleEventInput();
             scene->draw(window);
@@ -78,6 +78,6 @@ void GameManager::handleEventInput() {
         if (event.type == sf::Event::MouseButtonReleased) {
             FlagEvents.mouseClicked = false;
         }
-        scene->handleInput();
+        scene->handleInput(deltaTime);
     }
 }

@@ -9,6 +9,19 @@
 
 namespace physics{
     
+    sf::Vector2f moveLeft(float deltaTime, float speed, sf::Vector2f originalPos){
+        return { originalPos.x -= speed * deltaTime, originalPos.y };
+    }
+    sf::Vector2f moveRight(float deltaTime, float speed, sf::Vector2f originalPos){
+        return { originalPos.x += speed * deltaTime, originalPos.y };
+    }
+    sf::Vector2f moveUp(float deltaTime, float speed, sf::Vector2f originalPos){
+        return { originalPos.x, originalPos.y -= speed * deltaTime};
+    }
+    sf::Vector2f moveDown(float deltaTime, float speed, sf::Vector2f originalPos){
+        return { originalPos.x, originalPos.y += speed * deltaTime};
+    }
+
     // collisions 
     bool circleCollision(const sf::Sprite& sprite1, float radius1, const sf::Sprite& sprite2, float radius2) {
         // Get the positions of the sprites

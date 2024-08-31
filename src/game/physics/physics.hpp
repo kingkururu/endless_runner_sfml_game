@@ -22,8 +22,10 @@ namespace physics{
     void rightToLeftFall(); 
 
     // moving player
-    void moveLeft();
-    void moveRight();
+    sf::Vector2f moveLeft(float deltaTime, float speed, sf::Vector2f originalPos); 
+    sf::Vector2f moveRight(float deltaTime, float speed, sf::Vector2f originalPos);
+    sf::Vector2f moveUp(float deltaTime, float speed, sf::Vector2f originalPos);
+    sf::Vector2f moveDown(float deltaTime, float speed, sf::Vector2f originalPos);
 
     // collisions
         //circle-shaped sprite 

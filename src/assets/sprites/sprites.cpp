@@ -29,23 +29,6 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Text
     }
 }
 
-void NonStatic::updatePos() {
-    try {
-        if (position.x > Constants::SCREEN_WIDTH) {
-            position.x = Constants::SCREEN_WIDTH;
-        } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
-            position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
-        }
-        if (position.y > Constants::SCREEN_HEIGHT + Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT) {
-            setVisibleState(false);
-        }
-        spriteCreated->setPosition(position);
-    }
-    catch (const std::exception& e) {
-        std::cerr << "Error in updating position: " << e.what() << std::endl;
-    }
-}
-
 void NonStatic::setRects(int animNum){
     try{
         if(animNum < 0 || animNum > indexMax){
@@ -78,9 +61,31 @@ void NonStatic::changeAnimation(float deltaTime) {
     }
 }
 
+void NonStatic::updatePos() {
+    try {
+        if (position.y > Constants::SCREEN_HEIGHT + Constants::SPRITE_OUT_OF_BOUNDS_OFFSET 
+        || position.x > Constants::SCREEN_WIDTH + Constants::SPRITE_OUT_OF_BOUNDS_OFFSET 
+        || position.y < 0 - Constants::SPRITE_OUT_OF_BOUNDS_OFFSET
+        || position.x < 0 - Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
+            setVisibleState(false);
+        }
+
+        spriteCreated->setPosition(position); 
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Error in updating position: " << e.what() << std::endl;
+    }
+}
+
 // Player class
-void Player::updatePlayer() {
-    updatePos();
+void Player::updatePlayer(sf::Vector2f newPos) {
+    // if (position.x > Constants::SCREEN_WIDTH) {
+    //     position.x = Constants::SCREEN_WIDTH - Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
+    // } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
+    //     position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
+    // }
+
+    position = newPos;  
 }
 
 //obstacle class

@@ -43,27 +43,25 @@ void Scene::createMoreAssets(){
 
 void Scene::update(float deltaTime) {
     try {
-        if (playerSprite->getMoveState()) {
-            playerSprite->changeAnimation(deltaTime);
-            playerSprite->updatePlayer();
-        }
+        playerSprite->changeAnimation(deltaTime);
+        playerSprite->updatePos(); 
 
         for (auto& slime : slimes) {
             if (slime->getMoveState()) {
                 slime->changeAnimation(deltaTime);
-                slime->updateObstacle();
+                slime->updatePos();
             }
         }
 
         for (auto& bush : bushes) {
             if (bush->getMoveState()) {
-                bush->updateObstacle();
+                bush->updatePos();
             }
         }
 
         for (auto& bullet : bullets) {
             if (bullet->getMoveState()) {
-                bullet->updateBullet();
+                bullet->updatePos();
             }
         }
 
@@ -112,26 +110,28 @@ void Scene::draw(sf::RenderWindow& window) {
     }
 }
 
-void Scene::handleInput() {
+void Scene::handleInput(float deltaTime) {
 
-    if(FlagEvents.aPressed){
-        
-    } 
-    if(FlagEvents.sPressed){
-       
-    }
-    if(FlagEvents.wPressed){
-        
-    }
-    if(FlagEvents.dPressed){
-    
-    }
+    if(playerSprite->getMoveState()){
+        if(FlagEvents.aPressed){
+            playerSprite->updatePlayer(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+        } 
+        if(FlagEvents.sPressed){
+            playerSprite->updatePlayer(physics::moveDown(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+        }
+        if(FlagEvents.wPressed){
+            playerSprite->updatePlayer(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+        }
+        if(FlagEvents.dPressed){
+            playerSprite->updatePlayer(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+        }
 
-    if(FlagEvents.spacePressed){
+        if(FlagEvents.spacePressed){
 
-    }
-    if(FlagEvents.mouseClicked){
+        }
+        if(FlagEvents.mouseClicked){
 
+        }
     }
 
     if(FlagEvents.bPressed){
