@@ -24,22 +24,6 @@ SoundClass::SoundClass(std::weak_ptr<sf::SoundBuffer> soundBuffer, float volume)
     }
 }
 
-// MusicClass::MusicClass(std::weak_ptr<sf::Music> musicLoad, float volume)
-//     : SoundClass(std::weak_ptr<sf::SoundBuffer>(), volume), weakMusicPtr(musicLoad) {
-//     try {
-//         auto musicptr = weakMusicPtr.lock();
-//         if (!musicptr) {
-//             throw std::runtime_error("Error loading music");
-//         }
-//         music = std::make_unique<sf::Music>();
-//        // music->setVolume(volume);
-//         std::cout  << "music volume is " << volume << std::endl; 
-
-//     } catch (const std::exception& e) {
-//         std::cerr << e.what() << std::endl;
-//         music.reset();
-//     }
-// }
 MusicClass::MusicClass(std::unique_ptr<sf::Music> musicLoad, float volume)
     : music(std::move(musicLoad)), volume(volume) {
     try {
@@ -47,14 +31,14 @@ MusicClass::MusicClass(std::unique_ptr<sf::Music> musicLoad, float volume)
             throw std::runtime_error("Error loading music");
         }
         music->setVolume(volume);
-        music->setLoop(true);  // Optional: Set loop if desired
+        music->setLoop(true);  
         music->play();
 
         std::cout << "Music volume is " << volume << std::endl; 
 
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
-        music.reset();  // Ensure the pointer is reset on error
+        music.reset();  
     }
 }
 
@@ -66,3 +50,10 @@ void SoundClass::setVolume(float newVolume){
     }
 }
 
+void MusicClass::setVolume(float newVolume){
+    volume = newVolume;
+
+    if(music){
+        music->setVolume(volume); 
+    }
+}
