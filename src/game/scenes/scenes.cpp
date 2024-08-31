@@ -25,7 +25,7 @@ void Scene::createAssets() {
         playerJumpSound = std::make_unique<SoundClass>(Constants::PLAYERJUMP_SOUNDBUFF, Constants::PLAYERJUMPSOUND_VOLUME);
         bulletSound = std::make_unique<SoundClass>(Constants::BULLET_SOUNDBUFF, Constants::BULLETSOUND_VOLUME);
         obstHitSound = std::make_unique<SoundClass>(Constants::OBSTHIT_SOUNDBUFF, Constants::OBSTHITSOUND_VOLUME);
-        backgroundMusic = std::make_unique<MusicClass>(Constants::BACKGROUNDMUSIC_MUSIC, Constants::BACKGROUNDMUSIC_VOLUME);
+        backgroundMusic = std::make_unique<MusicClass>(std::move(Constants::BACKGROUNDMUSIC_MUSIC), Constants::BACKGROUNDMUSIC_VOLUME);
         backgroundMusic->returnMusic().play();
 
         // Initialize text

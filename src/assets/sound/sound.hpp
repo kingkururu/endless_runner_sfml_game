@@ -30,18 +30,31 @@ protected:
     float volume = 100.0f; 
 };
 
-class MusicClass : public SoundClass {
-public:
-    explicit MusicClass(std::weak_ptr<sf::Music> musicLoad, float volume);
+// class MusicClass : public SoundClass {
+// public:
+//     explicit MusicClass(std::weak_ptr<sf::Music> musicLoad, float volume);
 
-    sf::Music& returnMusic() { return *music; } 
-    //const sf::Music& returnMusic() const { return *music; }
-    ~MusicClass() = default; 
+//     sf::Music& returnMusic() { return *music; } 
+//     //const sf::Music& returnMusic() const { return *music; }
+//     ~MusicClass() = default; 
+
+// private:
+//     std::weak_ptr<sf::Music> weakMusicPtr;
+//     std::unique_ptr<sf::Music> music;
+
+// };
+
+class MusicClass {
+public:
+    // Constructor accepts a unique pointer to sf::Music
+    MusicClass(std::unique_ptr<sf::Music> musicLoad, float volume);
+
+    // Method to get the sf::Music object
+    sf::Music& returnMusic() { return *music; }
 
 private:
-    std::weak_ptr<sf::Music> weakMusicPtr;
     std::unique_ptr<sf::Music> music;
-
+    float volume{};
 };
 
 #endif /* sound_hpp */

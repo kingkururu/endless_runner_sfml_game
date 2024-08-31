@@ -48,7 +48,7 @@ namespace Constants {
     std::shared_ptr<sf::Font> TEXT_FONT = std::make_shared<sf::Font>(); 
 
     // music components 
-    std::shared_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC = std::make_shared<sf::Music>(); 
+    std::unique_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC = std::make_unique<sf::Music>(); 
 
     // sound components
     std::shared_ptr<sf::SoundBuffer> PLAYERDEAD_SOUNDBUFF = std::make_shared<sf::SoundBuffer>(); 

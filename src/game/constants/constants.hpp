@@ -90,7 +90,7 @@ namespace Constants {
 
     // music components 
     constexpr const char* BACKGROUNDMUSIC_PATH = "src/assets/sound/mp3,flac,wav/bgm.mp3";
-    extern std::shared_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC;
+    extern std::unique_ptr<sf::Music> BACKGROUNDMUSIC_MUSIC;
     constexpr float BACKGROUNDMUSIC_VOLUME = 100.0f; 
 
     // sound components
