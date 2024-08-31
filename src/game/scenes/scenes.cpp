@@ -13,11 +13,11 @@ void Scene::createAssets() {
     try {
         // Initialize assets
         background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_TEXTURE);
-        playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYER_SPEED, Constants::PLAYERANIM_MAX_INDEX, Constants::PLAYER_BITMASK);
+        playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYERANIM_MAX_INDEX, Constants::PLAYER_BITMASK);
         playerSprite->setRects(0);
-        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLET_SPEED, Constants::BULLETANIM_MAX_INDEX, Constants::BULLET_BITMASK));
-        bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSH_SPEED, Constants::BUSHANIM_MAX_INDEX, Constants::BUSH_BITMASK));
-        slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIME_SPEED, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
+        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, Constants::BULLET_BITMASK));
+        bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, Constants::BUSH_BITMASK));
+        slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
         slimes[0]->setRects(0);
 
         // Initialize sounds and music
@@ -90,6 +90,7 @@ void Scene::update() {
 
         for (auto& slime : slimes) {
             if (slime->getMoveState()) {
+                slime->updateObstacle(physics::moveLeft(deltaTime, Constants::SLIME_SPEED, slime->getSpritePos(), Constants::SLIME_ACCELERATION)); 
                 slime->changeAnimation(deltaTime);
                 slime->updatePos();
             }
@@ -97,7 +98,7 @@ void Scene::update() {
 
         for (auto& bush : bushes) {
             if (bush->getMoveState()) {
-                bush->updateObstacle(physics::moveLeft(deltaTime, Constants::BUSH_SPEED, bush->getSpritePos())); 
+                bush->updateObstacle(physics::moveLeft(deltaTime, Constants::BUSH_SPEED, bush->getSpritePos(), Constants::BUSH_ACCELERATION)); 
                 bush->updatePos();
             }
         }

@@ -41,6 +41,7 @@ namespace Constants {
     extern const sf::Vector2f PLAYER_SCALE;
     extern std::vector<sf::IntRect> PLAYERSPRITE_RECTS;
     constexpr float PLAYER_SPEED = 200.0f;
+    constexpr float PLAYER_ACCELERATION = 1.6;
     extern const sf::Color PLAYER_DEAD_COLOR;
     constexpr const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
     extern std::shared_ptr<sf::Texture> PLAYER_TEXTURE;
@@ -52,7 +53,7 @@ namespace Constants {
     extern const sf::Vector2f BULLET_SCALE;
     extern std::vector<sf::IntRect> BULLETSPRITES_RECTS;
     constexpr float BULLET_SPEED = 200.0f;
-    constexpr float BULLET_ACCELERATION = -20.0f;
+    constexpr float BULLET_ACCELERATION = 1.6;
     constexpr const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
     extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
     constexpr short BULLETANIM_MAX_INDEX = 0; 
@@ -66,7 +67,7 @@ namespace Constants {
     extern std::shared_ptr<sf::Texture> SLIME_TEXTURE;
     constexpr unsigned short SLIMEANIM_MAX_INDEX = 4; 
     constexpr float SLIME_SPEED = 200.0f;
-    constexpr float SLIME_ACCELERATION = -20.0f;
+    constexpr float SLIME_ACCELERATION = 1.6;
     extern std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
 
     // bush components (non-static) / non-animated
@@ -74,7 +75,7 @@ namespace Constants {
     extern const sf::Vector2f BUSH_SCALE;
     extern std::vector<sf::IntRect> BUSHSPRITES_RECTS;
     constexpr float BUSH_SPEED = 200.0f;
-    constexpr float BUSH_ACCELERATION = -20.0f;
+    constexpr float BUSH_ACCELERATION = 1.6f;
     constexpr const char* BUSHSPRITE_PATH = "src/assets/sprites/png/bush1.png";
     extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
     constexpr unsigned short BUSHANIM_MAX_INDEX = 0; 
