@@ -181,3 +181,20 @@ void Scene::restart() {
 
     FlagEvents.resetFlags(); 
 }
+
+void Scene::deleteInvisibleSprites() {
+    // Remove invisible slimes
+    auto slimeIt = std::remove_if(slimes.begin(), slimes.end(),
+                                  [](const std::unique_ptr<Obstacle>& slime) { return !slime->getVisibleState(); });
+    slimes.erase(slimeIt, slimes.end());
+
+    // Remove invisible bushes
+    auto bushIt = std::remove_if(bushes.begin(), bushes.end(),
+                                 [](const std::unique_ptr<Obstacle>& bush) { return !bush->getVisibleState(); });
+    bushes.erase(bushIt, bushes.end());
+
+    // Remove invisible bullets
+    auto bulletIt = std::remove_if(bullets.begin(), bullets.end(),
+                                   [](const std::unique_ptr<Bullet>& bullet) { return !bullet->getVisibleState(); });
+    bullets.erase(bulletIt, bullets.end());
+}

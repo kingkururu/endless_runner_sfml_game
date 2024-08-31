@@ -34,6 +34,7 @@ public:
     void handleGameEvents();
     void restart();
     void setDeltaTime(float deltaTime); 
+    void deleteInvisibleSprites(); 
 
 private:
     sf::RenderWindow* window;
