@@ -17,7 +17,9 @@ Slimes and bushes get re-spawned by decreasing time intervals. Good luck!
     - Click on screen to shoot bullet 
 
 --------------------------------------------------------- ASSETS SOURCES
+
 SPRITES:
+
 Main player 
 https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
 
@@ -31,6 +33,7 @@ Forest background
 https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
  
 SOUND: 
+
 Background music
 https://pixabay.com/music/video-games-chiptune-grooving-142242/
 
@@ -41,6 +44,7 @@ Bullet sound
 https://freesound.org/people/andersmmg/sounds/523425/ 
 
 FONT:
+
 Pixel font
 https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
 
