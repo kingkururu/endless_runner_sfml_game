@@ -1,11 +1,11 @@
-Made on August 2024 by Sunmyoung Yun
+Made on September 2024 by Sunmyoung Yun
 This is my third mini-game project with C++ & SFML
 This was inspired by chrome dinosaur game
 
 --------------------------------------------------------- HOW TO OPEN AND LAUNCH GAME
 1)  Clone repo in VScode
 2)  Type "make" in VScode terminal
-3)  TYpe "./ASAtut" in VScode terminal
+3)  Type "./ASAtut" in VScode terminal
 
 --------------------------------------------------------- GAME PLAY
 This is a like the chrome dinoaur game. You have to jump on the bushes, and can shoot bullets or jump from slimes. 
