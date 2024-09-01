@@ -30,7 +30,8 @@ namespace Constants {
     constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 200;
     constexpr unsigned short SPRITE_OUT_OF_BOUNDS_ADJUSTMENT = 200;
 
-    // background components (static)
+    // background components 
+    constexpr float BACKGROUND_SPEED = 35.0;
     extern const sf::Vector2f BACKGROUND_POSITION;
     extern const sf::Vector2f BACKGROUND_SCALE;
     constexpr const char* BACKGROUNDSPRITE_PATH = "src/assets/sprites/png/background.png";

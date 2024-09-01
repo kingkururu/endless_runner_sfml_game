@@ -72,6 +72,7 @@ void Scene::draw(sf::RenderWindow& window) {
 
         if (background && background->getVisibleState()) {
             window.draw(background->returnSpritesShape());
+            window.draw(background->returnSpritesShape2());
         }
         if (playerSprite && playerSprite->getVisibleState()) {
             window.draw(playerSprite->returnSpritesShape());
@@ -106,6 +107,8 @@ void Scene::draw(sf::RenderWindow& window) {
 
 void Scene::update() {
     try {
+        background->updateBackground(deltaTime, Constants::BACKGROUND_SPEED);
+
         playerSprite->changeAnimation(deltaTime);
         playerSprite->updatePos(); 
 

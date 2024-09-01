@@ -29,6 +29,28 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Text
     }
 }
 
+Background::Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture) : Static(position, scale, texture) {
+    if (auto tex = texture.lock()) {
+        spriteCreated2 = std::make_unique<sf::Sprite>(*tex);
+        spriteCreated2->setScale(scale);
+        spriteCreated2->setPosition(position.x + tex->getSize().x * scale.x, position.y);
+    }
+}
+
+void Background::updateBackground(float deltaTime, float speed) {
+        // Move both background sprites to the left
+        spriteCreated->move(-speed * deltaTime, 0);
+        spriteCreated2->move(-speed * deltaTime, 0);
+
+        // Reposition sprites when they go off screen
+        if (spriteCreated->getPosition().x + spriteCreated->getGlobalBounds().width < 0) {
+            spriteCreated->setPosition(spriteCreated2->getPosition().x + spriteCreated2->getGlobalBounds().width, spriteCreated->getPosition().y);
+        }
+        if (spriteCreated2->getPosition().x + spriteCreated2->getGlobalBounds().width < 0) {
+            spriteCreated2->setPosition(spriteCreated->getPosition().x + spriteCreated->getGlobalBounds().width, spriteCreated2->getPosition().y);
+        }
+}
+
 void NonStatic::setRects(int animNum){
     try{
         if(animNum < 0 || animNum > indexMax){

@@ -44,8 +44,14 @@ public:
 
 class Background : public Static{
 public:
-    explicit Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture) : Static(position, scale, texture) {}
+   // explicit Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture) : Static(position, scale, texture) {}
+   explicit Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture); 
     ~Background() override{};
+    void updateBackground(float deltaTime, float backgroundSpeed); 
+    sf::Sprite& returnSpritesShape2() { return *spriteCreated2; }
+
+private:
+    std::unique_ptr<sf::Sprite> spriteCreated2;
 };
 
 class NonStatic : public Sprite{
