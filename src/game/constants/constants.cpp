@@ -60,9 +60,10 @@ namespace Constants {
 
     //set slime position (random from upper right corner)
     sf::Vector2f makeSlimePosition(){
-        float xPos = static_cast<float>(SCREEN_WIDTH - std::rand() % static_cast<int>(SCREEN_WIDTH / 3));
+        float xPos = static_cast<float>(SCREEN_WIDTH - std::rand() % static_cast<int>(SCREEN_WIDTH / 2));
         float yPos = 0.0f;
 
+        std::cout << "slime position is: " << xPos << "and " <<yPos << std::endl; 
         return sf::Vector2f{ xPos, yPos }; 
     }
 

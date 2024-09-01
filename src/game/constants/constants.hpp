@@ -72,7 +72,7 @@ namespace Constants {
     extern std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
     constexpr float SLIME_INITIAL_RESPAWN_TIME = 3.0; 
     constexpr float SLIME_INTERVAL_DECREMENT = 0.08; 
-    constexpr short SLIME_FALL_ANGLE = 170; 
+    constexpr short SLIME_FALL_ANGLE = 150; 
 
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;

@@ -100,8 +100,6 @@ void Obstacle::setDirectionVector(float angle){
     float angleRad = angle * (3.14f / 180.f);
     directionVector.x = std::cos(angleRad);
     directionVector.y = std::sin(angleRad);
-
-    std::cout << directionVector.x << " and " << directionVector.y << std::endl; 
 }
 
 //bullet class
