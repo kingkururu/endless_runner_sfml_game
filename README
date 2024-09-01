@@ -8,7 +8,7 @@ This was inspired by chrome dinosaur game
 3)  Type "./ASAtut" in VScode terminal
 
 --------------------------------------------------------- GAME PLAY
-This is a like the chrome dinoaur game. You have to jump on the bushes, and can shoot bullets or jump from slimes. 
+This is like the chrome dinoaur game. You have to jump on the bushes, and can shoot bullets or jump from slimes. 
 Each obstacle destroyed or not hit will increase score by 1 point. Your aim is to score as much points possible before hitting an obstacle and dying. 
 
 Slimes and bushes get re-spawned by decreasing time intervals. Good luck!
