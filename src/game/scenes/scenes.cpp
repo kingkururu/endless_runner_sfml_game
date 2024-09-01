@@ -60,6 +60,7 @@ void Scene::spawnBullets(){
         bullets.push_back(std::make_unique<Bullet>(playerSprite->getSpritePos() + Constants::BULLET_POS_OFFSET, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, Constants::BULLET_BITMASK));
         bullets[bullets.size() - 1]->setDirectionVector(mouseClickedPos);
         bulletRespTime = Constants::BULLET_RESPAWN_TIME; 
+        bulletSound->returnSound().play(); 
     }
 } 
 
@@ -231,6 +232,10 @@ void Scene::handleGameEvents() {
         for (auto& bush : bushes) {
             bush->setMoveState(false);
         }
+
+        endingText->updateText("Player dead!\nFinal score: " + std::to_string(score)); 
+        backgroundMusic->returnMusic().stop(); 
+        playerDeadSound->returnSound().play();
     }
 }
 

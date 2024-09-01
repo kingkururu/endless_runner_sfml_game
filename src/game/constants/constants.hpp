@@ -104,7 +104,7 @@ namespace Constants {
     constexpr float BACKGROUNDMUSIC_VOLUME = 100.0f; 
 
     // sound components
-    constexpr const char* PLAYERDEADSOUND_PATH = "src/assets/sound/mp3,flac,wav/gameEnd.flac";
+    constexpr const char* PLAYERDEADSOUND_PATH = "src/assets/sound/mp3,flac,wav/playerDead.wav";
     extern std::shared_ptr<sf::SoundBuffer> PLAYERDEAD_SOUNDBUFF;
     constexpr float PLAYERDEADSOUND_VOLUME = 100.0f; 
 
@@ -112,11 +112,11 @@ namespace Constants {
     extern std::shared_ptr<sf::SoundBuffer> PLAYERJUMP_SOUNDBUFF;
     constexpr float PLAYERJUMPSOUND_VOLUME = 100.0f; 
 
-    constexpr const char* BULLETSOUND_PATH = "";
+    constexpr const char* BULLETSOUND_PATH = "src/assets/sound/mp3,flac,wav/bullet.wav";
     extern std::shared_ptr<sf::SoundBuffer> BULLET_SOUNDBUFF;
     constexpr float BULLETSOUND_VOLUME = 100.0f; 
 
-    constexpr const char* OBSTHITSOUND_PATH = "";
+    constexpr const char* OBSTHITSOUND_PATH = "src/assets/sound/mp3,flac,wav/obstacleHit.wav";
     extern std::shared_ptr<sf::SoundBuffer> OBSTHIT_SOUNDBUFF;
     constexpr float OBSTHITSOUND_VOLUME = 100.0f;
 
