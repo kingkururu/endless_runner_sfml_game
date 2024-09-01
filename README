@@ -1,8 +1,19 @@
-Made on August 2024 by Sunmyoung Yun
+Made on Sep 2024 by Sunmyoung Yun
 Simple game project made with C++ & SFML
+recreated chrome dinosaur game
+
+--------------------------------------------------------- How to open 
+1. Copy repo in VScode
+2. Type "make" in terminal to compile
+3. Type ./ASAtut in terminal to run game 
 
 --------------------------------------------------------- Game play
+    - Press B to restart Game
 
+    - Press W to move player up
+    - Press S to move player down
+    - Press space bar to jump
+    - Click on screen to launch a bullet 
 
 --------------------------------------------------------- Assets sources
 SPRITES:

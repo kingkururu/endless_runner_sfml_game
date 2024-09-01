@@ -105,9 +105,8 @@ void Scene::draw(sf::RenderWindow& window) {
         if (endingText && endingText->getVisibleState()) {
             window.draw(endingText->getText());
         }
-
+        
         window.display(); 
-
     } 
     
     catch (const std::exception& e) {
@@ -141,9 +140,8 @@ void Scene::update() {
                 bullet->updatePos();
             }
         }
-
     } 
-    
+
     catch (const std::exception& e) {
         std::cerr << "Exception in updateSprites: " << e.what() << std::endl;
     }
@@ -152,18 +150,12 @@ void Scene::update() {
 void Scene::handleInput() {
 
     if(playerSprite->getMoveState()){
-        // if(FlagEvents.aPressed){
-        //     playerSprite->updatePlayer(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
-        // } 
         if(FlagEvents.sPressed){
             playerSprite->updatePlayer(physics::moveDown(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
         if(FlagEvents.wPressed){
             playerSprite->updatePlayer(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
-        // if(FlagEvents.dPressed){
-        //     playerSprite->updatePlayer(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
-        // }
 
         if(FlagEvents.spacePressed){
 

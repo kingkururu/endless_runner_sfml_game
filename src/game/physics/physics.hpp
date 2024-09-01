@@ -28,6 +28,7 @@ namespace physics{
     sf::Vector2f moveRight(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
     sf::Vector2f moveUp(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
     sf::Vector2f moveDown(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
+    sf::Vector2f jump(); 
 
     // collisions
         //circle-shaped sprite 
