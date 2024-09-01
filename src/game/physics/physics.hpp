@@ -14,16 +14,14 @@
 #include <vector>
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
+#include <math.h>
 
 namespace physics{
     constexpr float gravity = 9.8;
 
-    // follow trajectory
-    sf::Vector2f follow(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, sf::Vector2i mouseClickedPos); 
-
     // falling objects
     sf::Vector2f freeFall(float deltaTime, float speed, sf::Vector2f originalPo);
-    sf::Vector2f fall(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, short angle); 
+    sf::Vector2f follow(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, const sf::Vector2f& direction); 
 
     // moving player
     sf::Vector2f moveLeft(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0); 

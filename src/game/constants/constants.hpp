@@ -70,9 +70,9 @@ namespace Constants {
     constexpr float SLIME_SPEED = 200.0f;
     constexpr float SLIME_ACCELERATION = 1.6;
     extern std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
-    constexpr float SLIME_INITIAL_RESPAWN_TIME = 12.0; 
+    constexpr float SLIME_INITIAL_RESPAWN_TIME = 3.0; 
     constexpr float SLIME_INTERVAL_DECREMENT = 0.08; 
-
+    constexpr short SLIME_FALL_ANGLE = 125; 
 
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;

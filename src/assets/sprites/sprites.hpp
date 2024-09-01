@@ -61,6 +61,7 @@ public:
     sf::IntRect getRects() const { return animationRects[currentIndex]; }
     void setRects(int animNum); 
     void changeAnimation(float deltaTime); 
+    void changePosition(sf::Vector2f newPos); 
 
 protected:
     bool moveState = true;
@@ -76,21 +77,31 @@ class Player : public NonStatic{
 public:
    explicit Player(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, animationRects, indexMax, bitMask) {}
    ~Player() override {}; 
-    void updatePlayer(sf::Vector2f newPos); 
+    //void updatePlayer(sf::Vector2f newPos); 
 };
 
 class Obstacle : public NonStatic{
 public:
     explicit Obstacle(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, animationRects, indexMax, bitMask) {}
     ~Obstacle() override {}; 
-    void updateObstacle(sf::Vector2f newPos);  
+   // void updateObstacle(sf::Vector2f newPos); 
+    void setDirectionVector(float angle);
+    const sf::Vector2f getDirectionVector() const { return directionVector; }
+
+private:
+    sf::Vector2f directionVector{}; 
 };
 
 class Bullet : public NonStatic{
-   public:
+public:
     explicit Bullet(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture>texture, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, animationRects, indexMax, bitMask) {}
     ~Bullet() override {}; 
-    void updateBullet(sf::Vector2f newPos);   
+    //void updateBullet(sf::Vector2f newPos);  
+    void setDirectionVector(sf::Vector2i projectionPos);
+    const sf::Vector2f getDirectionVector() const { return directionVector; } 
+
+private:
+    sf::Vector2f directionVector{};
 };
 
 

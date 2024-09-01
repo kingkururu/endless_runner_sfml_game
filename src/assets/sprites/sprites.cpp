@@ -77,22 +77,47 @@ void NonStatic::updatePos() {
     }
 }
 
-// Player class
-void Player::updatePlayer(sf::Vector2f newPos) {
-    // if (position.x > Constants::SCREEN_WIDTH) {
-    //     position.x = Constants::SCREEN_WIDTH - Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
-    // } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
-    //     position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
-    // }
-
-    position = newPos;  
+void NonStatic::changePosition(sf::Vector2f newPos){
+    position = newPos; 
 }
 
-void Obstacle::updateObstacle(sf::Vector2f newPos){
-    position = newPos;  
+// Player class
+// void Player::updatePlayer(sf::Vector2f newPos) {
+//     // if (position.x > Constants::SCREEN_WIDTH) {
+//     //     position.x = Constants::SCREEN_WIDTH - Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
+//     // } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
+//     //     position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
+//     // }
+
+//     position = newPos;  
+// }
+
+// void Obstacle::updateObstacle(sf::Vector2f newPos){
+//     position = newPos;  
+// }
+
+void Obstacle::setDirectionVector(float angle){
+    float angleRad = angle * (3.14f / 180.f);
+    directionVector.x = std::cos(angleRad);
+    directionVector.y = std::sin(angleRad);
+
+    std::cout << directionVector.x << " and " << directionVector.y << std::endl; 
 }
 
 //bullet class
-void Bullet::updateBullet(sf::Vector2f newPos){
-    position = newPos;  
+// void Bullet::updateBullet(sf::Vector2f newPos){
+//     position = newPos;  
+// }
+
+void Bullet::setDirectionVector(sf::Vector2i projectionPos){
+    directionVector = static_cast<sf::Vector2f>(projectionPos) - position;
+        
+        // Calculate the length of the direction vector (distance to the target)
+        float length = std::sqrt(directionVector.x * directionVector.x + directionVector.y * directionVector.y);
+    
+         if (length == 0) 
+            return; 
+
+        directionVector.x /= length;
+        directionVector.y /= length;
 }

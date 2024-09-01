@@ -7,7 +7,7 @@
 
 #include "scenes.hpp"
 
-Scene::Scene() : window(), slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME), bulletRespTime(Constants::BULLET_RESPAWN_TIME) {}
+Scene::Scene() : window(), slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME), bulletRespTime(Constants::BULLET_RESPAWN_TIME){}
 
 void Scene::createAssets() {
     try {
@@ -19,6 +19,8 @@ void Scene::createAssets() {
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, Constants::BUSH_BITMASK));
         slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
         slimes[0]->setRects(0);
+        slimes[0]->setDirectionVector(Constants::SLIME_FALL_ANGLE);
+
 
         // Initialize sounds and music
         playerDeadSound = std::make_unique<SoundClass>(Constants::PLAYERDEAD_SOUNDBUFF, Constants::PLAYERDEADSOUND_VOLUME);
@@ -41,7 +43,9 @@ void Scene::createMoreAssets(){
     if(slimeRespTime <= 0){
         float newSlimeInterval = Constants::SLIME_INITIAL_RESPAWN_TIME - (globalTime * Constants::SLIME_INTERVAL_DECREMENT);
         slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
-        slimes[0]->setRects(0);
+        slimes[slimes.size() - 1]->setRects(0);
+        slimes[slimes.size() - 1]->setDirectionVector(Constants::SLIME_FALL_ANGLE);
+
         slimeRespTime = std::max(newSlimeInterval, Constants::SLIME_INITIAL_RESPAWN_TIME);
     }
     if(bushRespTime <= 0){
@@ -57,6 +61,10 @@ void Scene::setTime(float deltaT, float globalT){
     slimeRespTime -= deltaTime; 
     bulletRespTime -= deltaTime; 
     bushRespTime -= deltaTime; 
+} 
+
+void Scene::setMouseClickedPos(sf::Vector2i mousePos){
+    mouseClickedPos = mousePos; 
 } 
 
 void Scene::draw(sf::RenderWindow& window) {
@@ -104,7 +112,7 @@ void Scene::update() {
 
         for (auto& slime : slimes) {
             if (slime->getMoveState()) {
-                slime->updateObstacle(physics::moveLeft(deltaTime, Constants::SLIME_SPEED, slime->getSpritePos(), Constants::SLIME_ACCELERATION)); 
+               slime->changePosition(physics::follow(deltaTime, Constants::SLIME_SPEED, slime->getSpritePos(), Constants::SLIME_ACCELERATION, slime->getDirectionVector())); 
                 slime->changeAnimation(deltaTime);
                 slime->updatePos();
             }
@@ -112,14 +120,14 @@ void Scene::update() {
 
         for (auto& bush : bushes) {
             if (bush->getMoveState()) {
-                bush->updateObstacle(physics::moveLeft(deltaTime, Constants::BUSH_SPEED, bush->getSpritePos(), Constants::BUSH_ACCELERATION)); 
+                bush->changePosition(physics::moveLeft(deltaTime, Constants::BUSH_SPEED, bush->getSpritePos(), Constants::BUSH_ACCELERATION));    
                 bush->updatePos();
             }
         }
 
         for (auto& bullet : bullets) {
             if (bullet->getMoveState()) {
-               // bullet->updateBullet(); 
+                // bullet->changePosition(physics::follow(deltaTime, Constants::BULLET_SPEED, bullet->getSpritePos(), Constants::BULLET_ACCELERATION, mouseClickedPos)); 
                 bullet->updatePos();
             }
         }
@@ -135,16 +143,16 @@ void Scene::handleInput() {
 
     if(playerSprite->getMoveState()){
         if(FlagEvents.aPressed){
-            playerSprite->updatePlayer(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->changePosition(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         } 
         if(FlagEvents.sPressed){
-            playerSprite->updatePlayer(physics::moveDown(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->changePosition(physics::moveDown(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
         if(FlagEvents.wPressed){
-            playerSprite->updatePlayer(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->changePosition(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
         if(FlagEvents.dPressed){
-            playerSprite->updatePlayer(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->changePosition(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
 
         if(FlagEvents.spacePressed){

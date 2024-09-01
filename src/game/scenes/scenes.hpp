@@ -35,6 +35,7 @@ public:
     void restart();
     void setTime(float deltaTime, float globalTime); 
     void deleteInvisibleSprites(); 
+    void setMouseClickedPos(sf::Vector2i mouseClickedPos); 
 
 private:
     sf::RenderWindow* window;
@@ -60,6 +61,7 @@ private:
     unsigned int score = Constants::INITIAL_SCORE;
     float deltaTime {}; 
     float globalTime {}; 
+    sf::Vector2i mouseClickedPos {}; 
 
     float slimeRespTime {};
     float bushRespTime {}; 

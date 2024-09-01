@@ -79,6 +79,7 @@ void GameManager::handleEventInput() {
         }
         if (event.type == sf::Event::MouseButtonReleased) {
             FlagEvents.mouseClicked = false;
+            scene->setMouseClickedPos(mouseClickedPos); 
         }
         scene->handleInput();
     }

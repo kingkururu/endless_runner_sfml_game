@@ -8,47 +8,14 @@
 #include "physics.hpp"
 
 namespace physics{
-    //follow trajectory
-    sf::Vector2f follow(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, sf::Vector2i mouseClickedPos){
-        
-        sf::Vector2f direction = static_cast<sf::Vector2f>(mouseClickedPos) - originalPos;
-        
-        // Calculate the length of the direction vector (distance to the target)
-        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-    
-         if (length == 0) 
-            return originalPos; 
-
-        direction.x /= length;
-        direction.y /= length;
-
-        sf::Vector2f movement = direction * speed * deltaTime;
-        
-        return originalPos + movement;
-    }
-
     //falling objects 
     sf::Vector2f freeFall(float deltaTime, float speed, sf::Vector2f originalPos){
         return { originalPos.x, originalPos.y += speed * deltaTime * gravity };
     }
 
-    //fall diagonally based on directions
-    sf::Vector2f fall(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, short angle){
-        
-        float angleRad = angle * (3.14 / 180); 
-        
-        float dx = std::cos(angleRad);
-        float dy = std::sin(angleRad);
-        
-         // Normalize direction vector
-         
-         float length = std::sqrt(dx * dx + dy * dy);
-         dx /= length;
-         dy /= length;
-         
-         // Calculate movement
-         sf::Vector2f movement(dx * speed * deltaTime * acceleration, dy * speed * deltaTime * acceleration);
-
+    //object moving in a direction vector
+    sf::Vector2f follow(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration, const sf::Vector2f& direction){
+         sf::Vector2f movement(direction.x * speed * deltaTime * acceleration, direction.y * speed * deltaTime * acceleration);
         return originalPos + movement;
     }
 
