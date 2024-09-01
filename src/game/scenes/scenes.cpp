@@ -16,6 +16,7 @@ void Scene::createAssets() {
         playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYERANIM_MAX_INDEX, Constants::PLAYER_BITMASK);
         playerSprite->setRects(0);
         bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, Constants::BULLET_BITMASK));
+        bullets[0]->setVisibleState(false); 
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, Constants::BUSH_BITMASK));
         slimes.push_back(std::make_unique<Obstacle>(Constants::makeSlimePosition(), Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
         slimes[0]->setRects(0);
@@ -38,7 +39,7 @@ void Scene::createAssets() {
     }
 }
 
-void Scene::createMoreAssets(){
+void Scene::respawnAssets(){
     if(slimeRespTime <= 0){
         float newSlimeInterval = Constants::SLIME_INITIAL_RESPAWN_TIME - (globalTime * Constants::SLIME_INTERVAL_DECREMENT);
         slimes.push_back(std::make_unique<Obstacle>(Constants::makeSlimePosition(), Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
@@ -51,6 +52,14 @@ void Scene::createMoreAssets(){
         float newBushInterval = Constants::BUSH_INITIAL_RESPAWN_TIME - (globalTime * Constants::BUSH_INTERVAL_DECREMENT);
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, Constants::BUSH_BITMASK));
         bushRespTime = std::max(newBushInterval, Constants::BUSH_INITIAL_RESPAWN_TIME);
+    }
+} 
+
+void Scene::spawnBullets(){
+    if (bulletRespTime <= 0){
+        bullets.push_back(std::make_unique<Bullet>(playerSprite->getSpritePos() + Constants::BULLET_POS_OFFSET, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, Constants::BULLET_BITMASK));
+        bullets[bullets.size() - 1]->setDirectionVector(mouseClickedPos);
+        bulletRespTime = Constants::BULLET_RESPAWN_TIME; 
     }
 } 
 
@@ -129,7 +138,7 @@ void Scene::update() {
 
         for (auto& bullet : bullets) {
             if (bullet->getMoveState()) {
-                // bullet->changePosition(physics::follow(deltaTime, Constants::BULLET_SPEED, bullet->getSpritePos(), Constants::BULLET_ACCELERATION, mouseClickedPos)); 
+                bullet->changePosition(physics::follow(deltaTime, Constants::BULLET_SPEED, bullet->getSpritePos(), Constants::BULLET_ACCELERATION, bullet->getDirectionVector())); 
                 bullet->updatePos();
             }
         }
@@ -161,7 +170,7 @@ void Scene::handleInput() {
 
         }
         if(FlagEvents.mouseClicked){
-
+            spawnBullets(); 
         }
     }
 
@@ -220,5 +229,5 @@ void Scene::deleteInvisibleSprites() {
     // Remove invisible bullets
     auto bulletIt = std::remove_if(bullets.begin(), bullets.end(),
                                    [](const std::unique_ptr<Bullet>& bullet) { return !bullet->getVisibleState(); });
-    bullets.erase(bulletIt, bullets.end());
+    bullets.erase(bulletIt, bullets.end()); 
 }

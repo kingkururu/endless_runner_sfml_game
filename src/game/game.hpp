@@ -29,8 +29,7 @@ private:
     sf::RenderWindow window;
     sf::Clock clock;
     float globalTime {};
-    sf::Vector2i mouseClickedPos {};
-
+    
     // Scene
     std::unique_ptr<Scene> scene;
 };

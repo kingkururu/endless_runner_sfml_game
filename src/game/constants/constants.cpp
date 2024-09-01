@@ -27,6 +27,7 @@ namespace Constants {
     std::vector<sf::IntRect> BULLETSPRITES_RECTS;
     std::shared_ptr<sf::Texture> BULLET_TEXTURE = std::make_shared<sf::Texture>();
     std::shared_ptr<sf::Uint8[]> BULLET_BITMASK;
+    const sf::Vector2f BULLET_POS_OFFSET = { 60.0f, 60.0f};  
 
     // slime components (non-static) / animated   
     const sf::Vector2f SLIME_SCALE = {0.35f, 0.35f};

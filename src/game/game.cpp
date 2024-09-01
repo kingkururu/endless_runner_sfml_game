@@ -21,11 +21,11 @@ void GameManager::runGame() {
         while (window.isOpen()) {
             if (!FlagEvents.gameEnd) {
                 countTime();
-                scene->createMoreAssets(); 
+                scene->respawnAssets(); 
                 scene->handleGameEvents(); 
-                scene->update();
             }
             handleEventInput();
+            scene->update();
             scene->draw(window);
         }
     } catch (const std::exception& e) {
@@ -74,12 +74,11 @@ void GameManager::handleEventInput() {
             FlagEvents.flagKeyReleased(); 
         }
         if (event.type == sf::Event::MouseButtonPressed) {
-            mouseClickedPos = sf::Mouse::getPosition(window);
             FlagEvents.mouseClicked = true;
+            scene->setMouseClickedPos(sf::Mouse::getPosition(window)); 
         }
         if (event.type == sf::Event::MouseButtonReleased) {
             FlagEvents.mouseClicked = false;
-            scene->setMouseClickedPos(mouseClickedPos); 
         }
         scene->handleInput();
     }

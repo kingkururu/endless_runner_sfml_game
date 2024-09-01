@@ -53,13 +53,14 @@ namespace Constants {
     extern const sf::Vector2f BULLET_POSITION;
     extern const sf::Vector2f BULLET_SCALE;
     extern std::vector<sf::IntRect> BULLETSPRITES_RECTS;
-    constexpr float BULLET_SPEED = 200.0f;
+    constexpr float BULLET_SPEED = 500.0f;
     constexpr float BULLET_ACCELERATION = 1.6;
     constexpr const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
     extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
     constexpr short BULLETANIM_MAX_INDEX = 0; 
     extern std::shared_ptr<sf::Uint8[]> BULLET_BITMASK;
-    constexpr float BULLET_RESPAWN_TIME = 0.9; 
+    constexpr float BULLET_RESPAWN_TIME = 0.2; 
+    extern const sf::Vector2f BULLET_POS_OFFSET;  
 
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
@@ -94,7 +95,7 @@ namespace Constants {
     extern const sf::Color TEXT_COLOR;
     constexpr const char* TEXT_PATH = "src/assets/fonts/ttf/font1.ttf";
     extern std::shared_ptr<sf::Font> TEXT_FONT; 
-    constexpr const char* TEXT_MESSAGE = "blank message in text";
+    constexpr const char* TEXT_MESSAGE = "current score: ";
 
     // music components 
     constexpr const char* BACKGROUNDMUSIC_PATH = "src/assets/sound/mp3,flac,wav/bgm.mp3";

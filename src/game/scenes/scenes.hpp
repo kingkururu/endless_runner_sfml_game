@@ -27,7 +27,7 @@ public:
     Scene();
 
     void createAssets();
-    void createMoreAssets(); 
+    void respawnAssets(); 
     void update();
     void draw(sf::RenderWindow& window);
     void handleInput();
@@ -36,6 +36,7 @@ public:
     void setTime(float deltaTime, float globalTime); 
     void deleteInvisibleSprites(); 
     void setMouseClickedPos(sf::Vector2i mouseClickedPos); 
+    void spawnBullets(); 
 
 private:
     sf::RenderWindow* window;
