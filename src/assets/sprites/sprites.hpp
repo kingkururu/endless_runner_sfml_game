@@ -27,6 +27,7 @@ public:
     sf::Sprite& returnSpritesShape() { return *spriteCreated; }
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
+    //const sf::Vector2f getSpriteSize();
 
 protected:
     sf::Vector2f position {};
@@ -44,7 +45,6 @@ public:
 
 class Background : public Static{
 public:
-   // explicit Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture) : Static(position, scale, texture) {}
    explicit Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture); 
     ~Background() override{};
     void updateBackground(float deltaTime, float backgroundSpeed); 

@@ -29,6 +29,24 @@ Sprite::Sprite(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Text
     }
 }
 
+// const sf::Vector2f Sprite::getSpriteSize(){
+//     try {
+//         if (auto tex = texture.lock()) {  
+//             sf::Vector2u textureSize = tex->getSize(); 
+//             sf::Vector2f scale = spriteCreated->getScale();
+//             sf::Vector2f spriteSize(textureSize.x * scale.x, textureSize.y * scale.y);
+
+//             std::cout << "size is: " << spriteSize.x << "and " << spriteSize.y << std::endl; 
+//             return spriteSize;
+//         }
+//     }
+
+//     catch (const std::exception& e){
+//         std::cerr << "failed getting size" << e.what() << std::endl;
+//         return {0.0f, 0.0f}; 
+//     }
+// }
+
 Background::Background(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture) : Static(position, scale, texture) {
     if (auto tex = texture.lock()) {
         spriteCreated2 = std::make_unique<sf::Sprite>(*tex);

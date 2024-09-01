@@ -128,14 +128,12 @@ void Scene::update() {
                 slime->updatePos();
             }
         }
-
         for (auto& bush : bushes) {
             if (bush->getMoveState()) {
                 bush->changePosition(physics::moveLeft(deltaTime, Constants::BUSH_SPEED, bush->getSpritePos(), Constants::BUSH_ACCELERATION));    
                 bush->updatePos();
             }
         }
-
         for (auto& bullet : bullets) {
             if (bullet->getMoveState()) {
                 bullet->changePosition(physics::follow(deltaTime, Constants::BULLET_SPEED, bullet->getSpritePos(), Constants::BULLET_ACCELERATION, bullet->getDirectionVector())); 
@@ -153,18 +151,18 @@ void Scene::update() {
 void Scene::handleInput() {
 
     if(playerSprite->getMoveState()){
-        if(FlagEvents.aPressed){
-            playerSprite->updatePlayer(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
-        } 
+        // if(FlagEvents.aPressed){
+        //     playerSprite->updatePlayer(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+        // } 
         if(FlagEvents.sPressed){
             playerSprite->updatePlayer(physics::moveDown(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
         if(FlagEvents.wPressed){
             playerSprite->updatePlayer(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
-        if(FlagEvents.dPressed){
-            playerSprite->updatePlayer(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
-        }
+        // if(FlagEvents.dPressed){
+        //     playerSprite->updatePlayer(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+        // }
 
         if(FlagEvents.spacePressed){
 
@@ -180,19 +178,58 @@ void Scene::handleInput() {
 }
 
 void Scene::handleGameEvents() { 
+    // //during game play
+    // for (auto& bush : bushes) {
+    //     if (!bush ) {
+    //         continue;
+    //     }
+
+    //     bool collisionDetected = physics::boundingBoxCollsion(
+    //         playerSprite->getSpritePos(),
+    //         static_cast<sf::Vector2f>(playerSprite->getRects().getSize()),
+    //         bush->getSpritePos(),
+    //         static_cast<sf::Vector2f>(bush->getRects().getSize())
+    //     );
+
+    //     if(collisionDetected){
+    //         FlagEvents.gameEnd = true; 
+    //     }
+    // }
+
+    // increase score
+    for (auto it = slimes.begin(); it != slimes.end(); ) {
+        if ((*it)->getSpritePos().x < playerSprite->getSpritePos().x - Constants::PASSTHROUGH_OFFSET){
+            ++score; 
+            it = slimes.erase(it);
+        } else {
+            ++it; 
+        }
+    }
+    for (auto it = bushes.begin(); it != bushes.end(); ) {
+        if ((*it)->getSpritePos().x < playerSprite->getSpritePos().x - Constants::PASSTHROUGH_OFFSET){
+            ++score; 
+            it = bushes.erase(it);
+        } else {
+            ++it; 
+        }
+    }
+
+    endingText->updateText("current score: " + std::to_string(score)); 
+
+    //if game ends
     if(FlagEvents.gameEnd){
-       playerSprite->setMoveState(true);
+       playerSprite->setMoveState(false);
        
        for (auto& slime : slimes) {
-            slime->setMoveState(true);
+            slime->setMoveState(false);
         }
 
         for (auto& bullet : bullets) {
-            bullet->setMoveState(true);
+            bullet->setMoveState(false);
         }
 
         for (auto& bush : bushes) {
-            bush->setMoveState(true);
+            bush->setMoveState(false);
         }
     }
 }
