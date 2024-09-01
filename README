@@ -1,19 +1,23 @@
-Made on Sep 2024 by Sunmyoung Yun
-Simple game project made with C++ & SFML
-recreated chrome dinosaur game
+Made on August 2024 by Sunmyoung Yun
+This is my third mini-game project with C++ & SFML
+This was inspired by chrome dinosaur game
 
---------------------------------------------------------- How to open 
-1. Copy repo in VScode
-2. Type "make" in terminal to compile
-3. Type ./ASAtut in terminal to run game 
+--------------------------------------------------------- HOW TO OPEN AND LAUNCH GAME
+1)  Clone repo in VScode
+2)  Type "make" in VScode terminal
+3)  TYpe "./ASAtut" in VScode terminal
 
---------------------------------------------------------- Game play
+--------------------------------------------------------- GAME PLAY
+This is a like the chrome dinoaur game. You have to jump on the bushes, and can shoot bullets or jump from slimes. 
+Each obstacle destroyed or not hit will increase score by 1 point. Your aim is to score as much points possible before hitting an obstacle and dying. 
+
+Slimes and bushes get re-spawned by decreasing time intervals. Good luck!
+
+Press (A) key to move the player left
     - Press B to restart Game
 
     - Press W to move player up
     - Press S to move player down
-    - Press space bar to jump
-    - Click on screen to launch a bullet 
 
 --------------------------------------------------------- Assets sources
 SPRITES:
