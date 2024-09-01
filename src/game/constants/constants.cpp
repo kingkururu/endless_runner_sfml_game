@@ -29,7 +29,6 @@ namespace Constants {
     std::shared_ptr<sf::Uint8[]> BULLET_BITMASK;
 
     // slime components (non-static) / animated   
-    const sf::Vector2f SLIME_POSITION = {static_cast<float>(std::rand() % SCREEN_WIDTH) - 60.0f, 0.0f};
     const sf::Vector2f SLIME_SCALE = {0.35f, 0.35f};
     std::vector<sf::IntRect> SLIMESPRITE_RECTS;
     std::shared_ptr<sf::Texture> SLIME_TEXTURE = std::make_shared<sf::Texture>();
@@ -59,6 +58,15 @@ namespace Constants {
 
     std::shared_ptr<sf::SoundBuffer> OBSTHIT_SOUNDBUFF = std::make_shared<sf::SoundBuffer>(); 
 
+    //set slime position (random from upper right corner)
+    sf::Vector2f makeSlimePosition(){
+        float xPos = static_cast<float>(SCREEN_WIDTH - std::rand() % static_cast<int>(SCREEN_WIDTH / 3));
+        float yPos = 0.0f;
+
+        return sf::Vector2f{ xPos, yPos }; 
+    }
+
+    //initialize bitmask 
     std::shared_ptr<sf::Uint8[]> createBitmask(const std::shared_ptr<sf::Texture>& texture) {
         if (!texture) {
             return nullptr;

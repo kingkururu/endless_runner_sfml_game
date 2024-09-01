@@ -77,7 +77,7 @@ class Player : public NonStatic{
 public:
    explicit Player(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, animationRects, indexMax, bitMask) {}
    ~Player() override {}; 
-    //void updatePlayer(sf::Vector2f newPos); 
+    void updatePlayer(sf::Vector2f newPos); 
 };
 
 class Obstacle : public NonStatic{

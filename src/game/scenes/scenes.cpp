@@ -17,10 +17,9 @@ void Scene::createAssets() {
         playerSprite->setRects(0);
         bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, Constants::BULLET_BITMASK));
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, Constants::BUSH_BITMASK));
-        slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
+        slimes.push_back(std::make_unique<Obstacle>(Constants::makeSlimePosition(), Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
         slimes[0]->setRects(0);
         slimes[0]->setDirectionVector(Constants::SLIME_FALL_ANGLE);
-
 
         // Initialize sounds and music
         playerDeadSound = std::make_unique<SoundClass>(Constants::PLAYERDEAD_SOUNDBUFF, Constants::PLAYERDEADSOUND_VOLUME);
@@ -42,7 +41,7 @@ void Scene::createAssets() {
 void Scene::createMoreAssets(){
     if(slimeRespTime <= 0){
         float newSlimeInterval = Constants::SLIME_INITIAL_RESPAWN_TIME - (globalTime * Constants::SLIME_INTERVAL_DECREMENT);
-        slimes.push_back(std::make_unique<Obstacle>(Constants::SLIME_POSITION, Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
+        slimes.push_back(std::make_unique<Obstacle>(Constants::makeSlimePosition(), Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, Constants::SLIME_BITMASK));
         slimes[slimes.size() - 1]->setRects(0);
         slimes[slimes.size() - 1]->setDirectionVector(Constants::SLIME_FALL_ANGLE);
 
@@ -143,16 +142,16 @@ void Scene::handleInput() {
 
     if(playerSprite->getMoveState()){
         if(FlagEvents.aPressed){
-            playerSprite->changePosition(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->updatePlayer(physics::moveLeft(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         } 
         if(FlagEvents.sPressed){
-            playerSprite->changePosition(physics::moveDown(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->updatePlayer(physics::moveDown(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
         if(FlagEvents.wPressed){
-            playerSprite->changePosition(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->updatePlayer(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
         if(FlagEvents.dPressed){
-            playerSprite->changePosition(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
+            playerSprite->updatePlayer(physics::moveRight(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
 
         if(FlagEvents.spacePressed){

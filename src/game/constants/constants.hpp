@@ -72,7 +72,7 @@ namespace Constants {
     extern std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
     constexpr float SLIME_INITIAL_RESPAWN_TIME = 3.0; 
     constexpr float SLIME_INTERVAL_DECREMENT = 0.08; 
-    constexpr short SLIME_FALL_ANGLE = 125; 
+    constexpr short SLIME_FALL_ANGLE = 170; 
 
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;
@@ -117,6 +117,8 @@ namespace Constants {
     extern std::shared_ptr<sf::SoundBuffer> OBSTHIT_SOUNDBUFF;
     constexpr float OBSTHITSOUND_VOLUME = 100.0f;
 
+    // make new slime positions each time
+    extern sf::Vector2f makeSlimePosition(); 
     // load textures, fonts, music, and sound
     extern void initialize(); 
 }

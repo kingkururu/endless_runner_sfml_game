@@ -82,15 +82,15 @@ void NonStatic::changePosition(sf::Vector2f newPos){
 }
 
 // Player class
-// void Player::updatePlayer(sf::Vector2f newPos) {
-//     // if (position.x > Constants::SCREEN_WIDTH) {
-//     //     position.x = Constants::SCREEN_WIDTH - Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
-//     // } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
-//     //     position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
-//     // }
+void Player::updatePlayer(sf::Vector2f newPos) {
+    if (position.x > Constants::SCREEN_WIDTH) {
+        position.x = Constants::SCREEN_WIDTH - Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
+    } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
+        position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
+    }
 
-//     position = newPos;  
-// }
+    changePosition(newPos); 
+}
 
 // void Obstacle::updateObstacle(sf::Vector2f newPos){
 //     position = newPos;  
