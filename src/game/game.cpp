@@ -48,9 +48,6 @@ void GameManager::handleEventInput() {
         }
         if (event.type == sf::Event::KeyPressed) {
             switch (event.key.code) {
-                case sf::Keyboard::Space:
-                    FlagEvents.spacePressed = true;
-                    break;
                 case sf::Keyboard::A:
                     FlagEvents.aPressed = true;
                     break;

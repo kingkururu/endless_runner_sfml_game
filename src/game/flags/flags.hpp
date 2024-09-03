@@ -23,10 +23,9 @@ extern struct flagEvents{
     bool sPressed;
     bool dPressed;
     bool bPressed;
-    bool spacePressed; 
     bool mouseClicked;
 
-    flagEvents() : wPressed(false), aPressed(false), sPressed(false), dPressed(false), bPressed(false), spacePressed(false), mouseClicked(false) {}
+    flagEvents() : wPressed(false), aPressed(false), sPressed(false), dPressed(false), bPressed(false), mouseClicked(false) {}
 
     void resetFlags(){
         std::memset(this, 0, sizeof(*this));

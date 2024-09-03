@@ -156,22 +156,19 @@ void Scene::handleInput() {
         if(FlagEvents.wPressed){
             playerSprite->updatePlayer(physics::moveUp(deltaTime, Constants::PLAYER_SPEED, playerSprite->getSpritePos())); 
         }
-
-        if(FlagEvents.spacePressed){
-
-        }
         if(FlagEvents.mouseClicked){
             spawnBullets(); 
         }
     }
 
     if(FlagEvents.bPressed){
+        backgroundMusic->returnMusic().stop(); 
         restart();
     }
 }
 
 void Scene::handleGameEvents() { 
-    // //during game play
+    // //during game play ( player hits bush )
     // for (auto& bush : bushes) {
     //     if ( playerSprite && bush ) {
     //         bool collisionDetected = physics::boundingBoxCollsion(
@@ -184,6 +181,11 @@ void Scene::handleGameEvents() {
     //         }
     //     }
     // }
+    // //player hits slime
+
+    // bullet hits bush
+
+    // bullet hits slime 
 
     // increase score
     for (auto it = slimes.begin(); it != slimes.end(); ) {
