@@ -133,20 +133,11 @@ void Player::updatePlayer(sf::Vector2f newPos) {
     changePosition(newPos); 
 }
 
-// void Obstacle::updateObstacle(sf::Vector2f newPos){
-//     position = newPos;  
-// }
-
 void Obstacle::setDirectionVector(float angle){
     float angleRad = angle * (3.14f / 180.f);
     directionVector.x = std::cos(angleRad);
     directionVector.y = std::sin(angleRad);
 }
-
-//bullet class
-// void Bullet::updateBullet(sf::Vector2f newPos){
-//     position = newPos;  
-// }
 
 void Bullet::setDirectionVector(sf::Vector2i projectionPos){
     directionVector = static_cast<sf::Vector2f>(projectionPos) - position;

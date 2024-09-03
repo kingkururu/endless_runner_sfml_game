@@ -91,7 +91,6 @@ class Obstacle : public NonStatic{
 public:
     explicit Obstacle(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture> texture, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, animationRects, indexMax, bitMask) {}
     ~Obstacle() override {}; 
-   // void updateObstacle(sf::Vector2f newPos); 
     void setDirectionVector(float angle);
     const sf::Vector2f getDirectionVector() const { return directionVector; }
 
@@ -103,7 +102,6 @@ class Bullet : public NonStatic{
 public:
     explicit Bullet(sf::Vector2f position, sf::Vector2f scale, std::weak_ptr<sf::Texture>texture, const std::vector<sf::IntRect> animationRects, unsigned const int indexMax, std::weak_ptr<sf::Uint8[]> bitMask) : NonStatic(position, scale, texture, animationRects, indexMax, bitMask) {}
     ~Bullet() override {}; 
-    //void updateBullet(sf::Vector2f newPos);  
     void setDirectionVector(sf::Vector2i projectionPos);
     const sf::Vector2f getDirectionVector() const { return directionVector; } 
 
