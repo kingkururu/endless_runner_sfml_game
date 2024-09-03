@@ -123,10 +123,11 @@ void NonStatic::changePosition(sf::Vector2f newPos){
 
 // Player class
 void Player::updatePlayer(sf::Vector2f newPos) {
-    if (position.x > Constants::SCREEN_WIDTH) {
-        position.x = Constants::SCREEN_WIDTH - Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT;
-    } else if (position.x < -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) {
-        position.x = -Constants::SPRITE_OUT_OF_BOUNDS_OFFSET;
+    if (FlagEvents.sPressed && newPos.y > Constants::SCREEN_HEIGHT - Constants::SPRITE_OUT_OF_BOUNDS_OFFSET){
+        newPos.y = Constants::SCREEN_HEIGHT - Constants::SPRITE_OUT_OF_BOUNDS_ADJUSTMENT; 
+    }
+    if (FlagEvents.wPressed && newPos.y < (Constants::SCREEN_HEIGHT + Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) / 2 ){
+        newPos.y = (Constants::SCREEN_HEIGHT + Constants::SPRITE_OUT_OF_BOUNDS_OFFSET) / 2 ; 
     }
 
     changePosition(newPos); 

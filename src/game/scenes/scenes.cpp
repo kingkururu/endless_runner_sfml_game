@@ -173,19 +173,15 @@ void Scene::handleInput() {
 void Scene::handleGameEvents() { 
     // //during game play
     // for (auto& bush : bushes) {
-    //     if (!bush ) {
-    //         continue;
-    //     }
-
-    //     bool collisionDetected = physics::boundingBoxCollsion(
-    //         playerSprite->getSpritePos(),
-    //         static_cast<sf::Vector2f>(playerSprite->getRects().getSize()),
-    //         bush->getSpritePos(),
-    //         static_cast<sf::Vector2f>(bush->getRects().getSize())
-    //     );
-
-    //     if(collisionDetected){
-    //         FlagEvents.gameEnd = true; 
+    //     if ( playerSprite && bush ) {
+    //         bool collisionDetected = physics::boundingBoxCollsion(
+    //         playerSprite->getSpritePos(), static_cast<sf::Vector2f>(playerSprite->getRects().getSize()),
+    //         bush->getSpritePos(), static_cast<sf::Vector2f>(bush->getRects().getSize()));
+        
+    //         if(collisionDetected){
+    //             FlagEvents.gameEnd = true; 
+    //             break; 
+    //         }
     //     }
     // }
 

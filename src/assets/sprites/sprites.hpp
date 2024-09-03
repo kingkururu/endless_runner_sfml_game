@@ -17,6 +17,7 @@
 #include <SFML/Graphics.hpp>
 #include "constants.hpp"
 #include "physics.hpp"
+#include "flags.hpp" 
 
 class Sprite{
 public:
