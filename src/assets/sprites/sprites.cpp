@@ -67,15 +67,17 @@ void NonStatic::setRects(int animNum){
 
 void NonStatic::changeAnimation(float deltaTime) {
     try {
-        elapsedTime += deltaTime;
-        if (elapsedTime > Constants::ANIMATION_CHANGE_TIME) {
-            ++currentIndex; 
+        if(animChangeState){
+            elapsedTime += deltaTime;
+            if (elapsedTime > Constants::ANIMATION_CHANGE_TIME) {
+                ++currentIndex; 
 
-            if (currentIndex >= indexMax) {
-                currentIndex = 0; 
+                if (currentIndex >= indexMax) {
+                    currentIndex = 0; 
+                }
+                setRects(currentIndex); 
+                elapsedTime = 0.0;
             }
-            setRects(currentIndex); 
-            elapsedTime = 0.0;
         }
     }
     catch (const std::exception& e) {

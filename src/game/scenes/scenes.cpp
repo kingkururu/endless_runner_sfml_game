@@ -116,7 +116,8 @@ void Scene::draw(sf::RenderWindow& window) {
 
 void Scene::update() {
     try {
-        background->updateBackground(deltaTime, Constants::BACKGROUND_SPEED);
+        if(background->getBackgroundMoveState())
+            background->updateBackground(deltaTime, Constants::BACKGROUND_SPEED);
 
         playerSprite->changeAnimation(deltaTime);
         playerSprite->updatePos(); 
@@ -168,19 +169,6 @@ void Scene::handleInput() {
 }
 
 void Scene::handleGameEvents() { 
-    
-    // player vs bush collision 
-    bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::pixelPerfectCollisionHelper);  
-
-    //player vs slime collision 
-    bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::pixelPerfectCollisionHelper); 
-
-    // bullet vs slime collision
-    bool slimeDead = physics::checkCollisions( bullets, slimes, physics::pixelPerfectCollisionHelper); 
-
-    //bullet vs bush collision
-    bool bushDead = physics::checkCollisions( bullets, bushes, physics::boundingBoxCollisionHelper); 
-
     // increase score
     for (auto it = slimes.begin(); it != slimes.end(); ) {
         if ((*it)->getSpritePos().x < playerSprite->getSpritePos().x - Constants::PASSTHROUGH_OFFSET){
@@ -201,12 +189,31 @@ void Scene::handleGameEvents() {
 
     endingText->updateText("current score: " + std::to_string(score)); 
 
+    // player vs bush collision 
+    bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::pixelPerfectCollisionHelper);  
+    
+    if(bushCollision){
+        FlagEvents.gameEnd = true; 
+    }
+    //player vs slime collision 
+    // bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::pixelPerfectCollisionHelper); 
+
+    // // bullet vs slime collision
+    // bool slimeDead = physics::checkCollisions( bullets, slimes, physics::pixelPerfectCollisionHelper); 
+
+    // //bullet vs bush collision
+    // bool bushDead = physics::checkCollisions( bullets, bushes, physics::boundingBoxCollisionHelper); 
+
     //if game ends
     if(FlagEvents.gameEnd){
+       background->setBackgroundMoveState(false); 
+
        playerSprite->setMoveState(false);
-       
+       playerSprite->setAnimChangeState(false);
+
        for (auto& slime : slimes) {
             slime->setMoveState(false);
+            slime->setAnimChangeState(false);
         }
 
         for (auto& bullet : bullets) {

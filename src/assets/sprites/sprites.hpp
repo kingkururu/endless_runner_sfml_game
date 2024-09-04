@@ -48,9 +48,12 @@ public:
     ~Background() override{};
     void updateBackground(float deltaTime, float backgroundSpeed); 
     sf::Sprite& returnSpritesShape2() { return *spriteCreated2; }
+    bool getBackgroundMoveState() { return backgroundMoveState; } 
+    void setBackgroundMoveState(bool newState) { backgroundMoveState = newState; }
 
 private:
     std::unique_ptr<sf::Sprite> spriteCreated2;
+    bool backgroundMoveState = true; 
 };
 
 class NonStatic : public Sprite{
@@ -68,6 +71,8 @@ public:
     void changeAnimation(float deltaTime); 
     void changePosition(sf::Vector2f newPos); 
     std::shared_ptr<sf::Uint8[]> const getBitmask() const { return bitMask.lock(); }
+    void setAnimChangeState(bool newState) { animChangeState = newState; }
+    
 protected:
     bool moveState = true;
     std::vector<sf::IntRect> animationRects{}; 
@@ -75,6 +80,7 @@ protected:
     int currentIndex {};
     int indexMax {}; 
     float elapsedTime {};
+    bool animChangeState = true; 
     std::weak_ptr<sf::Uint8[]> bitMask{}; 
 };
 
