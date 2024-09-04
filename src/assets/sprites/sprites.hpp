@@ -16,7 +16,6 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include "constants.hpp"
-#include "physics.hpp"
 #include "flags.hpp" 
 
 class Sprite{
@@ -25,10 +24,9 @@ public:
 
     virtual ~Sprite() = default;
     sf::Vector2f const getSpritePos() const { return position; };
-    sf::Sprite& returnSpritesShape() { return *spriteCreated; }
+    sf::Sprite& returnSpritesShape() const { return *spriteCreated; }
     bool const getVisibleState() const { return visibleState; }
     void setVisibleState(bool VisibleState){ visibleState = VisibleState; }
-    //const sf::Vector2f getSpriteSize();
 
 protected:
     sf::Vector2f position {};
@@ -69,7 +67,7 @@ public:
     void setRects(int animNum); 
     void changeAnimation(float deltaTime); 
     void changePosition(sf::Vector2f newPos); 
-
+    std::shared_ptr<sf::Uint8[]> const getBitmask() const { return bitMask.lock(); }
 protected:
     bool moveState = true;
     std::vector<sf::IntRect> animationRects{}; 

@@ -168,24 +168,13 @@ void Scene::handleInput() {
 }
 
 void Scene::handleGameEvents() { 
-    // //during game play ( player hits bush )
-    // for (auto& bush : bushes) {
-    //     if ( playerSprite && bush ) {
-    //         bool collisionDetected = physics::boundingBoxCollsion(
-    //         playerSprite->getSpritePos(), static_cast<sf::Vector2f>(playerSprite->getRects().getSize()),
-    //         bush->getSpritePos(), static_cast<sf::Vector2f>(bush->getRects().getSize()));
-        
-    //         if(collisionDetected){
-    //             FlagEvents.gameEnd = true; 
-    //             break; 
-    //         }
-    //     }
-    // }
-    // //player hits slime
+    
+    // player vs bush collision 
+    bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::boundingBoxCollisionHelper); 
 
-    // bullet hits bush
+    //player vs slime collision 
+    bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::boundingBoxCollisionHelper); 
 
-    // bullet hits slime 
 
     // increase score
     for (auto it = slimes.begin(); it != slimes.end(); ) {
@@ -227,7 +216,7 @@ void Scene::handleGameEvents() {
         backgroundMusic->returnMusic().stop(); 
         playerDeadSound->returnSound().play();
     }
-}
+} 
 
 void Scene::restart() {
     playerSprite->setMoveState(true);

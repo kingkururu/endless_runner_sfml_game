@@ -15,8 +15,10 @@
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
 #include <math.h>
+#include "sprites.hpp"
 
 namespace physics{
+
     constexpr float gravity = 9.8;
 
     // falling objects
@@ -32,11 +34,29 @@ namespace physics{
 
     // collisions
         //circle-shaped sprite 
-    bool circleCollision(const sf::Sprite& sprite1, float radius1, const sf::Sprite& sprite2, float radius2);
+    bool circleCollision(const Sprite& sprite1, float radius1, const Sprite& sprite2, float radius2);
         //axis aligned bounding box
     bool boundingBoxCollsion(const sf::Vector2f &position1, const sf::Vector2f &size1, const sf::Vector2f &position2, const sf::Vector2f &size2);
         //pixel perfect 
     bool pixelPerfectCollision(const std::shared_ptr<sf::Uint8[]> &bitmask1, const sf::Vector2f &position1, const sf::Vector2f &size1, const std::shared_ptr<sf::Uint8[]> &bitmask2, const sf::Vector2f &position2, const sf::Vector2f &size2);  
-}
+    
+    //sprite vs sprites (default)
+    bool checkCollisions(const std::unique_ptr<Sprite>& sprite1, 
+                     const std::vector<std::unique_ptr<Sprite>>& sprites,
+                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
+    //player vs obstacles
+    bool checkCollisions(const std::unique_ptr<Player>& playerSprite, 
+                     const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
+                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
+    //bullets vs obstacles
+    bool checkCollisions(const std::vector<std::unique_ptr<Sprite>>& bulletSprites, 
+                     const std::vector<std::unique_ptr<Sprite>>& obstacleSprites,
+                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
+
+    bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2);
+    bool boundingBoxCollisionHelper(const Sprite& sprite1, const Sprite& sprite2);  
+    bool pixelPerfectCollisionHelper(const NonStatic& sprite1, const NonStatic& sprite2);
+
+    }
 
 #endif /* game_hpp */

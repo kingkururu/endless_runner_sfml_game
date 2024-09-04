@@ -34,10 +34,10 @@ namespace physics{
     }
 
     // collisions 
-    bool circleCollision(const sf::Sprite& sprite1, float radius1, const sf::Sprite& sprite2, float radius2) {
+    bool circleCollision(const Sprite& sprite1, float radius1, const Sprite& sprite2, float radius2) {
         // Get the positions of the sprites
-        sf::Vector2f pos1 = sprite1.getPosition();
-        sf::Vector2f pos2 = sprite2.getPosition();
+        sf::Vector2f pos1 = sprite1.returnSpritesShape().getPosition();
+        sf::Vector2f pos2 = sprite2.returnSpritesShape().getPosition(); 
 
         // Calculate the distance between the centers of the circles
         float dx = pos1.x - pos2.x;
@@ -108,4 +108,90 @@ namespace physics{
 
         return false; // No collision detected
     }
+
+    //defult (spritve vs sprites)
+    bool checkCollisions(const std::unique_ptr<Sprite>& sprite1, 
+                     const std::vector<std::unique_ptr<Sprite>>& sprites,
+                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc) {
+
+    // Iterate over all sprites to check for collisions
+    for (const auto& sprite : sprites) {
+        // Use the provided collision detection function
+        if (collisionFunc(*sprite1, *sprite)) {
+            return true; // Collision detected
+        }
+    }
+
+    return false; // No collision detected
+    }
+
+    // player vs obstacles
+    bool checkCollisions(const std::unique_ptr<Player>& playerSprite, 
+                     const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
+                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc) {
+
+    // Iterate over all sprites to check for collisions
+    for (const auto& sprite : obstacleSprites) {
+        // Use the provided collision detection function
+        if (collisionFunc(*playerSprite, *sprite)) {
+            return true; // Collision detected
+        }
+    }
+
+    return false; // No collision detected
+    }
+
+    // bullet vs obstacles
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Helper function for circle collision
+    bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2) {
+        float radius1 = sprite1.returnSpritesShape().getGlobalBounds().width / 2.0f;
+        float radius2 = sprite2.returnSpritesShape().getGlobalBounds().width / 2.0f;
+
+        return physics::circleCollision(sprite1, radius1, sprite2, radius2);
+    }
+
+    bool boundingBoxCollisionHelper(const Sprite& sprite1, const Sprite& sprite2) {    
+    sf::FloatRect bounds1 = sprite1.returnSpritesShape().getGlobalBounds();
+    sf::FloatRect bounds2 = sprite2.returnSpritesShape().getGlobalBounds(); 
+
+    sf::Vector2f position1(bounds1.left, bounds1.top);
+    sf::Vector2f size1(bounds1.width, bounds1.height);
+    sf::Vector2f position2(bounds2.left, bounds2.top);
+    sf::Vector2f size2(bounds2.width, bounds2.height);
+
+    // Call the existing boundingBoxCollsion
+    return boundingBoxCollsion(position1, size1, position2, size2);
+    }
+
+    bool pixelPerfectCollisionHelper(const NonStatic& obj1, const NonStatic& obj2) {
+    auto bitmask1 = obj1.getBitmask();
+    auto bitmask2 = obj2.getBitmask();
+
+    if (!bitmask1 || !bitmask2) {
+        std::cerr << "Error: Missing bitmask for one or both sprites in pixel-perfect collision check." << std::endl;
+        return false;
+    }
+
+    sf::Vector2f pos1 = obj1.returnSpritesShape().getPosition();
+    sf::Vector2f size1 = { obj1.returnSpritesShape().getGlobalBounds().width, obj1.returnSpritesShape().getGlobalBounds().height };
+
+    sf::Vector2f pos2 = obj2.returnSpritesShape().getPosition();
+    sf::Vector2f size2 = { obj2.returnSpritesShape().getGlobalBounds().width, obj2.returnSpritesShape().getGlobalBounds().height };
+
+    return physics::pixelPerfectCollision(bitmask1, pos1, size1, bitmask2, pos2, size2);
+    }
+
 }

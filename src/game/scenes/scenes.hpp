@@ -15,12 +15,15 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
+#include <functional> 
 
 #include "sprites.hpp"
 #include "sound.hpp"
 #include "fonts.hpp"
 #include "constants.hpp"
 #include "flags.hpp"
+#include "physics.hpp"
+
 
 class Scene {
 public:
