@@ -48,9 +48,9 @@ namespace physics{
     bool checkCollisions(const std::unique_ptr<Player>& playerSprite, 
                      const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
                      const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
-    //bullets vs obstacles
-    bool checkCollisions(const std::vector<std::unique_ptr<Sprite>>& bulletSprites, 
-                     const std::vector<std::unique_ptr<Sprite>>& obstacleSprites,
+    // //bullets vs obstacles
+    bool checkCollisions(const std::vector<std::unique_ptr<Bullet>>& bulletSprites, 
+                     const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
                      const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
 
     bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2);

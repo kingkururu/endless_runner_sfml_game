@@ -175,6 +175,11 @@ void Scene::handleGameEvents() {
     //player vs slime collision 
     bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::boundingBoxCollisionHelper); 
 
+    // bullet vs slime collision
+    bool slimeDead = physics::checkCollisions( bullets, slimes, physics::boundingBoxCollisionHelper); 
+
+    //bullet vs bush collision
+    bool bushDead = physics::checkCollisions( bullets, bushes, physics::boundingBoxCollisionHelper); 
 
     // increase score
     for (auto it = slimes.begin(); it != slimes.end(); ) {

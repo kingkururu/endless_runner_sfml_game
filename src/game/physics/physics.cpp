@@ -142,18 +142,23 @@ namespace physics{
     }
 
     // bullet vs obstacles
-
-
-
-
-
-
-
-
-
-
-
-
+    bool checkCollisions(const std::vector<std::unique_ptr<Bullet>>& bulletSprites, 
+                        const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
+                        const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc) 
+    {
+        // Iterate over each bullet sprite
+        for (const auto& bullet : bulletSprites) {
+            // Iterate over each obstacle sprite
+            for (const auto& obstacle : obstacleSprites) {
+                // Check for collision using the provided function
+                if (collisionFunc(*bullet, *obstacle)) {
+                    return true; // Collision detected
+                }
+            }
+        }
+        
+        return false; // No collisions detected
+    }
 
     // Helper function for circle collision
     bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2) {
@@ -163,6 +168,7 @@ namespace physics{
         return physics::circleCollision(sprite1, radius1, sprite2, radius2);
     }
 
+    // helper function for bounding box aabb collision 
     bool boundingBoxCollisionHelper(const Sprite& sprite1, const Sprite& sprite2) {    
     sf::FloatRect bounds1 = sprite1.returnSpritesShape().getGlobalBounds();
     sf::FloatRect bounds2 = sprite2.returnSpritesShape().getGlobalBounds(); 
@@ -176,6 +182,7 @@ namespace physics{
     return boundingBoxCollsion(position1, size1, position2, size2);
     }
 
+    // helper function for pixel perfect collision
     bool pixelPerfectCollisionHelper(const NonStatic& obj1, const NonStatic& obj2) {
     auto bitmask1 = obj1.getBitmask();
     auto bitmask2 = obj2.getBitmask();
