@@ -109,57 +109,6 @@ namespace physics{
         return false; // No collision detected
     }
 
-    //defult (spritve vs sprites)
-    bool checkCollisions(const std::unique_ptr<Sprite>& sprite1, 
-                     const std::vector<std::unique_ptr<Sprite>>& sprites,
-                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc) {
-
-    // Iterate over all sprites to check for collisions
-    for (const auto& sprite : sprites) {
-        // Use the provided collision detection function
-        if (collisionFunc(*sprite1, *sprite)) {
-            return true; // Collision detected
-        }
-    }
-
-    return false; // No collision detected
-    }
-
-    // player vs obstacles
-    bool checkCollisions(const std::unique_ptr<Player>& playerSprite, 
-                     const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
-                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc) {
-
-    // Iterate over all sprites to check for collisions
-    for (const auto& sprite : obstacleSprites) {
-        // Use the provided collision detection function
-        if (collisionFunc(*playerSprite, *sprite)) {
-            return true; // Collision detected
-        }
-    }
-
-    return false; // No collision detected
-    }
-
-    // bullet vs obstacles
-    bool checkCollisions(const std::vector<std::unique_ptr<Bullet>>& bulletSprites, 
-                        const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
-                        const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc) 
-    {
-        // Iterate over each bullet sprite
-        for (const auto& bullet : bulletSprites) {
-            // Iterate over each obstacle sprite
-            for (const auto& obstacle : obstacleSprites) {
-                // Check for collision using the provided function
-                if (collisionFunc(*bullet, *obstacle)) {
-                    return true; // Collision detected
-                }
-            }
-        }
-        
-        return false; // No collisions detected
-    }
-
     // Helper function for circle collision
     bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2) {
         float radius1 = sprite1.returnSpritesShape().getGlobalBounds().width / 2.0f;

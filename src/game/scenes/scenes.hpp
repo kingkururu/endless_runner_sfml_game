@@ -15,7 +15,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
-#include <functional> 
 
 #include "sprites.hpp"
 #include "sound.hpp"
@@ -70,6 +69,7 @@ private:
     float slimeRespTime {};
     float bushRespTime {}; 
     float bulletRespTime {}; 
+
 };
 
 

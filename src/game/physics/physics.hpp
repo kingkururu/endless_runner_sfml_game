@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
 #include <math.h>
+#include <functional> 
 #include "sprites.hpp"
 
 namespace physics{
@@ -40,23 +41,41 @@ namespace physics{
         //pixel perfect 
     bool pixelPerfectCollision(const std::shared_ptr<sf::Uint8[]> &bitmask1, const sf::Vector2f &position1, const sf::Vector2f &size1, const std::shared_ptr<sf::Uint8[]> &bitmask2, const sf::Vector2f &position2, const sf::Vector2f &size2);  
     
-    //sprite vs sprites (default)
-    bool checkCollisions(const std::unique_ptr<Sprite>& sprite1, 
-                     const std::vector<std::unique_ptr<Sprite>>& sprites,
-                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
-    //player vs obstacles
-    bool checkCollisions(const std::unique_ptr<Player>& playerSprite, 
-                     const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
-                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
-    // //bullets vs obstacles
-    bool checkCollisions(const std::vector<std::unique_ptr<Bullet>>& bulletSprites, 
-                     const std::vector<std::unique_ptr<Obstacle>>& obstacleSprites,
-                     const std::function<bool(const Sprite&, const Sprite&)>& collisionFunc); 
-
     bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2);
     bool boundingBoxCollisionHelper(const Sprite& sprite1, const Sprite& sprite2);  
     bool pixelPerfectCollisionHelper(const NonStatic& sprite1, const NonStatic& sprite2);
 
+    //check templates 
+    template<typename SpriteType1, typename SpriteType2, typename CollisionFunc>
+    bool checkCollisions(const std::vector<std::unique_ptr<SpriteType1>>& firstGroup, 
+                         const std::vector<std::unique_ptr<SpriteType2>>& secondGroup,
+                         const CollisionFunc& collisionFunc) {
+        // Iterate over each sprite in the first group
+        for (const auto& item1 : firstGroup) {
+            // Iterate over each sprite in the second group
+            for (const auto& item2 : secondGroup) {
+                // Check for collision using the provided function
+                if (collisionFunc(*item1, *item2)) {
+                    return true; // Collision detected
+                }
+            }
+        }
+        return false; // No collisions detected
+    }
+
+    template<typename SpriteType1, typename SpriteType2, typename CollisionFunc>
+    bool checkCollisions(const std::unique_ptr<SpriteType1>& firstGroup, 
+                         const std::vector<std::unique_ptr<SpriteType2>>& Group,
+                         const CollisionFunc& collisionFunc) {
+        
+            for (const auto& item2 : Group) {
+                if (collisionFunc(*firstGroup, *item2)) {
+                    return true; // Collision detected
+                }
+            }
+        return false; // No collisions detected
+    }
+                
     }
 
 #endif /* game_hpp */

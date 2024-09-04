@@ -170,13 +170,13 @@ void Scene::handleInput() {
 void Scene::handleGameEvents() { 
     
     // player vs bush collision 
-    bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::boundingBoxCollisionHelper); 
+    bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::pixelPerfectCollisionHelper);  
 
     //player vs slime collision 
-    bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::boundingBoxCollisionHelper); 
+    bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::pixelPerfectCollisionHelper); 
 
     // bullet vs slime collision
-    bool slimeDead = physics::checkCollisions( bullets, slimes, physics::boundingBoxCollisionHelper); 
+    bool slimeDead = physics::checkCollisions( bullets, slimes, physics::pixelPerfectCollisionHelper); 
 
     //bullet vs bush collision
     bool bushDead = physics::checkCollisions( bullets, bushes, physics::boundingBoxCollisionHelper); 
