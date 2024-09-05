@@ -33,9 +33,6 @@ void Scene::createAssets() {
 
         // Initialize text
         endingText = std::make_unique<TextClass>(Constants::TEXT_POSITION, Constants::TEXT_SIZE, Constants::TEXT_COLOR, Constants::TEXT_FONT, Constants::TEXT_MESSAGE);
-        
-       // Constants::printBitmaskDebug(Constants::PLAYER_BITMASKS[0], Constants::PLAYERSPRITE_RECTS[0].width, Constants::PLAYERSPRITE_RECTS[0].height ); 
-
         } 
 
     catch (const std::exception& e) {

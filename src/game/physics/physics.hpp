@@ -31,11 +31,11 @@ namespace physics{
     sf::Vector2f moveRight(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
     sf::Vector2f moveUp(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
     sf::Vector2f moveDown(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
-    sf::Vector2f jump(); 
+    sf::Vector2f jump(float deltaTime, float jumpSpeed, sf::Vector2f originalPos); 
 
     // collisions
         //circle-shaped sprite 
-    //bool circleCollision(const Sprite& sprite1, float radius1, const Sprite& sprite2, float radius2);
+    bool circleCollision(const Sprite& sprite1, float radius1, const Sprite& sprite2, float radius2);
         //axis aligned bounding box
     bool boundingBoxCollision(const sf::Vector2f &position1, const sf::Vector2f &size1, const sf::Vector2f &position2, const sf::Vector2f &size2);
         //pixel perfect 

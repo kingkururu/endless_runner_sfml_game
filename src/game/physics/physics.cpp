@@ -33,21 +33,24 @@ namespace physics{
         return { originalPos.x, originalPos.y += speed * deltaTime * acceleration};
     }
 
+    sf::Vector2f jump(float deltaTime, float jumpSpeed, sf::Vector2f originalPos){
+
+    }
 
     // collisions (circle collision)
-    // bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2) {
-    //     // Calculate the distance between the centers of the circles
-    //     float dx = pos1.x - pos2.x;
-    //     float dy = pos1.y - pos2.y;
-    //     float distanceSquared = dx * dx + dy * dy;
+    bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2) {
+        // Calculate the distance between the centers of the circles
+        float dx = pos1.x - pos2.x;
+        float dy = pos1.y - pos2.y;
+        float distanceSquared = dx * dx + dy * dy;
 
-    //     // Calculate the sum of the radii
-    //     float radiusSum = radius1 + radius2;
-    //     float radiusSumSquared = radiusSum * radiusSum;
+        // Calculate the sum of the radii
+        float radiusSum = radius1 + radius2;
+        float radiusSumSquared = radiusSum * radiusSum;
 
-    //     // Check if the distance squared is less than or equal to the sum of radii squared
-    //     return distanceSquared <= radiusSumSquared;
-    // }
+        // Check if the distance squared is less than or equal to the sum of radii squared
+        return distanceSquared <= radiusSumSquared;
+    }
 
     // bounding box collision
     bool boundingBoxCollision(const sf::Vector2f &position1, 
