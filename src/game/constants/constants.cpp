@@ -123,27 +123,26 @@ namespace Constants {
 
         // make bitmasks
         for (const auto& rect : PLAYERSPRITE_RECTS ) {
-            PLAYER_BITMASKS.push_back(createBitmask(PLAYER_TEXTURE, rect, ALPHA_THRESHOLD));
+            PLAYER_BITMASKS.push_back(createBitmask(PLAYER_TEXTURE, rect));
         }
         
         for (const auto& rect : BULLETSPRITES_RECTS ) {
-            BULLET_BITMASKS.push_back(createBitmask(BULLET_TEXTURE, rect, ALPHA_THRESHOLD));
+            BULLET_BITMASKS.push_back(createBitmask(BULLET_TEXTURE, rect));
         }
 
         for (const auto& rect : SLIMESPRITE_RECTS ) {
-            SLIME_BITMASKS.push_back(createBitmask(SLIME_TEXTURE, rect, ALPHA_THRESHOLD));
+            SLIME_BITMASKS.push_back(createBitmask(SLIME_TEXTURE, rect));
         }
         
         for (const auto& rect : BUSHSPRITES_RECTS ) {
-            BUSH_BITMASKS.push_back(createBitmask(BUSH_TEXTURE, rect, ALPHA_THRESHOLD));
+            BUSH_BITMASKS.push_back(createBitmask(BUSH_TEXTURE, rect));
         }
 
     }
 
 std::shared_ptr<sf::Uint8[]> createBitmask(
     const std::shared_ptr<sf::Texture>& texture,
-    const sf::IntRect& rect,  // Rectangle representing the portion of the texture
-    sf::Uint8 alphaThreshold) {
+    const sf::IntRect& rect) {
 
     if (!texture) {
         std::cerr << "Error: Texture is empty." << std::endl;

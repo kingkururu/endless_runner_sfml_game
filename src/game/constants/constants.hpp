@@ -28,7 +28,6 @@ namespace Constants {
     // basic animation standards
     constexpr float ANIMATION_CHANGE_TIME = 0.1f;
     constexpr short PASSTHROUGH_OFFSET = 65; 
-    constexpr short ALPHA_THRESHOLD = 255; 
 
     // screen buffers for sprites and texts
     constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 110;
@@ -128,10 +127,7 @@ namespace Constants {
     extern sf::Vector2f makeSlimePosition(); 
     // load textures, fonts, music, and sound
     extern void initialize(); 
-    extern std::shared_ptr<sf::Uint8[]> createBitmask(
-        const std::shared_ptr<sf::Texture>& texture,
-        const sf::IntRect& rect,  // Rectangle representing the portion of the texture
-        sf::Uint8 alphaThreshold);
+    extern std::shared_ptr<sf::Uint8[]> createBitmask( const std::shared_ptr<sf::Texture>& texture, const sf::IntRect& rect );
     extern void printBitmaskDebug(const std::shared_ptr<sf::Uint8[]>& bitmask, unsigned int width, unsigned int height);
 
 
