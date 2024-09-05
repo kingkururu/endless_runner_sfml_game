@@ -33,29 +33,28 @@ namespace physics{
         return { originalPos.x, originalPos.y += speed * deltaTime * acceleration};
     }
 
-    // collisions 
-    bool circleCollision(const Sprite& sprite1, float radius1, const Sprite& sprite2, float radius2) {
-        // Get the positions of the sprites
-        sf::Vector2f pos1 = sprite1.returnSpritesShape().getPosition();
-        sf::Vector2f pos2 = sprite2.returnSpritesShape().getPosition(); 
 
-        // Calculate the distance between the centers of the circles
-        float dx = pos1.x - pos2.x;
-        float dy = pos1.y - pos2.y;
-        float distanceSquared = dx * dx + dy * dy;
+    // collisions (circle collision)
+    // bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2) {
+    //     // Calculate the distance between the centers of the circles
+    //     float dx = pos1.x - pos2.x;
+    //     float dy = pos1.y - pos2.y;
+    //     float distanceSquared = dx * dx + dy * dy;
 
-        // Calculate the sum of the radii
-        float radiusSum = radius1 + radius2;
-        float radiusSumSquared = radiusSum * radiusSum;
+    //     // Calculate the sum of the radii
+    //     float radiusSum = radius1 + radius2;
+    //     float radiusSumSquared = radiusSum * radiusSum;
 
-        // Check if the distance squared is less than or equal to the sum of radii squared
-        return distanceSquared <= radiusSumSquared;
-    }
+    //     // Check if the distance squared is less than or equal to the sum of radii squared
+    //     return distanceSquared <= radiusSumSquared;
+    // }
 
-    bool boundingBoxCollsion(const sf::Vector2f &position1, 
+    // bounding box collision
+    bool boundingBoxCollision(const sf::Vector2f &position1, 
                                const sf::Vector2f &size1,
                                const sf::Vector2f &position2, 
                                const sf::Vector2f &size2) {
+
         float xOverlapStart = std::max(position1.x, position2.x);
         float yOverlapStart = std::max(position1.y, position2.y);
         float xOverlapEnd = std::min(position1.x + size1.x, position2.x + size2.x);
@@ -64,90 +63,95 @@ namespace physics{
         if (xOverlapStart >= xOverlapEnd || yOverlapStart >= yOverlapEnd) {
             return false;
         }
-
         return true; 
     }
 
-    bool pixelPerfectCollision(const std::shared_ptr<sf::Uint8[]> &bitmask1, 
-                               const sf::Vector2f &position1, 
-                               const sf::Vector2f &size1,
-                               const std::shared_ptr<sf::Uint8[]> &bitmask2, 
-                               const sf::Vector2f &position2, 
-                               const sf::Vector2f &size2) {
+    // pixel perfect collition
+    bool pixelPerfectCollision(
+        const std::shared_ptr<sf::Uint8[]>& bitmask1, const sf::Vector2f& position1, const sf::Vector2f& size1,
+        const std::shared_ptr<sf::Uint8[]>& bitmask2, const sf::Vector2f& position2, const sf::Vector2f& size2) {
 
-        // Calculate the bounding box of the overlapping area
-        float xOverlapStart = std::max(position1.x, position2.x);
-        float yOverlapStart = std::max(position1.y, position2.y);
-        float xOverlapEnd = std::min(position1.x + size1.x, position2.x + size2.x);
-        float yOverlapEnd = std::min(position1.y + size1.y, position2.y + size2.y);
+        // Helper function to get the pixel index in the bitmask
+        auto getPixelIndex = [](const sf::Vector2f& size, int x, int y) -> int {
+            return (y * static_cast<int>(size.x) + x) * 4; // Each pixel has 4 bytes (RGBA)
+        };
 
-        // If there's no overlap, return false
-        if (xOverlapStart >= xOverlapEnd || yOverlapStart >= yOverlapEnd) {
+        // Calculate the overlapping area between the two objects
+        float left = std::max(position1.x, position2.x);
+        float top = std::max(position1.y, position2.y);
+        float right = std::min(position1.x + size1.x, position2.x + size2.x);
+        float bottom = std::min(position1.y + size1.y, position2.y + size2.y);
+
+        // If there is no overlap, return false
+        if (left >= right || top >= bottom) {
             return false;
-        }
+        } 
 
-        // Iterate over the overlapping area
-        for (int y = yOverlapStart; y < yOverlapEnd; ++y) {
-            for (int x = xOverlapStart; x < xOverlapEnd; ++x) {
-                // Calculate local coordinates within each bitmask
+        // Check each pixel in the overlapping area
+        for (int y = static_cast<int>(top); y < static_cast<int>(bottom); ++y) {
+            for (int x = static_cast<int>(left); x < static_cast<int>(right); ++x) {
+                // Calculate the position in each bitmask
                 int x1 = x - static_cast<int>(position1.x);
                 int y1 = y - static_cast<int>(position1.y);
                 int x2 = x - static_cast<int>(position2.x);
                 int y2 = y - static_cast<int>(position2.y);
 
-                // Check the corresponding bits in both bitmasks
-                bool pixel1 = bitmask1[y1 * static_cast<int>(size1.x) + x1] != 0;
-                bool pixel2 = bitmask2[y2 * static_cast<int>(size2.x) + x2] != 0;
+                // Get the index of the pixel in each bitmask
+                int index1 = getPixelIndex(size1, x1, y1);
+                int index2 = getPixelIndex(size2, x2, y2);
 
-                // If both pixels are set, we have a collision
-                if (pixel1 && pixel2) {
-                    return true;
+                // Check if the pixels' values are non-zero (i.e., not transparent)
+                if (bitmask1[index1] == 1 && bitmask2[index2] == 1) {
+                   // std::cout << "Collision detected at pixel (" << x << ", " << y << ")" << std::endl;
+                    return true; // Collision detected
                 }
             }
         }
-
-        return false; // No collision detected
+        return false; 
     }
 
-    // Helper function for circle collision
-    bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2) {
-        float radius1 = sprite1.returnSpritesShape().getGlobalBounds().width / 2.0f;
-        float radius2 = sprite2.returnSpritesShape().getGlobalBounds().width / 2.0f;
+    //bounding box collision helper
+    bool boundingBoxCollisionHelper(const NonStatic& sprite1, const NonStatic& sprite2) {    
+        // Retrieve global bounds of the entire sprite
+        sf::FloatRect bounds1 = sprite1.returnSpritesShape().getGlobalBounds();
+        sf::FloatRect bounds2 = sprite2.returnSpritesShape().getGlobalBounds(); 
 
-        return physics::circleCollision(sprite1, radius1, sprite2, radius2);
+        // Retrieve the current animation frame (IntRect) for each sprite
+        sf::IntRect rect1 = sprite1.getRects();
+        sf::IntRect rect2 = sprite2.getRects();
+
+        // Adjust the position using the left and top of the current frame
+        sf::Vector2f position1(bounds1.left + rect1.left, bounds1.top + rect1.top);
+        sf::Vector2f position2(bounds2.left + rect2.left, bounds2.top + rect2.top);
+
+        // Adjust the size using the width and height of the current frame
+        sf::Vector2f size1(static_cast<float>(rect1.width), static_cast<float>(rect1.height));
+        sf::Vector2f size2(static_cast<float>(rect2.width), static_cast<float>(rect2.height));
+
+        // Call the existing boundingBoxCollision function with adjusted values
+        return boundingBoxCollision(position1, size1, position2, size2);
     }
 
-    // helper function for bounding box aabb collision 
-    bool boundingBoxCollisionHelper(const Sprite& sprite1, const Sprite& sprite2) {    
-    sf::FloatRect bounds1 = sprite1.returnSpritesShape().getGlobalBounds();
-    sf::FloatRect bounds2 = sprite2.returnSpritesShape().getGlobalBounds(); 
-
-    sf::Vector2f position1(bounds1.left, bounds1.top);
-    sf::Vector2f size1(bounds1.width, bounds1.height);
-    sf::Vector2f position2(bounds2.left, bounds2.top);
-    sf::Vector2f size2(bounds2.width, bounds2.height);
-
-    // Call the existing boundingBoxCollsion
-    return boundingBoxCollsion(position1, size1, position2, size2);
-    }
-
-    // helper function for pixel perfect collision
+    //pixel perfect collision helper
     bool pixelPerfectCollisionHelper(const NonStatic& obj1, const NonStatic& obj2) {
-    auto bitmask1 = obj1.getBitmask();
-    auto bitmask2 = obj2.getBitmask();
+        // Retrieve bitmasks for the current animation frame
+        auto bitmask1 = obj1.getBitmask(obj1.getCurrIndex());
+        auto bitmask2 = obj2.getBitmask(obj2.getCurrIndex());
 
-    if (!bitmask1 || !bitmask2) {
-        std::cerr << "Error: Missing bitmask for one or both sprites in pixel-perfect collision check." << std::endl;
-        return false;
-    }
+        // Check if bitmasks are available
+        if (!bitmask1 || !bitmask2) {
+            std::cerr << "Error: Missing bitmask for one or both sprites in pixel-perfect collision check." << std::endl;
+            return false;
+        }
 
-    sf::Vector2f pos1 = obj1.returnSpritesShape().getPosition();
-    sf::Vector2f size1 = { obj1.returnSpritesShape().getGlobalBounds().width, obj1.returnSpritesShape().getGlobalBounds().height };
+        // Retrieve positions and sizes of both objects
+        sf::Vector2f position1 = obj1.getSpritePos();
+        sf::Vector2f size1 = { static_cast<float>(obj1.getRects().width), static_cast<float>(obj1.getRects().height) }; 
+        sf::Vector2f position2 = obj2.getSpritePos();
+        sf::Vector2f size2 = { static_cast<float>(obj2.getRects().width), static_cast<float>(obj2.getRects().height) }; 
 
-    sf::Vector2f pos2 = obj2.returnSpritesShape().getPosition();
-    sf::Vector2f size2 = { obj2.returnSpritesShape().getGlobalBounds().width, obj2.returnSpritesShape().getGlobalBounds().height };
-
-    return physics::pixelPerfectCollision(bitmask1, pos1, size1, bitmask2, pos2, size2);
+        // Perform pixel-perfect collision detection
+        return pixelPerfectCollision(bitmask1, position1, size1, bitmask2, position2, size2);
     }
 
 }

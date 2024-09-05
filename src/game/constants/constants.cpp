@@ -19,28 +19,28 @@ namespace Constants {
     std::vector<sf::IntRect> PLAYERSPRITE_RECTS;
     const sf::Color PLAYER_DEAD_COLOR = sf::Color(200, 0, 0);
     std::shared_ptr<sf::Texture> PLAYER_TEXTURE = std::make_shared<sf::Texture>();
-    std::shared_ptr<sf::Uint8[]> PLAYER_BITMASK;
+    std::vector<std::shared_ptr<sf::Uint8[]>> PLAYER_BITMASKS;
 
     // bullet components (non-static) / non-animated
     const sf::Vector2f BULLET_POSITION = PLAYER_POSITION;
     const sf::Vector2f BULLET_SCALE = {2.5f, 2.5f};
     std::vector<sf::IntRect> BULLETSPRITES_RECTS;
     std::shared_ptr<sf::Texture> BULLET_TEXTURE = std::make_shared<sf::Texture>();
-    std::shared_ptr<sf::Uint8[]> BULLET_BITMASK;
+    std::vector<std::shared_ptr<sf::Uint8[]>> BULLET_BITMASKS;
     const sf::Vector2f BULLET_POS_OFFSET = { 60.0f, 60.0f};  
 
     // slime components (non-static) / animated   
     const sf::Vector2f SLIME_SCALE = {0.35f, 0.35f};
     std::vector<sf::IntRect> SLIMESPRITE_RECTS;
     std::shared_ptr<sf::Texture> SLIME_TEXTURE = std::make_shared<sf::Texture>();
-    std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
+    std::vector<std::shared_ptr<sf::Uint8[]>> SLIME_BITMASKS;
 
     // bush components (non-static) / non-animated
     const sf::Vector2f BUSH_POSITION = {SCREEN_WIDTH - 100.0f, SCREEN_HEIGHT - 130.0f};
     const sf::Vector2f BUSH_SCALE = {3.0f, 3.0f};
     std::vector<sf::IntRect> BUSHSPRITES_RECTS;
     std::shared_ptr<sf::Texture> BUSH_TEXTURE = std::make_shared<sf::Texture>();
-    std::shared_ptr<sf::Uint8[]> BUSH_BITMASK;
+    std::vector<std::shared_ptr<sf::Uint8[]>> BUSH_BITMASKS;
 
     // text components
     const sf::Vector2f TEXT_POSITION = {0.0f, 0.0f};
@@ -64,35 +64,6 @@ namespace Constants {
         float xPos = static_cast<float>(SCREEN_WIDTH - std::rand() % static_cast<int>(SCREEN_WIDTH / 2));
         float yPos = 0.0f;
         return sf::Vector2f{ xPos, yPos }; 
-    }
-
-    //initialize bitmask 
-    std::shared_ptr<sf::Uint8[]> createBitmask(const std::shared_ptr<sf::Texture>& texture) {
-        if (!texture) {
-            return nullptr;
-        }
-
-        sf::Image image = texture->copyToImage();
-        unsigned int width = image.getSize().x;
-        unsigned int height = image.getSize().y;
-
-        unsigned int bitmaskSize = (width * height) / 8 + ((width * height) % 8 != 0); // rounding up
-        std::shared_ptr<sf::Uint8[]> bitmask(new sf::Uint8[bitmaskSize](), std::default_delete<sf::Uint8[]>());
-
-        for (unsigned int y = 0; y < height; ++y) {
-            for (unsigned int x = 0; x < width; ++x) {
-                sf::Color pixelColor = image.getPixel(x, y);
-                unsigned int bitIndex = y * width + x;
-                unsigned int byteIndex = bitIndex / 8;
-                unsigned int bitPosition = bitIndex % 8;
-
-                if (pixelColor.a > 128) {
-                    bitmask[byteIndex] |= (1 << bitPosition);
-                }
-            }
-        }
-
-        return bitmask; 
     }
 
     //initializer function
@@ -139,18 +110,91 @@ namespace Constants {
         }
 
         //make rects for animations     //at this current moment player is only player_run.png
-        for(int i = 0; i < 5; ++i ){
+        for(int i = 0; i < 6; ++i ){
             PLAYERSPRITE_RECTS.push_back(sf::IntRect{ 32 * i, 0, 32, 32}); 
+                       // PLAYERSPRITE_RECTS.push_back(sf::IntRect{ 302 * i, 0, 28, 32}); 
+
         }
         for(int i = 0; i < 5; ++i ){
             SLIMESPRITE_RECTS.push_back(sf::IntRect{ 490 * i, 0, 490, 242}); 
         }
+        BUSHSPRITES_RECTS.push_back(sf::IntRect{ 0, 0, 32, 32 }); 
+        BULLETSPRITES_RECTS.push_back(sf::IntRect{ 0, 0, 8, 8 }); 
 
         // make bitmasks
-        PLAYER_BITMASK = createBitmask(PLAYER_TEXTURE);
-        BULLET_BITMASK = createBitmask(BULLET_TEXTURE); 
-        SLIME_BITMASK = createBitmask(SLIME_TEXTURE);
-        BUSH_BITMASK = createBitmask(BUSH_TEXTURE);
+        for (const auto& rect : PLAYERSPRITE_RECTS ) {
+            PLAYER_BITMASKS.push_back(createBitmask(PLAYER_TEXTURE, rect, ALPHA_THRESHOLD));
+        }
+        
+        for (const auto& rect : BULLETSPRITES_RECTS ) {
+            BULLET_BITMASKS.push_back(createBitmask(BULLET_TEXTURE, rect, ALPHA_THRESHOLD));
+        }
+
+        for (const auto& rect : SLIMESPRITE_RECTS ) {
+            SLIME_BITMASKS.push_back(createBitmask(SLIME_TEXTURE, rect, ALPHA_THRESHOLD));
+        }
+        
+        for (const auto& rect : BUSHSPRITES_RECTS ) {
+            BUSH_BITMASKS.push_back(createBitmask(BUSH_TEXTURE, rect, ALPHA_THRESHOLD));
+        }
+
+    }
+
+std::shared_ptr<sf::Uint8[]> createBitmask(
+    const std::shared_ptr<sf::Texture>& texture,
+    const sf::IntRect& rect,  // Rectangle representing the portion of the texture
+    sf::Uint8 alphaThreshold) {
+
+    if (!texture) {
+        std::cerr << "Error: Texture is empty." << std::endl;
+        return nullptr;
+    }
+
+    // Ensure the rect is within the bounds of the texture
+    sf::Vector2u textureSize = texture->getSize();
+    if (rect.left < 0 || rect.top < 0 || 
+        rect.left + rect.width > static_cast<int>(textureSize.x) || 
+        rect.top + rect.height > static_cast<int>(textureSize.y)) {
+        std::cerr << "Error: Rect is out of bounds of the texture." << std::endl;
+        return nullptr;
+    }
+
+    sf::Image image = texture->copyToImage();
+    unsigned int width = rect.width;
+    unsigned int height = rect.height;
+
+    unsigned int bitmaskSize = (width * height) / 8 + ((width * height) % 8 != 0); // rounding up
+    std::shared_ptr<sf::Uint8[]> bitmask(new sf::Uint8[bitmaskSize](), std::default_delete<sf::Uint8[]>());
+
+    std::cout << "Creating new bitmask for rect (" << rect.left << ", " << rect.top 
+              << ", " << rect.width << ", " << rect.height << ")" << std::endl;
+
+         for (unsigned int y = 0; y < height; ++y) {
+            for (unsigned int x = 0; x < width; ++x) {
+                sf::Color pixelColor = image.getPixel(x, y);
+                unsigned int bitIndex = y * width + x;
+                unsigned int byteIndex = bitIndex / 8;
+                unsigned int bitPosition = bitIndex % 8;
+
+                if (pixelColor.a > 128) {
+                    bitmask[byteIndex] |= (1 << bitPosition);
+                }
+            }
+        }
+
+        return bitmask; 
+    }
+
+    void printBitmaskDebug(const std::shared_ptr<sf::Uint8[]>& bitmask, unsigned int width, unsigned int height) {
+        unsigned int bitmaskSize = (width * height + 7) / 8;
+        for (unsigned int i = 0; i < bitmaskSize; ++i) {
+            for (int bit = 7; bit >= 0; --bit) { // Print bits from high to low
+                std::cout << ((bitmask[i] & (1 << bit)) ? '1' : '0');
+            }
+            if ((i + 1) % (width / 8) == 0) { // New line after each row
+                std::cout << std::endl;
+            }
+        }
     }
 }
 

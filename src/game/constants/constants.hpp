@@ -12,6 +12,8 @@
 #include <SFML/Audio.hpp>
 #include <vector>
 #include <iostream> 
+#include <unordered_map>
+
 
 namespace Constants {
     // basic game components
@@ -26,6 +28,7 @@ namespace Constants {
     // basic animation standards
     constexpr float ANIMATION_CHANGE_TIME = 0.1f;
     constexpr short PASSTHROUGH_OFFSET = 65; 
+    constexpr short ALPHA_THRESHOLD = 255; 
 
     // screen buffers for sprites and texts
     constexpr unsigned short SPRITE_OUT_OF_BOUNDS_OFFSET = 110;
@@ -48,8 +51,8 @@ namespace Constants {
     extern const sf::Color PLAYER_DEAD_COLOR;
     constexpr const char* PLAYERSPRITE_PATH = "src/assets/sprites/png/player_run.png";
     extern std::shared_ptr<sf::Texture> PLAYER_TEXTURE;
-    constexpr unsigned short PLAYERANIM_MAX_INDEX = 4; 
-    extern std::shared_ptr<sf::Uint8[]> PLAYER_BITMASK;
+    constexpr unsigned short PLAYERANIM_MAX_INDEX = 6; 
+    extern std::vector<std::shared_ptr<sf::Uint8[]>> PLAYER_BITMASKS;
 
     // bullet components (non-static) / non-animated
     extern const sf::Vector2f BULLET_POSITION;
@@ -60,9 +63,9 @@ namespace Constants {
     constexpr const char* BULLETSPRITE_PATH = "src/assets/sprites/png/bullet.png";
     extern std::shared_ptr<sf::Texture> BULLET_TEXTURE;
     constexpr short BULLETANIM_MAX_INDEX = 0; 
-    extern std::shared_ptr<sf::Uint8[]> BULLET_BITMASK;
     constexpr float BULLET_RESPAWN_TIME = 0.2; 
     extern const sf::Vector2f BULLET_POS_OFFSET;  
+    extern std::vector<std::shared_ptr<sf::Uint8[]>> BULLET_BITMASKS;
 
     // slime components (non-static) / animated
     extern const sf::Vector2f SLIME_POSITION;
@@ -70,13 +73,13 @@ namespace Constants {
     extern std::vector<sf::IntRect> SLIMESPRITE_RECTS;
     constexpr const char* SLIMESPRITE_PATH = "src/assets/sprites/png/slime.png";
     extern std::shared_ptr<sf::Texture> SLIME_TEXTURE;
-    constexpr unsigned short SLIMEANIM_MAX_INDEX = 4; 
+    constexpr unsigned short SLIMEANIM_MAX_INDEX = 5; 
     constexpr float SLIME_SPEED = 200.0f;
     constexpr float SLIME_ACCELERATION = 1.6;
-    extern std::shared_ptr<sf::Uint8[]> SLIME_BITMASK;
     constexpr float SLIME_INITIAL_RESPAWN_TIME = 3.0; 
     constexpr float SLIME_INTERVAL_DECREMENT = 0.08; 
     constexpr short SLIME_FALL_ANGLE = 150; 
+    extern std::vector<std::shared_ptr<sf::Uint8[]>> SLIME_BITMASKS;
 
     // bush components (non-static) / non-animated
     extern const sf::Vector2f BUSH_POSITION;
@@ -87,9 +90,9 @@ namespace Constants {
     constexpr const char* BUSHSPRITE_PATH = "src/assets/sprites/png/bush1.png";
     extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
     constexpr unsigned short BUSHANIM_MAX_INDEX = 0; 
-    extern std::shared_ptr<sf::Uint8[]> BUSH_BITMASK;
     constexpr float BUSH_INITIAL_RESPAWN_TIME = 10.0; 
     constexpr float BUSH_INTERVAL_DECREMENT = 0.08; 
+    extern std::vector<std::shared_ptr<sf::Uint8[]>> BUSH_BITMASKS;
 
     // text components
     extern const sf::Vector2f TEXT_POSITION;
@@ -125,4 +128,12 @@ namespace Constants {
     extern sf::Vector2f makeSlimePosition(); 
     // load textures, fonts, music, and sound
     extern void initialize(); 
+    extern std::shared_ptr<sf::Uint8[]> createBitmask(
+        const std::shared_ptr<sf::Texture>& texture,
+        const sf::IntRect& rect,  // Rectangle representing the portion of the texture
+        sf::Uint8 alphaThreshold);
+    extern void printBitmaskDebug(const std::shared_ptr<sf::Uint8[]>& bitmask, unsigned int width, unsigned int height);
+
+
+
 }

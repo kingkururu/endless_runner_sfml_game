@@ -101,8 +101,19 @@ void NonStatic::updatePos() {
     }
 }
 
-void NonStatic::changePosition(sf::Vector2f newPos){
-    position = newPos; 
+sf::IntRect NonStatic::getRects() const{
+    if (animationRects.empty()) {
+        throw std::runtime_error("Animation rects are empty.");
+    }
+    //std::cout << "left " <<  animationRects[currentIndex].left << " right " <<  animationRects[currentIndex].top << "width" << animationRects[currentIndex].width << "height: " <<  animationRects[currentIndex].height << std::endl; 
+    return animationRects[currentIndex % animationRects.size()];
+}
+
+std::shared_ptr<sf::Uint8[]> const NonStatic::getBitmask(size_t index) const {
+    if (index >= bitMask.size()) 
+        throw std::out_of_range("Index out of range.");
+        
+    return bitMask[index].lock();
 }
 
 // Player class

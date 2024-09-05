@@ -1,9 +1,9 @@
-// //
-// //  game.cpp
-// //  sfmlgame3
-// //
-// //  Created by Sunmyoung Yun on 2024/08
-// //
+//
+//  game.cpp
+//  sfmlgame3
+//
+//  Created by Sunmyoung Yun on 2024/08
+//
 
 #include "game.hpp"
 
@@ -13,17 +13,18 @@ GameManager::GameManager()
     window.setFramerateLimit(Constants::FRAME_LIMIT);
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     scene = std::make_unique<Scene>();
-    scene->createAssets();
 }
 
 void GameManager::runGame() {
     try {
+        scene->createAssets();
         while (window.isOpen()) {
             if (!FlagEvents.gameEnd) {
                 countTime();
                 scene->respawnAssets(); 
                 scene->handleGameEvents(); 
             }
+            scene->handleGameFlags(); 
             handleEventInput();
             scene->update();
             scene->draw(window);

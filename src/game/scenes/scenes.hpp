@@ -22,6 +22,7 @@
 #include "constants.hpp"
 #include "flags.hpp"
 #include "physics.hpp"
+#include "utils.hpp"
 
 
 class Scene {
@@ -39,9 +40,10 @@ public:
     void deleteInvisibleSprites(); 
     void setMouseClickedPos(sf::Vector2i mouseClickedPos); 
     void spawnBullets(); 
+    void handleGameFlags(); 
 
 private:
-    sf::RenderWindow* window;
+   // sf::RenderWindow* window;
 
     // Sprites
     std::unique_ptr<Background> background;

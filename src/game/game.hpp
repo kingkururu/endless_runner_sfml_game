@@ -1,8 +1,10 @@
-// //
-// //  game.hpp
-// //  sfmlgame3
-// //
-// //  Created by Sunmyoung Yun on 2024/08
+//
+//  game.hpp
+//  sfmlgame3
+//
+//  Created by Sunmyoung Yun on 2024/08
+
+#pragma once
 
 #ifndef GAME_HPP
 #define GAME_HPP

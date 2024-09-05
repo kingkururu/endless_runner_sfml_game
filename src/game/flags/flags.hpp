@@ -11,7 +11,7 @@
 #define flags_hpp
 
 #include <stdio.h>
-#include <cstring>  
+#include <cstring>
 
 extern struct flagEvents{
     // game states
