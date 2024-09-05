@@ -112,8 +112,6 @@ namespace Constants {
         //make rects for animations     //at this current moment player is only player_run.png
         for(int i = 0; i < 6; ++i ){
             PLAYERSPRITE_RECTS.push_back(sf::IntRect{ 32 * i, 0, 32, 32}); 
-                       // PLAYERSPRITE_RECTS.push_back(sf::IntRect{ 302 * i, 0, 28, 32}); 
-
         }
         for(int i = 0; i < 5; ++i ){
             SLIMESPRITE_RECTS.push_back(sf::IntRect{ 490 * i, 0, 490, 242}); 

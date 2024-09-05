@@ -221,10 +221,10 @@ void Scene::handleGameEvents() {
     bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::pixelPerfectCollisionHelper);  
     bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::pixelPerfectCollisionHelper); 
 
-    if(physics::checkCollisions( bullets, slimes, physics::pixelPerfectCollisionHelper)){
+    if(physics::checkCollisions( bullets, slimes, physics::boundingBoxCollisionHelper)){
        ++score; 
     } 
-    
+
     if(bushCollision || slimeCollision){
         std::cout << "Ending Game" << std::endl;
         FlagEvents.gameEnd = true; 
