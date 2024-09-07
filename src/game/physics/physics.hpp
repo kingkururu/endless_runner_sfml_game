@@ -35,7 +35,7 @@ namespace physics{
 
     // collisions
         //circle-shaped sprite 
-    bool circleCollision(const Sprite& sprite1, float radius1, const Sprite& sprite2, float radius2);
+    bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2);
         //axis aligned bounding box
     bool boundingBoxCollision(const sf::Vector2f &position1, const sf::Vector2f &size1, const sf::Vector2f &position2, const sf::Vector2f &size2);
         //pixel perfect 

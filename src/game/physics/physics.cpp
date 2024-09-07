@@ -34,7 +34,7 @@ namespace physics{
     }
 
     sf::Vector2f jump(float deltaTime, float jumpSpeed, sf::Vector2f originalPos){
-
+    return { originalPos.x, originalPos.y -= jumpSpeed * deltaTime };
     }
 
     // collisions (circle collision)

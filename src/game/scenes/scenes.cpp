@@ -188,7 +188,7 @@ void Scene::handleInput() {
     }
 
     if(FlagEvents.bPressed && backgroundMusic){
-        backgroundMusic->returnMusic().pause(); 
+        backgroundMusic->returnMusic().stop(); 
         restart();
     }
 }
@@ -220,6 +220,7 @@ void Scene::handleGameEvents() {
 
     if(physics::checkCollisions( bullets, slimes, physics::boundingBoxCollisionHelper)){
        ++score; 
+       obstHitSound->returnSound().play(); 
     } 
 
     if(bushCollision || slimeCollision){
