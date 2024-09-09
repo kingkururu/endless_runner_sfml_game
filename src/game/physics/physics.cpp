@@ -8,6 +8,16 @@
 #include "physics.hpp"
 
 namespace physics{
+    
+    struct RaycastResult {
+    sf::Vector2f intersection;
+    float collisionTime;
+    // bool hit;
+    int counter; 
+    };
+
+    RaycastResult cachedRaycastResult {}; 
+
     //falling objects 
     sf::Vector2f freeFall(float deltaTime, float speed, sf::Vector2f originalPos){
         return { originalPos.x, originalPos.y += speed * deltaTime * gravity };
@@ -33,9 +43,9 @@ namespace physics{
         return { originalPos.x, originalPos.y += speed * deltaTime * acceleration};
     }
 
-    sf::Vector2f jump(float deltaTime, float jumpSpeed, sf::Vector2f originalPos){
-    return { originalPos.x, originalPos.y -= jumpSpeed * deltaTime };
-    }
+    // sf::Vector2f jump(float deltaTime, float jumpSpeed, sf::Vector2f originalPos){
+    // return { originalPos.x, originalPos.y -= jumpSpeed * deltaTime };
+    // }
 
     // collisions (circle collision)
     bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2) {
@@ -50,6 +60,52 @@ namespace physics{
 
         // Check if the distance squared is less than or equal to the sum of radii squared
         return distanceSquared <= radiusSumSquared;
+    }
+
+    bool raycastPreCollision(const sf::Vector2f obj1position, const sf::Vector2f obj1direction, float obj1Speed, const sf::FloatRect obj1Bounds,
+                          const sf::Vector2f obj2position, const sf::Vector2f obj2direction, float obj2Speed, const sf::FloatRect obj2Bounds) {
+        
+        ++cachedRaycastResult.counter; 
+        // Calculate the relative velocity (bullet velocity minus slime velocity)
+        sf::Vector2f relativeVelocity = obj1direction * obj1Speed - obj2direction * obj2Speed;
+
+        // Define raycast parameters based on relative positions and velocities
+        sf::Vector2f relativePosition = obj1position - obj2position;
+
+        // Perform the raycast calculation to see if paths intersect
+        // This checks if the relative path of the bullet intersects the slime's bounding box
+        float velocityDot = relativeVelocity.x * relativeVelocity.x + relativeVelocity.y * relativeVelocity.y;
+        float positionVelocityDot = relativePosition.x * relativeVelocity.x + relativePosition.y * relativeVelocity.y;
+
+                //std::cout << obj1Speed << " and " << obj2Speed << std::endl; 
+
+
+        // Avoid division by zero
+        if (velocityDot == 0) {
+                            std::cout << "raycast collision at " << cachedRaycastResult.collisionTime << std::endl; 
+
+            return false; // No relative motion, hence no collision
+        }
+
+        // Time of closest approach between bullet and slime along their relative paths
+        float timeToClosestApproach = -positionVelocityDot / velocityDot;
+        cachedRaycastResult.collisionTime = timeToClosestApproach; 
+        
+        // Determine closest points of approach using time of closest approach
+        sf::Vector2f bulletClosestPoint = obj1position + obj1direction * obj1Speed * timeToClosestApproach;
+        sf::Vector2f slimeClosestPoint = obj2position + obj2direction * obj2Speed * timeToClosestApproach;
+
+        // Convert the closest points into bounding rectangles and check for intersection
+        sf::FloatRect obj1ClosestRect(bulletClosestPoint, sf::Vector2f(obj1Bounds.width, obj1Bounds.height));
+        sf::FloatRect obj2ClosestRect(slimeClosestPoint, sf::Vector2f(obj2Bounds.width, obj2Bounds.height));
+
+        // Check if the bounding boxes of closest approach intersect
+        bool collisionDetected = obj1ClosestRect.intersects(obj2ClosestRect); 
+
+                std::cout << "raycast collision will happen at " << cachedRaycastResult.collisionTime << std::endl; 
+
+
+        return collisionDetected;
     }
 
     // bounding box collision
@@ -155,6 +211,31 @@ namespace physics{
 
         // Perform pixel-perfect collision detection
         return pixelPerfectCollision(bitmask1, position1, size1, bitmask2, position2, size2);
+    }
+
+    bool raycastCollisionHelper(const NonStatic& obj1, const NonStatic& obj2, float currentTime) {
+
+        if(!cachedRaycastResult.counter){
+        sf::Vector2f obj1position = obj1.getSpritePos();
+        sf::Vector2f obj2position = obj2.getSpritePos();
+
+        sf::Vector2f obj1direction = obj1.getDirectionVector();
+        sf::Vector2f obj2direction = obj2.getDirectionVector();
+
+        float obj1Speed = obj1.getSpeed(); 
+        float obj2Speed = obj2.getSpeed(); 
+
+        sf::FloatRect obj1Bounds = obj1.returnSpritesShape().getGlobalBounds();
+        sf::FloatRect obj2Bounds = obj2.returnSpritesShape().getGlobalBounds();
+
+        return raycastPreCollision(obj1position, obj1direction, obj1Speed, obj1Bounds, obj2position, obj2direction, obj2Speed, obj2Bounds); 
+
+        } else if (currentTime > cachedRaycastResult.collisionTime){
+            cachedRaycastResult.counter = 0; 
+            return true;
+        }
+
+        return false; 
     }
 
 }

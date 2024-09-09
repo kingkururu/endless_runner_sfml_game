@@ -134,7 +134,7 @@ void Obstacle::setDirectionVector(float angle){
     directionVector.y = std::sin(angleRad);
 }
 
-void Bullet::setDirectionVector(sf::Vector2i projectionPos){
+void Bullet::setDirectionVector(sf::Vector2i projectionPos) {
     directionVector = static_cast<sf::Vector2f>(projectionPos) - position;
         
         // Calculate the length of the direction vector (distance to the target)

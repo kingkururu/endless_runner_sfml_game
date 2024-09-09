@@ -41,10 +41,8 @@ public:
     void setMouseClickedPos(sf::Vector2i mouseClickedPos); 
     void spawnBullets(); 
     void handleGameFlags(); 
-
+    
 private:
-   // sf::RenderWindow* window;
-
     // Sprites
     std::unique_ptr<Background> background;
     std::unique_ptr<Player> playerSprite;
@@ -71,7 +69,8 @@ private:
     float slimeRespTime {};
     float bushRespTime {}; 
     float bulletRespTime {}; 
-
+    std::vector<float> bulletSpawnedTimes; 
+    
 };
 
 

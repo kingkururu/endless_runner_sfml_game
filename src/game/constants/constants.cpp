@@ -163,8 +163,8 @@ std::shared_ptr<sf::Uint8[]> createBitmask(
     unsigned int bitmaskSize = (width * height) / 8 + ((width * height) % 8 != 0); // rounding up
     std::shared_ptr<sf::Uint8[]> bitmask(new sf::Uint8[bitmaskSize](), std::default_delete<sf::Uint8[]>());
 
-    std::cout << "Creating new bitmask for rect (" << rect.left << ", " << rect.top 
-              << ", " << rect.width << ", " << rect.height << ")" << std::endl;
+    // std::cout << "Creating new bitmask for rect (" << rect.left << ", " << rect.top 
+    //           << ", " << rect.width << ", " << rect.height << ")" << std::endl;
 
          for (unsigned int y = 0; y < height; ++y) {
             for (unsigned int x = 0; x < width; ++x) {

@@ -61,8 +61,11 @@ void Scene::spawnBullets(){
         bullets.push_back(std::make_unique<Bullet>(playerSprite->getSpritePos() + Constants::BULLET_POS_OFFSET, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BULLET_BITMASKS)));
         bullets[bullets.size() - 1]->setDirectionVector(mouseClickedPos);
         bulletRespTime = Constants::BULLET_RESPAWN_TIME; 
+        bulletSpawnedTimes.push_back(deltaTime); 
+
         if(bulletSound)
             bulletSound->returnSound().play(); 
+        
     }
 } 
 
@@ -72,6 +75,10 @@ void Scene::setTime(float deltaT, float globalT){
     slimeRespTime -= deltaTime; 
     bulletRespTime -= deltaTime; 
     bushRespTime -= deltaTime; 
+    
+    for (auto& time : bulletSpawnedTimes){
+        time += deltaTime; 
+    }
 } 
 
 void Scene::setMouseClickedPos(sf::Vector2i mousePos){
@@ -218,10 +225,18 @@ void Scene::handleGameEvents() {
     bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::pixelPerfectCollisionHelper);  
     bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::pixelPerfectCollisionHelper); 
 
-    if(physics::checkCollisions( bullets, slimes, physics::boundingBoxCollisionHelper)){
-       ++score; 
-       obstHitSound->returnSound().play(); 
-    } 
+    // if(physics::checkCollisions( bullets, slimes, physics::boundingBoxCollisionHelper)){
+    //    ++score; 
+    //    obstHitSound->returnSound().play(); 
+    // } 
+
+    bool bulletCollision = physics::checkCollisions( bullets, slimes, physics::raycastCollisionHelper, bulletSpawnedTimes);
+
+    if(bulletCollision){
+        ++score; 
+               obstHitSound->returnSound().play(); 
+
+    }
 
     if(bushCollision || slimeCollision){
         std::cout << "Ending Game" << std::endl;
@@ -312,6 +327,11 @@ void Scene::restart() {
 
     if(endingText)
         endingText->updateText("current score: " + std::to_string(score)); 
+
+    bullets.clear();
+    bulletSpawnedTimes.clear(); 
+    slimes.clear(); 
+    bushes.clear(); 
 }
 
 void Scene::deleteInvisibleSprites() {
@@ -335,13 +355,32 @@ void Scene::deleteInvisibleSprites() {
                                     });
     bushes.erase(bushIt, bushes.end());
 
-    // Remove invisible bullets
+    // // Remove invisible bullets
+    // auto bulletIt = std::remove_if(bullets.begin(), bullets.end(),
+    //                                [](const std::unique_ptr<Bullet>& bullet) { 
+    //                                 if(bullet){
+    //                                     return !bullet->getVisibleState();
+    //                                 } 
+    //                                 return false;
+    //                                 });
+    // bullets.erase(bulletIt, bullets.end()); 
+
+    std::vector<size_t> bulletsToRemove;
     auto bulletIt = std::remove_if(bullets.begin(), bullets.end(),
-                                   [](const std::unique_ptr<Bullet>& bullet) { 
-                                    if(bullet){
-                                        return !bullet->getVisibleState();
-                                    } 
-                                    return false;
-                                    });
-    bullets.erase(bulletIt, bullets.end()); 
+                                   [&bulletsToRemove, this](const std::unique_ptr<Bullet>& bullet) {
+                                       if (bullet && !bullet->getVisibleState()) {
+                                           bulletsToRemove.push_back(bullets.size() - 1); // Store index
+                                           return true;
+                                       }
+                                       return false;
+                                   });
+
+    bullets.erase(bulletIt, bullets.end());
+
+    // Remove corresponding times
+    for (const auto& index : bulletsToRemove) {
+        if (index < bulletSpawnedTimes.size()) {
+            bulletSpawnedTimes.erase(bulletSpawnedTimes.begin() + index);
+        }
+    }
 }
