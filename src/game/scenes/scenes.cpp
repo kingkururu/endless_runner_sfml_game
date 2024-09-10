@@ -7,9 +7,9 @@
 
 #include "scenes.hpp"
 
-Scene::Scene() : slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME), bulletRespTime(Constants::BULLET_RESPAWN_TIME){}
+Scene::Scene( sf::RenderWindow& gameWindow ) : window(gameWindow), slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME), bulletRespTime(Constants::BULLET_RESPAWN_TIME){}
 
-void Scene::runScene(float deltaT, float globalT, sf::RenderWindow& window){
+void Scene::runScene(float deltaT, float globalT){
     deltaTime = deltaT;
     globalTime = globalT; 
     
@@ -21,7 +21,7 @@ void Scene::runScene(float deltaT, float globalT, sf::RenderWindow& window){
     }
     handleGameFlags(); 
     update();
-    draw(window);
+    draw();
 }
 
 void Scene::createAssets() {
@@ -102,7 +102,7 @@ void Scene::setMouseClickedPos(sf::Vector2i mousePos){
     mouseClickedPos = mousePos; 
 } 
 
-void Scene::draw(sf::RenderWindow& window) {
+void Scene::draw() {
     try {
         window.clear();
 

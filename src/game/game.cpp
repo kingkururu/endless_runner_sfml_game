@@ -12,7 +12,7 @@ GameManager::GameManager()
     Constants::initialize();
     window.setFramerateLimit(Constants::FRAME_LIMIT);
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    scene = std::make_unique<Scene>();
+    scene = std::make_unique<Scene>(window);
 }
 
 void GameManager::runGame() {
@@ -22,7 +22,7 @@ void GameManager::runGame() {
         while (window.isOpen()) {
             countTime();
             handleEventInput();
-            scene->runScene(deltaTime, globalTime, window); 
+            scene->runScene(deltaTime, globalTime); 
         }
         
     } catch (const std::exception& e) {

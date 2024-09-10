@@ -27,13 +27,13 @@
 
 class Scene {
 public:
-    Scene();
+    Scene( sf::RenderWindow& gameWindow );
     
-    void runScene(float deltaTime, float globalTime, sf::RenderWindow& window); 
+    void runScene(float deltaTime, float globalTime); 
     void createAssets();
     void respawnAssets(); 
     void update();
-    void draw(sf::RenderWindow& window);
+    void draw();
     void handleInput();
     void handleGameEvents();
     void restart();
@@ -62,6 +62,7 @@ private:
     std::unique_ptr<TextClass> endingText;
 
     // other game components 
+    sf::RenderWindow& window; 
     unsigned int score = Constants::INITIAL_SCORE;
     float deltaTime {}; 
     float globalTime {}; 
