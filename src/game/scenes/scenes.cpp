@@ -17,6 +17,7 @@ void Scene::createAssets() {
         playerSprite->setRects(0);
         bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BULLET_BITMASKS)));
         bullets[0]->setVisibleState(false); 
+        bulletSpawnedTimes.push_back(deltaTime); 
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BUSH_BITMASKS)));
         slimes.push_back(std::make_unique<Obstacle>(Constants::makeSlimePosition(), Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::SLIME_BITMASKS)));
         slimes[0]->setRects(0);
@@ -225,17 +226,14 @@ void Scene::handleGameEvents() {
     bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::pixelPerfectCollisionHelper);  
     bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::pixelPerfectCollisionHelper); 
 
-    // if(physics::checkCollisions( bullets, slimes, physics::boundingBoxCollisionHelper)){
-    //    ++score; 
-    //    obstHitSound->returnSound().play(); 
-    // } 
-
-    bool bulletCollision = physics::checkCollisions( bullets, slimes, physics::raycastCollisionHelper, bulletSpawnedTimes);
+    // bool bulletCollision = physics::checkCollisions( bullets, slimes, physics::raycastCollisionHelper, bulletSpawnedTimes);
+bool bulletCollision = physics::checkCollisions(bullets, slimes, [&](const NonStatic& obj1, const NonStatic& obj2, float currentTime, size_t index) {
+    return physics::raycastCollisionHelper(obj1, obj2, currentTime, index);
+}, bulletSpawnedTimes);
 
     if(bulletCollision){
         ++score; 
-               obstHitSound->returnSound().play(); 
-
+        obstHitSound->returnSound().play(); 
     }
 
     if(bushCollision || slimeCollision){

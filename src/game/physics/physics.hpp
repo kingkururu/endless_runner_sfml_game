@@ -39,8 +39,8 @@ namespace physics{
         //circle-shaped sprite 
     bool circleCollision(const sf::Vector2f pos1, float radius1, const sf::Vector2f pos2, float radius2);
         //ray cast pre-collision
-    bool raycastPreCollision(const sf::Vector2f obj1position, const sf::Vector2f obj1direction, float obj1Speed, const sf::FloatRect obj1Bounds,
-                          const sf::Vector2f obj2position, const sf::Vector2f obj2direction, float obj2Speed, const sf::FloatRect obj2Bounds);
+    bool raycastPreCollision(const sf::Vector2f obj1position, const sf::Vector2f obj1direction, float obj1Speed, const sf::FloatRect obj1Bounds, float obj1Acceleration, 
+                            const sf::Vector2f obj2position, const sf::Vector2f obj2direction, float obj2Speed, const sf::FloatRect obj2Bounds, float obj2Acceleration);
         //axis aligned bounding box
     bool boundingBoxCollision(const sf::Vector2f &position1, const sf::Vector2f &size1, const sf::Vector2f &position2, const sf::Vector2f &size2);
         //pixel perfect 
@@ -51,7 +51,7 @@ namespace physics{
     // bool circleCollisionHelper(const Sprite& sprite1, const Sprite& sprite2);
     bool boundingBoxCollisionHelper(const NonStatic& sprite1, const NonStatic& sprite2); 
     bool pixelPerfectCollisionHelper(const NonStatic& sprite1, const NonStatic& sprite2);
-    bool raycastCollisionHelper(const NonStatic& sprite1, const NonStatic& sprite2, float currentTime);
+    bool raycastCollisionHelper(const NonStatic& sprite1, const NonStatic& sprite2, float currentTime, size_t index);
 
     //check templates 
     template<typename SpriteType1, typename SpriteType2, typename CollisionFunc>
@@ -108,11 +108,12 @@ namespace physics{
                          const CollisionFunc& collisionFunc, std::vector<float>firstGroupSpawnedTimes) {
         
         if(firstGroupSpawnedTimes.size() != firstGroup.size()){
+            // std::cout << "bullet time ve size is " << firstGroupSpawnedTimes.size() << "the bullet vec size is " <<  firstGroup.size() << std::endl; 
             throw std::runtime_error("first group sprite vec size and spawned time size is not equal");
         }
 
          // Iterate over each sprite in the first group
-        for (int i = 0; i < firstGroup.size(); ++i){
+        for (size_t i = 0; i < firstGroup.size(); ++i){
             if (!firstGroup[i]) {
                 throw std::runtime_error("first sprite pointer is empty.");
             }
@@ -120,7 +121,7 @@ namespace physics{
                 if (!item2) {
                     throw std::runtime_error("second sprite pointer is empty.");
                 }
-                if (collisionFunc(*firstGroup[i], *item2, firstGroupSpawnedTimes[i])) {
+                if (collisionFunc(*firstGroup[i], *item2, firstGroupSpawnedTimes[i], i)) {
                     item2->setVisibleState(false); 
                     firstGroup[i]->setVisibleState(false); 
                     return true; // Collision detected

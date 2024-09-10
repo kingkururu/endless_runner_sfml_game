@@ -77,6 +77,8 @@ public:
     virtual void setDirectionVector( sf::Vector2f dir) {directionVector = dir; } 
     virtual const float getSpeed() const { return speed; }
     void setSpeed(float newSpeed) { speed = newSpeed; } 
+    virtual const float getAcceleration() const { return acceleration; }
+    void setAcceleration(float newAcc) { acceleration = newAcc; } 
 
 protected:
     bool moveState = true;
@@ -89,7 +91,7 @@ protected:
     std::vector<std::weak_ptr<sf::Uint8[]>> bitMask{}; 
     sf::Vector2f directionVector{}; 
     float speed {}; 
-
+    float acceleration{}; 
 };
 
 class Player : public NonStatic{
@@ -98,7 +100,7 @@ public:
    ~Player() override {}; 
     void updatePlayer(sf::Vector2f newPos); 
     const float getSpeed() const override { return Constants::PLAYER_SPEED; }
-
+    const float getAcceleration() const override { return Constants::PLAYER_ACCELERATION; }
 };
 
 class Obstacle : public NonStatic{
@@ -109,6 +111,8 @@ public:
     const float getSpeed() const override { return Constants::SLIME_SPEED; }
     using NonStatic::setDirectionVector;
     void setDirectionVector(float angle);
+    const float getAcceleration() const override { return Constants::SLIME_ACCELERATION; }
+
 private:
 };
 
@@ -120,6 +124,8 @@ public:
     const float getSpeed() const override { return Constants::BULLET_SPEED; }
     using NonStatic::setDirectionVector;
     void setDirectionVector(sf::Vector2i projectionPos);
+    const float getAcceleration() const override { return Constants::BULLET_ACCELERATION; }
+
 
 private:
 };
