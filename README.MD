@@ -21,7 +21,7 @@ Slimes and bushes get re-spawned by decreasing time intervals. Good luck!
 SPRITES:
 
 Main player 
-https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
+https://craftpix.net/freebies/free-pixel-art-tiny-hero-sprites/ 
 
 Bushes
 https://craftpix.net/freebies/free-top-down-bushes-pixel-art/

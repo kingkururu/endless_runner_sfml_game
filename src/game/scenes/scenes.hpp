@@ -28,7 +28,8 @@
 class Scene {
 public:
     Scene();
-
+    
+    void runScene(float deltaTime, float globalTime, sf::RenderWindow& window); 
     void createAssets();
     void respawnAssets(); 
     void update();
@@ -36,7 +37,7 @@ public:
     void handleInput();
     void handleGameEvents();
     void restart();
-    void setTime(float deltaTime, float globalTime); 
+    void setTime(); 
     void deleteInvisibleSprites(); 
     void setMouseClickedPos(sf::Vector2i mouseClickedPos); 
     void spawnBullets(); 
@@ -70,6 +71,7 @@ private:
     float bushRespTime {}; 
     float bulletRespTime {}; 
     std::vector<float> bulletSpawnedTimes; 
+    float spacePressedElapsedTime {}; 
     
 };
 

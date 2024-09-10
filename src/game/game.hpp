@@ -31,6 +31,7 @@ private:
     sf::RenderWindow window;
     sf::Clock clock;
     float globalTime {};
+    float deltaTime {}; 
     
     // Scene
     std::unique_ptr<Scene> scene;

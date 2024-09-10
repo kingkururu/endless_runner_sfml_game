@@ -18,17 +18,13 @@ GameManager::GameManager()
 void GameManager::runGame() {
     try {
         scene->createAssets();
+
         while (window.isOpen()) {
-            if (!FlagEvents.gameEnd) {
-                countTime();
-                scene->respawnAssets(); 
-                scene->handleGameEvents(); 
-            }
-            scene->handleGameFlags(); 
+            countTime();
             handleEventInput();
-            scene->update();
-            scene->draw(window);
+            scene->runScene(deltaTime, globalTime, window); 
         }
+        
     } catch (const std::exception& e) {
         std::cerr << "exception in runGame: " << e.what() << std::endl;
     }
@@ -36,9 +32,8 @@ void GameManager::runGame() {
 
 void GameManager::countTime() {
     sf::Time frameTime = clock.restart();
-    globalTime += frameTime.asSeconds();
-
-    scene->setTime(frameTime.asSeconds(), globalTime);
+    deltaTime = frameTime.asSeconds(); 
+    globalTime += deltaTime;
 }
 
 void GameManager::handleEventInput() {
@@ -64,6 +59,9 @@ void GameManager::handleEventInput() {
                 case sf::Keyboard::B:
                     FlagEvents.bPressed = true;
                     break;
+                case sf::Keyboard::Space:
+                    FlagEvents.spacePressed = true;
+                    break;
                 default:
                     break;
             }
@@ -78,6 +76,5 @@ void GameManager::handleEventInput() {
         if (event.type == sf::Event::MouseButtonReleased) {
             FlagEvents.mouseClicked = false;
         }
-        scene->handleInput();
     }
 }

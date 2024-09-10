@@ -22,7 +22,7 @@ namespace physics{
     struct RaycastResult;
     extern RaycastResult cachedRaycastResult; 
 
-    constexpr float gravity = 9.8;
+    constexpr float gravity = 9.8f;
 
     // falling objects
     sf::Vector2f freeFall(float deltaTime, float speed, sf::Vector2f originalPo);
@@ -33,7 +33,7 @@ namespace physics{
     sf::Vector2f moveRight(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
     sf::Vector2f moveUp(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
     sf::Vector2f moveDown(float deltaTime, float speed, sf::Vector2f originalPos, float acceleration = 1.0);
-    sf::Vector2f jump(float deltaTime, float jumpSpeed, sf::Vector2f originalPos); 
+    sf::Vector2f jump(float& elapsedTime, float deltaTime, float jumpSpeed, sf::Vector2f originalPos); 
 
     // collisions
         //circle-shaped sprite 

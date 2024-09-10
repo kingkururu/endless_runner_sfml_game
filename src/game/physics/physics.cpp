@@ -42,9 +42,17 @@ namespace physics{
         return { originalPos.x, originalPos.y += speed * deltaTime * acceleration};
     }
 
-    // sf::Vector2f jump(float deltaTime, float jumpSpeed, sf::Vector2f originalPos){
-    // return { originalPos.x, originalPos.y -= jumpSpeed * deltaTime };
-    // }
+    sf::Vector2f jump(float& elapsedTime, float deltaTime, float jumpSpeed, sf::Vector2f originalPos){
+       if(elapsedTime < 0.4f){
+            return { originalPos.x, originalPos.y -= jumpSpeed * deltaTime * gravity };
+        } else if (elapsedTime > 0.4f && elapsedTime < 0.8f){
+            return { originalPos.x, originalPos.y += jumpSpeed * deltaTime * gravity };
+        } else {
+            FlagEvents.spacePressed = false; 
+            elapsedTime = 0.0f; 
+            return { originalPos.x, originalPos.y };
+        }
+    }
 
     // collisions (circle collision)
     bool circleCollision(sf::Vector2f pos1, float radius1, sf::Vector2f pos2, float radius2) {

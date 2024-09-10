@@ -9,15 +9,27 @@
 
 Scene::Scene() : slimeRespTime(Constants::SLIME_INITIAL_RESPAWN_TIME), bushRespTime(Constants::BUSH_INITIAL_RESPAWN_TIME), bulletRespTime(Constants::BULLET_RESPAWN_TIME){}
 
+void Scene::runScene(float deltaT, float globalT, sf::RenderWindow& window){
+    deltaTime = deltaT;
+    globalTime = globalT; 
+    
+    if (!FlagEvents.gameEnd) {
+        setTime();
+        handleInput();
+        respawnAssets(); 
+        handleGameEvents(); 
+    }
+    handleGameFlags(); 
+    update();
+    draw(window);
+}
+
 void Scene::createAssets() {
     try {
         // Initialize assets
         background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_TEXTURE);
         playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYERANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::PLAYER_BITMASKS));
         playerSprite->setRects(0);
-        // bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BULLET_BITMASKS)));
-        // bullets[0]->setVisibleState(false); 
-        // bulletSpawnedTimes.push_back(deltaTime); 
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BUSH_BITMASKS)));
         slimes.push_back(std::make_unique<Obstacle>(Constants::makeSlimePosition(), Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::SLIME_BITMASKS)));
         slimes[0]->setRects(0);
@@ -70,15 +82,19 @@ void Scene::spawnBullets(){
     }
 } 
 
-void Scene::setTime(float deltaT, float globalT){
-    globalTime = globalT;
-    deltaTime = deltaT;  
+void Scene::setTime(){
     slimeRespTime -= deltaTime; 
     bulletRespTime -= deltaTime; 
     bushRespTime -= deltaTime; 
     
     for (auto& time : bulletSpawnedTimes){
         time += deltaTime; 
+    }
+
+    if (FlagEvents.spacePressed){
+        spacePressedElapsedTime += deltaTime; 
+    } else {
+        spacePressedElapsedTime = 0.0f; 
     }
 } 
 
@@ -193,6 +209,9 @@ void Scene::handleInput() {
         if(FlagEvents.mouseClicked){
             spawnBullets(); 
         }
+        if(FlagEvents.spacePressed){
+            playerSprite->updatePlayer(physics::jump(spacePressedElapsedTime, deltaTime, Constants::PLAYER_JUMP_SPEED, playerSprite->getSpritePos())); 
+        }
     }
 
     if(FlagEvents.bPressed && backgroundMusic){
@@ -272,7 +291,8 @@ void Scene::handleGameFlags(){
                 bush->setMoveState(false);
         }
 
-        endingText->updateText("Player dead!\nFinal score: " + std::to_string(score)); 
+        if(endingText)
+            endingText->updateText("Player dead!\nFinal score: " + std::to_string(score)); 
     }
 }
 

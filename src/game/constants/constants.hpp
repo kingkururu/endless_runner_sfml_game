@@ -52,6 +52,7 @@ namespace Constants {
     extern std::shared_ptr<sf::Texture> PLAYER_TEXTURE;
     constexpr unsigned short PLAYERANIM_MAX_INDEX = 6; 
     extern std::vector<std::shared_ptr<sf::Uint8[]>> PLAYER_BITMASKS;
+    constexpr float PLAYER_JUMP_SPEED = 50.0f;
 
     // bullet components (non-static) / non-animated
     extern const sf::Vector2f BULLET_POSITION;
@@ -89,7 +90,7 @@ namespace Constants {
     constexpr const char* BUSHSPRITE_PATH = "src/assets/sprites/png/bush1.png";
     extern std::shared_ptr<sf::Texture> BUSH_TEXTURE;
     constexpr unsigned short BUSHANIM_MAX_INDEX = 0; 
-    constexpr float BUSH_INITIAL_RESPAWN_TIME = 10.0; 
+    constexpr float BUSH_INITIAL_RESPAWN_TIME = 5.0; 
     constexpr float BUSH_INTERVAL_DECREMENT = 0.08; 
     extern std::vector<std::shared_ptr<sf::Uint8[]>> BUSH_BITMASKS;
 
