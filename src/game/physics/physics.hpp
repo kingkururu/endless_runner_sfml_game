@@ -108,7 +108,6 @@ namespace physics{
                          const CollisionFunc& collisionFunc, std::vector<float>firstGroupSpawnedTimes) {
         
         if(firstGroupSpawnedTimes.size() != firstGroup.size()){
-            // std::cout << "bullet time ve size is " << firstGroupSpawnedTimes.size() << "the bullet vec size is " <<  firstGroup.size() << std::endl; 
             throw std::runtime_error("first group sprite vec size and spawned time size is not equal");
         }
 
@@ -126,7 +125,6 @@ namespace physics{
                     firstGroup[i]->setVisibleState(false); 
                     return true; // Collision detected
                 }
-                // std::cout << "raycast check " << std::endl; 
             }
         }
 
