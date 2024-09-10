@@ -126,13 +126,14 @@ namespace physics{
                     firstGroup[i]->setVisibleState(false); 
                     return true; // Collision detected
                 }
+                // std::cout << "raycast check " << std::endl; 
             }
         }
+
         return false; 
 
     }
-
-                
+           
 }
 
 #endif /* game_hpp */

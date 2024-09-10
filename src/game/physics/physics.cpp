@@ -65,7 +65,8 @@ namespace physics{
                                 const sf::Vector2f obj2position, const sf::Vector2f obj2direction, float obj2Speed, const sf::FloatRect obj2Bounds, float obj2Acceleration) {
             
         ++cachedRaycastResult.counter;
-        
+        std::cout << "calculating raycast collision time" << std::endl; 
+
         // Calculate the initial relative velocity (obj1 velocity minus obj2 velocity)
         sf::Vector2f relativeVelocity = obj1direction * obj1Speed - obj2direction * obj2Speed;
         sf::Vector2f relativePosition = obj1position - obj2position;

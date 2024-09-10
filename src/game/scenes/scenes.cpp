@@ -15,9 +15,9 @@ void Scene::createAssets() {
         background = std::make_unique<Background>(Constants::BACKGROUND_POSITION, Constants::BACKGROUND_SCALE, Constants::BACKGROUND_TEXTURE);
         playerSprite = std::make_unique<Player>(Constants::PLAYER_POSITION, Constants::PLAYER_SCALE, Constants::PLAYER_TEXTURE, Constants::PLAYERSPRITE_RECTS, Constants::PLAYERANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::PLAYER_BITMASKS));
         playerSprite->setRects(0);
-        bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BULLET_BITMASKS)));
-        bullets[0]->setVisibleState(false); 
-        bulletSpawnedTimes.push_back(deltaTime); 
+        // bullets.push_back(std::make_unique<Bullet>(Constants::BULLET_POSITION, Constants::BULLET_SCALE, Constants::BULLET_TEXTURE, Constants::BULLETSPRITES_RECTS, Constants::BULLETANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BULLET_BITMASKS)));
+        // bullets[0]->setVisibleState(false); 
+        // bulletSpawnedTimes.push_back(deltaTime); 
         bushes.push_back(std::make_unique<Obstacle>(Constants::BUSH_POSITION, Constants::BUSH_SCALE, Constants::BUSH_TEXTURE, Constants::BUSHSPRITES_RECTS, Constants::BUSHANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::BUSH_BITMASKS)));
         slimes.push_back(std::make_unique<Obstacle>(Constants::makeSlimePosition(), Constants::SLIME_SCALE, Constants::SLIME_TEXTURE, Constants::SLIMESPRITE_RECTS, Constants::SLIMEANIM_MAX_INDEX, utils::convertToWeakPtrVector(Constants::SLIME_BITMASKS)));
         slimes[0]->setRects(0);
@@ -225,11 +225,7 @@ void Scene::handleGameEvents() {
     // player vs bush collision 
     bool bushCollision = physics::checkCollisions( playerSprite, bushes, physics::pixelPerfectCollisionHelper);  
     bool slimeCollision = physics::checkCollisions( playerSprite, slimes, physics::pixelPerfectCollisionHelper); 
-
-    // bool bulletCollision = physics::checkCollisions( bullets, slimes, physics::raycastCollisionHelper, bulletSpawnedTimes);
-bool bulletCollision = physics::checkCollisions(bullets, slimes, [&](const NonStatic& obj1, const NonStatic& obj2, float currentTime, size_t index) {
-    return physics::raycastCollisionHelper(obj1, obj2, currentTime, index);
-}, bulletSpawnedTimes);
+    bool bulletCollision = physics::checkCollisions( bullets, slimes, physics::raycastCollisionHelper, bulletSpawnedTimes);
 
     if(bulletCollision){
         ++score; 
@@ -353,16 +349,7 @@ void Scene::deleteInvisibleSprites() {
                                     });
     bushes.erase(bushIt, bushes.end());
 
-    // // Remove invisible bullets
-    // auto bulletIt = std::remove_if(bullets.begin(), bullets.end(),
-    //                                [](const std::unique_ptr<Bullet>& bullet) { 
-    //                                 if(bullet){
-    //                                     return !bullet->getVisibleState();
-    //                                 } 
-    //                                 return false;
-    //                                 });
-    // bullets.erase(bulletIt, bullets.end()); 
-
+    // Remove invisible bullets
     std::vector<size_t> bulletsToRemove;
     auto bulletIt = std::remove_if(bullets.begin(), bullets.end(),
                                    [&bulletsToRemove, this](const std::unique_ptr<Bullet>& bullet) {
