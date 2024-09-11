@@ -1,6 +1,6 @@
-Made on September 2024 by Sunmyoung Yun
-This is my third mini-game project with C++ & SFML
-This was inspired by chrome dinosaur game
+Made on September 2024 by Sunmyoung Yun.
+
+This is my third mini-game project with C++ & SFML, inspired by the chrome dinosaur game.
 
 --------------------------------------------------------- HOW TO OPEN AND LAUNCH GAME
 1)  Clone repo in VScode
