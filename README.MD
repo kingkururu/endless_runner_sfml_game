@@ -47,7 +47,8 @@ https://freesound.org/people/andersmmg/sounds/523425/
 FONT:
 
 Pixel font
-https://craftpix.net/freebies/free-cartoon-forest-game-backgrounds/
+https://www.dafont.com/search.php?q=pixel&page=1
+
 
 --------------------------------------------------------- GAMEPLAY SCREENSHOT
 <img width="1470" alt="Screenshot 2024-09-01 at 8 31 22 PM" src="https://github.com/user-attachments/assets/0e67357e-c94d-4c67-95ca-f2b09813ca46">
