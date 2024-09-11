@@ -8,6 +8,7 @@ This is my third mini-game project with C++ & SFML, inspired by the chrome dinos
 3)  Type "./ASAtut" in VScode terminal
 
 --------------------------------------------------------- GAME PLAY
+
 This is like the Chrome dinosaur game. You need to jump over bushes and can either shoot bullets or jump to avoid slimes. Each obstacle you destroy or successfully avoid increases your score by 1 point. The goal is to score as many points as possible before hitting an obstacle and losing the game.
 Slimes and bushes get re-spawned by decreasing time intervals. Good luck!
 
