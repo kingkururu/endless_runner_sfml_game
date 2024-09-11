@@ -43,7 +43,7 @@ namespace Constants {
     std::vector<std::shared_ptr<sf::Uint8[]>> BUSH_BITMASKS;
 
     // text components
-    const sf::Vector2f TEXT_POSITION = {0.0f, 0.0f};
+    const sf::Vector2f TEXT_POSITION = {30.0f, 0.0f};
     const sf::Color TEXT_COLOR = sf::Color::White;
     std::shared_ptr<sf::Font> TEXT_FONT = std::make_shared<sf::Font>(); 
 
